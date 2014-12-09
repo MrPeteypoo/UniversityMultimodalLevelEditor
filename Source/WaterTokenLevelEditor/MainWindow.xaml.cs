@@ -20,9 +20,54 @@ namespace WaterTokenLevelEditor
     /// </summary>
     public partial class MainWindow : Window
     {
+        /// <summary>
+        /// The entry point for the WPF application.
+        /// </summary>
         public MainWindow()
         {
             InitializeComponent();
         }
+
+
+        #region WPF Events
+
+
+        /// <summary>
+        /// Colours any given control a dark gray colour with aqua text.
+        /// </summary>
+        private void btn_MouseEnter (object sender, MouseEventArgs e)
+        {
+            // Cast the sender to a Control so we can modify the colour.
+            Control control = sender as Control;
+
+            // Check whether the sender was indeed a Control.
+            if (control != null)
+            {
+                Color darkGray = Color.FromRgb (60, 60, 60);
+
+                control.Background = new SolidColorBrush (darkGray);
+                control.Foreground = Brushes.Aqua;
+            }
+        }
+
+
+        /// <summary>
+        /// Colours any given control transparent with black text.
+        /// </summary>
+        private void btn_MouseLeave (object sender, MouseEventArgs e)
+        {
+            // Cast the sender to a Control so we can modify the colour.
+            Control control = sender as Control;
+
+            // Check whether the sender was indeed a Control.
+            if (control != null)
+            {
+                control.Background = Brushes.Transparent;
+                control.Foreground = Brushes.Black;
+            }
+        }
+
+
+        #endregion
     }
 }
