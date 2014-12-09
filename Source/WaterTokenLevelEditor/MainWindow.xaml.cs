@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -69,5 +70,22 @@ namespace WaterTokenLevelEditor
 
 
         #endregion
+
+        private void win_mainWindow_Loaded(object sender, RoutedEventArgs e)
+        {
+            ObservableCollection<Image> collection = new ObservableCollection<Image>();
+            
+            for (int y = 0; y < 12; ++y)
+            {
+                for (int x = 0; x < 16; ++x)
+                {
+                    collection.Add (new Image() { Source = new BitmapImage (new Uri (@"Images/alphaThing.png", UriKind.Relative)), Height = 32, Width = 32 });
+                }
+
+            }
+
+            lst_levelGrid.ItemsSource = collection;
+            //lst_levelGrid.it
+        }
     }
 }

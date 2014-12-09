@@ -1,7 +1,7 @@
 ﻿<Window x:Name="win_mainWindow" x:Class="WaterTokenLevelEditor.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="Water Token Level Editor" Height="350" Width="525" MinWidth="525" MinHeight="350">
+        Title="Water Token Level Editor" Height="350" Width="525" MinWidth="525" MinHeight="350" Loaded="win_mainWindow_Loaded">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="0.09*" MinWidth="120"/>
@@ -16,6 +16,13 @@
         </Grid.RowDefinitions>
 
 
+        <!-- |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||| -->
+        <!-- ||||||||||||||                                                          |||||||||||||| -->
+        <!-- ||||||||||||||                        Main Menu                         |||||||||||||| -->
+        <!-- ||||||||||||||                                                          |||||||||||||| -->
+        <!-- |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||| -->
+
+        
         <Menu Grid.ColumnSpan ="3" Grid.Row="0" x:Name="men_mainMenu" Margin="0" BorderBrush="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}" BorderThickness="0,0,0,1" MaxHeight="20" MinHeight="20" Background="#FFF0F0F0">
 
             <MenuItem Header="_File" >
@@ -25,7 +32,7 @@
             </MenuItem>
 
             <MenuItem Header="_Layout">
-                <MenuItem Header="_GridSize" />
+                <MenuItem Header="_Grid Size" />
             </MenuItem>
 
             <MenuItem Header="_Help">
@@ -33,6 +40,14 @@
             </MenuItem>
 
         </Menu>
+
+        
+        <!-- |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||| -->
+        <!-- ||||||||||||||                                                          |||||||||||||| -->
+        <!-- ||||||||||||||                     Game Object Column                   |||||||||||||| -->
+        <!-- ||||||||||||||                                                          |||||||||||||| -->
+        <!-- |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||| -->
+        
 
         <DockPanel Grid.Column="0" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="{DynamicResource {x:Static SystemColors.ControlLightBrushKey}}">
 
@@ -43,9 +58,9 @@
 
                     <Expander Header="Characters" HorizontalContentAlignment="Stretch" RenderTransformOrigin="0.5,0.5" VerticalContentAlignment="Stretch" Foreground="{DynamicResource {x:Static SystemColors.ActiveCaptionTextBrushKey}}" Background="#00000000" BorderThickness="0,0,0,0" Padding="5,5,0,0" BorderBrush="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}" >
                         <ItemsControl>
-                            <Label Content="Boss" Padding="30,2,0,2" MouseEnter="btn_MouseEnter" MouseLeave="btn_MouseLeave" Margin="-5,0,0,0"/>
-                            <Label Content="Grunt" Padding="30,2,0,2" MouseEnter="btn_MouseEnter" MouseLeave="btn_MouseLeave" Margin="-5,0,0,0"/>
-                            <Label Content="NPC" Padding="30,2,0,2" MouseEnter="btn_MouseEnter" MouseLeave="btn_MouseLeave" Margin="-5,0,0,0"/>
+                            <Label Content="Boss" Padding="30,3,0,3" MouseEnter="btn_MouseEnter" MouseLeave="btn_MouseLeave" Margin="-5,0,0,0"/>
+                            <Label Content="Grunt" Padding="30,3,0,3" MouseEnter="btn_MouseEnter" MouseLeave="btn_MouseLeave" Margin="-5,0,0,0"/>
+                            <Label Content="NPC" Padding="30,3,0,3" MouseEnter="btn_MouseEnter" MouseLeave="btn_MouseLeave" Margin="-5,0,0,0"/>
                         </ItemsControl>
                     </Expander>
 
@@ -53,13 +68,13 @@
 
                     <Expander Header="Level" HorizontalContentAlignment="Stretch" RenderTransformOrigin="0.5,0.5" VerticalContentAlignment="Stretch" Foreground="{DynamicResource {x:Static SystemColors.ActiveCaptionTextBrushKey}}" Background="#00000000" BorderThickness="0,0,0,0" Padding="5,5,0,0" BorderBrush="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}" >
                         <ItemsControl>
-                            <Label Content="Player Spawn" Padding="30,2,0,2" MouseEnter="btn_MouseEnter" MouseLeave="btn_MouseLeave" Margin="-5,0,0,0"/>
-                            <Label Content="Regen Point" Padding="30,2,0,2" MouseEnter="btn_MouseEnter" MouseLeave="btn_MouseLeave" Margin="-5,0,0,0"/>
-                            <Label Content="Treasure Chest" Padding="30,2,0,2" MouseEnter="btn_MouseEnter" MouseLeave="btn_MouseLeave" Margin="-5,0,0,0"/>
-                            <Label Content="Door" Padding="30,2,0,2" MouseEnter="btn_MouseEnter" MouseLeave="btn_MouseLeave" Margin="-5,0,0,0"/>
-                            <Label Content="Village" Padding="30,2,0,2" MouseEnter="btn_MouseEnter" MouseLeave="btn_MouseLeave" Margin="-5,0,0,0"/>
-                            <Label Content="Level End" Padding="30,2,0,2" MouseEnter="btn_MouseEnter" MouseLeave="btn_MouseLeave" Margin="-5,0,0,0"/>
-                            <Label Content="Boundary" Padding="30,2,0,2" MouseEnter="btn_MouseEnter" MouseLeave="btn_MouseLeave" Margin="-5,0,0,0"/>
+                            <Label Content="Player Spawn" Padding="30,3,0,3" MouseEnter="btn_MouseEnter" MouseLeave="btn_MouseLeave" Margin="-5,0,0,0"/>
+                            <Label Content="Regen Point" Padding="30,3,0,3" MouseEnter="btn_MouseEnter" MouseLeave="btn_MouseLeave" Margin="-5,0,0,0"/>
+                            <Label Content="Treasure Chest" Padding="30,3,0,3" MouseEnter="btn_MouseEnter" MouseLeave="btn_MouseLeave" Margin="-5,0,0,0"/>
+                            <Label Content="Door" Padding="30,3,0,3" MouseEnter="btn_MouseEnter" MouseLeave="btn_MouseLeave" Margin="-5,0,0,0"/>
+                            <Label Content="Village" Padding="30,3,0,3" MouseEnter="btn_MouseEnter" MouseLeave="btn_MouseLeave" Margin="-5,0,0,0"/>
+                            <Label Content="Level End" Padding="30,3,0,3" MouseEnter="btn_MouseEnter" MouseLeave="btn_MouseLeave" Margin="-5,0,0,0"/>
+                            <Label Content="Boundary" Padding="30,3,0,3" MouseEnter="btn_MouseEnter" MouseLeave="btn_MouseLeave" Margin="-5,0,0,0"/>
                         </ItemsControl>
                     </Expander>
 
@@ -67,16 +82,16 @@
 
                     <Expander Header="Terrain" HorizontalContentAlignment="Stretch" RenderTransformOrigin="0.5,0.5" VerticalContentAlignment="Stretch" Foreground="{DynamicResource {x:Static SystemColors.ActiveCaptionTextBrushKey}}" Background="#00000000" BorderThickness="0,0,0,0" Padding="5,5,0,0" BorderBrush="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}" Margin="0,0,0,5" >
                         <ItemsControl>
-                            <Label Content="Normal" Padding="30,2,0,2" MouseEnter="btn_MouseEnter" MouseLeave="btn_MouseLeave" Margin="-5,0,0,0"/>
-                            <Label Content="Sand" Padding="30,2,0,2" MouseEnter="btn_MouseEnter" MouseLeave="btn_MouseLeave" Margin="-5,0,0,0"/>
-                            <Label Content="Forest" Padding="30,2,0,2" MouseEnter="btn_MouseEnter" MouseLeave="btn_MouseLeave" Margin="-5,0,0,0"/>
-                            <Label Content="Mountain" Padding="30,2,0,2" MouseEnter="btn_MouseEnter" MouseLeave="btn_MouseLeave" Margin="-5,0,0,0"/>
-                            <Label Content="River" Padding="30,2,0,2" MouseEnter="btn_MouseEnter" MouseLeave="btn_MouseLeave" Margin="-5,0,0,0"/>
-                            <Label Content="Sea" Padding="30,2,0,2" MouseEnter="btn_MouseEnter" MouseLeave="btn_MouseLeave" Margin="-5,0,0,0"/>
-                            <Label Content="Bridge" Padding="30,2,0,2" MouseEnter="btn_MouseEnter" MouseLeave="btn_MouseLeave" Margin="-5,0,0,0"/>
-                            <Label Content="Village" Padding="30,2,0,2" MouseEnter="btn_MouseEnter" MouseLeave="btn_MouseLeave" Margin="-5,0,0,0"/>
-                            <Label Content="Throne" Padding="30,2,0,2" MouseEnter="btn_MouseEnter" MouseLeave="btn_MouseLeave" Margin="-5,0,0,0"/>
-                            <Label Content="Pillar" Padding="30,2,0,2" MouseEnter="btn_MouseEnter" MouseLeave="btn_MouseLeave" Margin="-5,0,0,0"/>
+                            <Label Content="Normal" Padding="30,3,0,3" MouseEnter="btn_MouseEnter" MouseLeave="btn_MouseLeave" Margin="-5,0,0,0"/>
+                            <Label Content="Sand" Padding="30,3,0,3" MouseEnter="btn_MouseEnter" MouseLeave="btn_MouseLeave" Margin="-5,0,0,0"/>
+                            <Label Content="Forest" Padding="30,3,0,3" MouseEnter="btn_MouseEnter" MouseLeave="btn_MouseLeave" Margin="-5,0,0,0"/>
+                            <Label Content="Mountain" Padding="30,3,0,3" MouseEnter="btn_MouseEnter" MouseLeave="btn_MouseLeave" Margin="-5,0,0,0"/>
+                            <Label Content="River" Padding="30,3,0,3" MouseEnter="btn_MouseEnter" MouseLeave="btn_MouseLeave" Margin="-5,0,0,0"/>
+                            <Label Content="Sea" Padding="30,3,0,3" MouseEnter="btn_MouseEnter" MouseLeave="btn_MouseLeave" Margin="-5,0,0,0"/>
+                            <Label Content="Bridge" Padding="30,3,0,3" MouseEnter="btn_MouseEnter" MouseLeave="btn_MouseLeave" Margin="-5,0,0,0"/>
+                            <Label Content="Village" Padding="30,3,0,3" MouseEnter="btn_MouseEnter" MouseLeave="btn_MouseLeave" Margin="-5,0,0,0"/>
+                            <Label Content="Throne" Padding="30,3,0,3" MouseEnter="btn_MouseEnter" MouseLeave="btn_MouseLeave" Margin="-5,0,0,0"/>
+                            <Label Content="Pillar" Padding="30,3,0,3" MouseEnter="btn_MouseEnter" MouseLeave="btn_MouseLeave" Margin="-5,0,0,0"/>
                         </ItemsControl>
                     </Expander>
                     
@@ -87,14 +102,39 @@
 
         <GridSplitter Grid.Column="0" Grid.Row="1" HorizontalAlignment="Right" Width="3" ScrollViewer.VerticalScrollBarVisibility="Disabled" ResizeDirection="Columns" BorderThickness="0" Background="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}"/>
 
-        <DockPanel Grid.Column="1" Grid.Row="1" HorizontalAlignment="Stretch" LastChildFill="False" Margin="0" VerticalAlignment="Stretch" Grid.RowSpan="2" ScrollViewer.HorizontalScrollBarVisibility="Visible" UseLayoutRounding="False">
-        </DockPanel>
+
+        <!-- |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||| -->
+        <!-- ||||||||||||||                                                          |||||||||||||| -->
+        <!-- ||||||||||||||                        Level Column                      |||||||||||||| -->
+        <!-- ||||||||||||||                                                          |||||||||||||| -->
+        <!-- |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||| -->
+
+
+        <ListView x:Name="lst_levelGrid" Grid.Column="1" Grid.Row="1" ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Auto" BorderThickness="0" VerticalContentAlignment="Center" >
+        </ListView>
+        <!-- <DockPanel Grid.Column="1" Grid.Row="1" HorizontalAlignment="Stretch" LastChildFill="False" Margin="0" VerticalAlignment="Stretch" Grid.RowSpan="2" ScrollViewer.HorizontalScrollBarVisibility="Visible" UseLayoutRounding="False">
+        </DockPanel> -->
+
+
+        <!-- |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||| -->
+        <!-- ||||||||||||||                                                          |||||||||||||| -->
+        <!-- ||||||||||||||                      Properties Column                   |||||||||||||| -->
+        <!-- ||||||||||||||                                                          |||||||||||||| -->
+        <!-- |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||| -->
+
 
         <DockPanel Grid.Column="2" Grid.Row="1" HorizontalAlignment="Stretch" LastChildFill="False" Margin="0" VerticalAlignment="Stretch" Background="{DynamicResource {x:Static SystemColors.ControlLightBrushKey}}" >
             <Label Content="Properties" VerticalAlignment="Top" ScrollViewer.VerticalScrollBarVisibility="Disabled" DockPanel.Dock="Top" Foreground="White" Background="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}" />
         </DockPanel>
 
         <GridSplitter Grid.Column="2" Grid.Row="1" HorizontalAlignment="Left" Width="3" ScrollViewer.VerticalScrollBarVisibility="Disabled" ResizeDirection="Columns" BorderThickness="0" Background="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}" />
+
+
+        <!-- |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||| -->
+        <!-- ||||||||||||||                                                          |||||||||||||| -->
+        <!-- ||||||||||||||                         Status bar                       |||||||||||||| -->
+        <!-- ||||||||||||||                                                          |||||||||||||| -->
+        <!-- |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||| -->
 
 
         <Label Grid.ColumnSpan ="3" Grid.Row="2" x:Name="lbl_statusLabel" Height="26" Margin="0" VerticalAlignment="Bottom" BorderThickness="0,1,0,0" Background="{DynamicResource {x:Static SystemColors.ControlLightBrushKey}}" BorderBrush="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}" MinHeight="26" MaxHeight="26" Content="Label"/>
