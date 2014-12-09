@@ -27,6 +27,8 @@ namespace WaterTokenLevelEditor
         public MainWindow()
         {
             InitializeComponent();
+
+            MainWindowLoaded();
         }
 
 
@@ -71,21 +73,39 @@ namespace WaterTokenLevelEditor
 
         #endregion
 
-        private void win_mainWindow_Loaded(object sender, RoutedEventArgs e)
+        private void MainWindowLoaded()
         {
+            // Resize the grid.
+            for (int x = 0; x < 16; ++x)
+            {   
+                grd_levelGrid.ColumnDefinitions.Add (new ColumnDefinition());
+            }
+
+            for (int y = 0; y < 12; ++y)
+            {   
+                grd_levelGrid.RowDefinitions.Add (new RowDefinition());
+            }
+
             ObservableCollection<Image> collection = new ObservableCollection<Image>();
             
             for (int y = 0; y < 12; ++y)
             {
                 for (int x = 0; x < 16; ++x)
                 {
-                    collection.Add (new Image() { Source = new BitmapImage (new Uri (@"Images/alphaThing.png", UriKind.Relative)), Height = 32, Width = 32 });
+                    Image tile = new Image() { Source = new BitmapImage (new Uri (@"Images/alphaThing.png", UriKind.Relative)), Stretch = Stretch.Fill };
+                    tile.SetValue (Grid.ColumnProperty, x);
+                    tile.SetValue (Grid.RowProperty, y);
+                    collection.Add (tile);
                 }
-
             }
 
-            lst_levelGrid.ItemsSource = collection;
-            //lst_levelGrid.it
+            for (int i = 0; i < collection.Count; ++i)
+            {
+                grd_levelGrid.Children.Add (collection[i]);
+            }
+
+            grd_levelGrid.Width = 32 * 16;
+            grd_levelGrid.Height = 32 * 12;
         }
     }
 }
