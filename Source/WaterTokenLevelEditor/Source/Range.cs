@@ -10,7 +10,7 @@ namespace WaterTokenLevelEditor
     /// <summary>
     /// A simple range class which holds a minimum and maximum value.
     /// </summary>
-    public sealed class Range<T> where T : IComparable<T>
+    public sealed class Range<T> where T : struct, IComparable<T>
     {
         private T m_minimum;    //!< The minimum value of the range.
         private T m_maximum;    //!< The maximum value of the range.
@@ -23,19 +23,10 @@ namespace WaterTokenLevelEditor
         /// </summary>
         /// <param name="minimum">The minimum value of the range.</param>
         /// <param name="maximum">The maximum value of the range.</param>
-        Range (T minimum, T maximum)
+        public Range (T minimum, T maximum)
         {
-            if (minimum != null && maximum != null)
-            {
-                m_minimum = MathMin (minimum, maximum);
-                m_maximum = MathMax (minimum, maximum);
-            }
-
-            else
-            {
-                throw new ArgumentNullException ("Attempt to use the default constructor for the Range class with a null object.");
-            }
-            
+            m_minimum = MathMin (minimum, maximum);
+            m_maximum = MathMax (minimum, maximum);            
         }
 
 
@@ -43,7 +34,7 @@ namespace WaterTokenLevelEditor
         /// The default copy constructor for the Range class.
         /// </summary>
         /// <param name="copy">The object to copy from.</param>
-        Range (Range<T> copy)
+        public Range (Range<T> copy)
         {
             if (copy)
             {
@@ -81,15 +72,7 @@ namespace WaterTokenLevelEditor
             get { return m_minimum; }
             set 
             {
-                if (value != null)
-                {
-                    m_minimum = MathMin (value, m_maximum);
-                }
-
-                else
-                {
-                    throw new ArgumentNullException ("Attempt to set Range.minimum to null");
-                }
+                m_minimum = MathMin (value, m_maximum);
             }
         }
 
@@ -102,15 +85,7 @@ namespace WaterTokenLevelEditor
             get { return m_maximum; }
             set 
             {
-                if (value != null)
-                {
-                    m_maximum = MathMax (value, m_minimum);
-                }
-
-                else
-                {
-                    throw new ArgumentNullException ("Attempt to set Range.maximum to null");
-                }
+                m_maximum = MathMax (value, m_minimum);
             }
         }
 
