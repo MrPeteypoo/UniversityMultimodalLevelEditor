@@ -139,6 +139,14 @@ namespace WaterTokenLevelEditor
     }
 
 
+    public enum SupplyType
+    {
+        Healing     = 0,
+        Growth      = 1,
+        Temporary   = 2
+    }
+
+
     /// <summary>
     /// An enumeration of each available weapon rank in the game. Determines whether characters have enough skill to weild the weapon or not.
     /// </summary>
