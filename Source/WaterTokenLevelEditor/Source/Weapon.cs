@@ -68,7 +68,7 @@ namespace WaterTokenLevelEditor
         /// <summary>
         /// A simple operator overload for the "if (variable) ;" shorthand.
         /// </summary>
-        /// <param name="range">The object to check.</param>
+        /// <param name="weapon">The object to check.</param>
         /// <returns>Whether the object is a null pointer.</returns>
         public static implicit operator bool (Weapon weapon)
         {
