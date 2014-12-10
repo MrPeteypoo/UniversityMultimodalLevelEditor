@@ -32,13 +32,50 @@ namespace WaterTokenLevelEditor
         }
 
 
+        /// <summary>
+        /// Creates a test grid.
+        /// </summary>
+        private void MainWindowLoaded()
+        {
+            // Resize the grid.
+            for (int x = 0; x < 24; ++x)
+            {   
+                grd_levelGrid.ColumnDefinitions.Add (new ColumnDefinition());
+            }
+
+            ObservableCollection<Image> collection = new ObservableCollection<Image>();
+            
+            for (int y = 0; y < 12; ++y)
+            {
+                grd_levelGrid.RowDefinitions.Add (new RowDefinition());
+                for (int x = 0; x < 24; ++x)
+                {
+                    Image tile = new Image() { Source = new BitmapImage (new Uri (@"Images/alphaThing.png", UriKind.Relative)), Stretch = Stretch.Fill };
+                    tile.SetValue (Grid.ColumnProperty, x);
+                    tile.SetValue (Grid.RowProperty, y);
+                    collection.Add (tile);
+                }
+            }
+
+            for (int i = 0; i < collection.Count; ++i)
+            {
+                grd_levelGrid.Children.Add (collection[i]);
+            }
+
+            grd_levelGrid.Width = 32 * 24;
+            grd_levelGrid.Height = 32 * 12;
+
+            lbl_statusLabel.Content = "Level grid loaded...";
+        }
+
+
         #region WPF Events
 
 
         /// <summary>
         /// Colours any given control a dark gray colour with aqua text.
         /// </summary>
-        private void btn_MouseEnter (object sender, MouseEventArgs e)
+        private void Button_MouseEnter (object sender, MouseEventArgs e)
         {
             // Cast the sender to a Control so we can modify the colour.
             Control control = sender as Control;
@@ -57,7 +94,7 @@ namespace WaterTokenLevelEditor
         /// <summary>
         /// Colours any given control transparent with black text.
         /// </summary>
-        private void btn_MouseLeave (object sender, MouseEventArgs e)
+        private void Button_MouseLeave (object sender, MouseEventArgs e)
         {
             // Cast the sender to a Control so we can modify the colour.
             Control control = sender as Control;
@@ -71,41 +108,16 @@ namespace WaterTokenLevelEditor
         }
 
 
+        /// <summary>
+        /// The exit event which will close the window.
+        /// </summary>
+        private void Menu_ExitClick (object sender, RoutedEventArgs e)
+        {
+            win_mainWindow.Close();
+        }
+
+
         #endregion
 
-        private void MainWindowLoaded()
-        {
-            // Resize the grid.
-            for (int x = 0; x < 16; ++x)
-            {   
-                grd_levelGrid.ColumnDefinitions.Add (new ColumnDefinition());
-            }
-
-            for (int y = 0; y < 12; ++y)
-            {   
-                grd_levelGrid.RowDefinitions.Add (new RowDefinition());
-            }
-
-            ObservableCollection<Image> collection = new ObservableCollection<Image>();
-            
-            for (int y = 0; y < 12; ++y)
-            {
-                for (int x = 0; x < 16; ++x)
-                {
-                    Image tile = new Image() { Source = new BitmapImage (new Uri (@"Images/alphaThing.png", UriKind.Relative)), Stretch = Stretch.Fill };
-                    tile.SetValue (Grid.ColumnProperty, x);
-                    tile.SetValue (Grid.RowProperty, y);
-                    collection.Add (tile);
-                }
-            }
-
-            for (int i = 0; i < collection.Count; ++i)
-            {
-                grd_levelGrid.Children.Add (collection[i]);
-            }
-
-            grd_levelGrid.Width = 32 * 16;
-            grd_levelGrid.Height = 32 * 12;
-        }
     }
 }

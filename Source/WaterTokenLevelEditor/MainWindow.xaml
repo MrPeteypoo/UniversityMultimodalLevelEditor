@@ -12,7 +12,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="20" MaxHeight="20" MinHeight="20" />
             <RowDefinition Height="*" />
-            <RowDefinition Height="26" MaxHeight="26" MinHeight="26"/>
+            <RowDefinition Height="36" MaxHeight="36" MinHeight="36"/>
         </Grid.RowDefinitions>
 
 
@@ -27,8 +27,13 @@
 
             <MenuItem Header="_File" >
                 <MenuItem Header="_New" />
+                <Separator Padding="0" Margin="0,5"></Separator>
                 <MenuItem Header="_Load" />
+                <Separator Margin="0,5"></Separator>
                 <MenuItem Header="_Save" />
+                <MenuItem Header="_Save As" />
+                <Separator Margin="0,5"></Separator>
+                <MenuItem Header="_Exit" Click="Menu_ExitClick" />
             </MenuItem>
 
             <MenuItem Header="_Layout">
@@ -58,23 +63,23 @@
 
                     <Expander Header="Characters" HorizontalContentAlignment="Stretch" RenderTransformOrigin="0.5,0.5" VerticalContentAlignment="Stretch" Foreground="{DynamicResource {x:Static SystemColors.ActiveCaptionTextBrushKey}}" Background="#00000000" BorderThickness="0,0,0,0" Padding="5,5,0,0" BorderBrush="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}" >
                         <ItemsControl>
-                            <Label Content="Boss" Padding="30,3,0,3" MouseEnter="btn_MouseEnter" MouseLeave="btn_MouseLeave" Margin="-5,0,0,0"/>
-                            <Label Content="Grunt" Padding="30,3,0,3" MouseEnter="btn_MouseEnter" MouseLeave="btn_MouseLeave" Margin="-5,0,0,0"/>
-                            <Label Content="NPC" Padding="30,3,0,3" MouseEnter="btn_MouseEnter" MouseLeave="btn_MouseLeave" Margin="-5,0,0,0"/>
+                            <Label Content="Boss" Padding="30,3,0,3" MouseEnter="Button_MouseEnter" MouseLeave="Button_MouseLeave" Margin="-5,0,0,0"/>
+                            <Label Content="Grunt" Padding="30,3,0,3" MouseEnter="Button_MouseEnter" MouseLeave="Button_MouseLeave" Margin="-5,0,0,0"/>
+                            <Label Content="NPC" Padding="30,3,0,3" MouseEnter="Button_MouseEnter" MouseLeave="Button_MouseLeave" Margin="-5,0,0,0"/>
                         </ItemsControl>
                     </Expander>
 
                     <Separator Background="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}" Margin="0,5,0,5" Padding="0" BorderBrush="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}" BorderThickness="0" />
 
-                    <Expander Header="Level" HorizontalContentAlignment="Stretch" RenderTransformOrigin="0.5,0.5" VerticalContentAlignment="Stretch" Foreground="{DynamicResource {x:Static SystemColors.ActiveCaptionTextBrushKey}}" Background="#00000000" BorderThickness="0,0,0,0" Padding="5,5,0,0" BorderBrush="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}" >
+                    <Expander Header="Interactive" HorizontalContentAlignment="Stretch" RenderTransformOrigin="0.5,0.5" VerticalContentAlignment="Stretch" Foreground="{DynamicResource {x:Static SystemColors.ActiveCaptionTextBrushKey}}" Background="#00000000" BorderThickness="0,0,0,0" Padding="5,5,0,0" BorderBrush="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}" >
                         <ItemsControl>
-                            <Label Content="Player Spawn" Padding="30,3,0,3" MouseEnter="btn_MouseEnter" MouseLeave="btn_MouseLeave" Margin="-5,0,0,0"/>
-                            <Label Content="Regen Point" Padding="30,3,0,3" MouseEnter="btn_MouseEnter" MouseLeave="btn_MouseLeave" Margin="-5,0,0,0"/>
-                            <Label Content="Treasure Chest" Padding="30,3,0,3" MouseEnter="btn_MouseEnter" MouseLeave="btn_MouseLeave" Margin="-5,0,0,0"/>
-                            <Label Content="Door" Padding="30,3,0,3" MouseEnter="btn_MouseEnter" MouseLeave="btn_MouseLeave" Margin="-5,0,0,0"/>
-                            <Label Content="Village" Padding="30,3,0,3" MouseEnter="btn_MouseEnter" MouseLeave="btn_MouseLeave" Margin="-5,0,0,0"/>
-                            <Label Content="Level End" Padding="30,3,0,3" MouseEnter="btn_MouseEnter" MouseLeave="btn_MouseLeave" Margin="-5,0,0,0"/>
-                            <Label Content="Boundary" Padding="30,3,0,3" MouseEnter="btn_MouseEnter" MouseLeave="btn_MouseLeave" Margin="-5,0,0,0"/>
+                            <Label Content="Player Spawn" Padding="30,3,0,3" MouseEnter="Button_MouseEnter" MouseLeave="Button_MouseLeave" Margin="-5,0,0,0"/>
+                            <Label Content="Regen Point" Padding="30,3,0,3" MouseEnter="Button_MouseEnter" MouseLeave="Button_MouseLeave" Margin="-5,0,0,0"/>
+                            <Label Content="Treasure Chest" Padding="30,3,0,3" MouseEnter="Button_MouseEnter" MouseLeave="Button_MouseLeave" Margin="-5,0,0,0"/>
+                            <Label Content="Door" Padding="30,3,0,3" MouseEnter="Button_MouseEnter" MouseLeave="Button_MouseLeave" Margin="-5,0,0,0"/>
+                            <Label Content="Village" Padding="30,3,0,3" MouseEnter="Button_MouseEnter" MouseLeave="Button_MouseLeave" Margin="-5,0,0,0"/>
+                            <Label Content="Goal" Padding="30,3,0,3" MouseEnter="Button_MouseEnter" MouseLeave="Button_MouseLeave" Margin="-5,0,0,0"/>
+                            <Label Content="Boundary" Padding="30,3,0,3" MouseEnter="Button_MouseEnter" MouseLeave="Button_MouseLeave" Margin="-5,0,0,0"/>
                         </ItemsControl>
                     </Expander>
 
@@ -82,16 +87,16 @@
 
                     <Expander Header="Terrain" HorizontalContentAlignment="Stretch" RenderTransformOrigin="0.5,0.5" VerticalContentAlignment="Stretch" Foreground="{DynamicResource {x:Static SystemColors.ActiveCaptionTextBrushKey}}" Background="#00000000" BorderThickness="0,0,0,0" Padding="5,5,0,0" BorderBrush="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}" Margin="0,0,0,5" >
                         <ItemsControl>
-                            <Label Content="Normal" Padding="30,3,0,3" MouseEnter="btn_MouseEnter" MouseLeave="btn_MouseLeave" Margin="-5,0,0,0"/>
-                            <Label Content="Sand" Padding="30,3,0,3" MouseEnter="btn_MouseEnter" MouseLeave="btn_MouseLeave" Margin="-5,0,0,0"/>
-                            <Label Content="Forest" Padding="30,3,0,3" MouseEnter="btn_MouseEnter" MouseLeave="btn_MouseLeave" Margin="-5,0,0,0"/>
-                            <Label Content="Mountain" Padding="30,3,0,3" MouseEnter="btn_MouseEnter" MouseLeave="btn_MouseLeave" Margin="-5,0,0,0"/>
-                            <Label Content="River" Padding="30,3,0,3" MouseEnter="btn_MouseEnter" MouseLeave="btn_MouseLeave" Margin="-5,0,0,0"/>
-                            <Label Content="Sea" Padding="30,3,0,3" MouseEnter="btn_MouseEnter" MouseLeave="btn_MouseLeave" Margin="-5,0,0,0"/>
-                            <Label Content="Bridge" Padding="30,3,0,3" MouseEnter="btn_MouseEnter" MouseLeave="btn_MouseLeave" Margin="-5,0,0,0"/>
-                            <Label Content="Village" Padding="30,3,0,3" MouseEnter="btn_MouseEnter" MouseLeave="btn_MouseLeave" Margin="-5,0,0,0"/>
-                            <Label Content="Throne" Padding="30,3,0,3" MouseEnter="btn_MouseEnter" MouseLeave="btn_MouseLeave" Margin="-5,0,0,0"/>
-                            <Label Content="Pillar" Padding="30,3,0,3" MouseEnter="btn_MouseEnter" MouseLeave="btn_MouseLeave" Margin="-5,0,0,0"/>
+                            <Label Content="Normal" Padding="30,3,0,3" MouseEnter="Button_MouseEnter" MouseLeave="Button_MouseLeave" Margin="-5,0,0,0"/>
+                            <Label Content="Sand" Padding="30,3,0,3" MouseEnter="Button_MouseEnter" MouseLeave="Button_MouseLeave" Margin="-5,0,0,0"/>
+                            <Label Content="Forest" Padding="30,3,0,3" MouseEnter="Button_MouseEnter" MouseLeave="Button_MouseLeave" Margin="-5,0,0,0"/>
+                            <Label Content="Mountain" Padding="30,3,0,3" MouseEnter="Button_MouseEnter" MouseLeave="Button_MouseLeave" Margin="-5,0,0,0"/>
+                            <Label Content="River" Padding="30,3,0,3" MouseEnter="Button_MouseEnter" MouseLeave="Button_MouseLeave" Margin="-5,0,0,0"/>
+                            <Label Content="Sea" Padding="30,3,0,3" MouseEnter="Button_MouseEnter" MouseLeave="Button_MouseLeave" Margin="-5,0,0,0"/>
+                            <Label Content="Bridge" Padding="30,3,0,3" MouseEnter="Button_MouseEnter" MouseLeave="Button_MouseLeave" Margin="-5,0,0,0"/>
+                            <Label Content="Village" Padding="30,3,0,3" MouseEnter="Button_MouseEnter" MouseLeave="Button_MouseLeave" Margin="-5,0,0,0"/>
+                            <Label Content="Throne" Padding="30,3,0,3" MouseEnter="Button_MouseEnter" MouseLeave="Button_MouseLeave" Margin="-5,0,0,0"/>
+                            <Label Content="Pillar" Padding="30,3,0,3" MouseEnter="Button_MouseEnter" MouseLeave="Button_MouseLeave" Margin="-5,0,0,0"/>
                         </ItemsControl>
                     </Expander>
 
@@ -136,7 +141,7 @@
         <!-- |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||| -->
 
 
-        <Label Grid.ColumnSpan ="3" Grid.Row="2" x:Name="lbl_statusLabel" Height="26" Margin="0" VerticalAlignment="Bottom" BorderThickness="0,1,0,0" Background="{DynamicResource {x:Static SystemColors.ControlLightBrushKey}}" BorderBrush="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}" MinHeight="26" MaxHeight="26" Content="Label"/>
+        <Label Grid.ColumnSpan ="3" Grid.Row="2" x:Name="lbl_statusLabel" Height="36" Margin="0" VerticalAlignment="Bottom" BorderThickness="0,1,0,0" Background="{DynamicResource {x:Static SystemColors.ControlLightBrushKey}}" BorderBrush="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}" Content="Label" Padding="5,8"/>
 
     </Grid>
 </Window>
