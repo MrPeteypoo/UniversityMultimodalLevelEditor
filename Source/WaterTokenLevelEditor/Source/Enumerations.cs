@@ -7,6 +7,110 @@ using System.Threading.Tasks;
 namespace WaterTokenLevelEditor
 {
     /// <summary>
+    /// Used to specify how a character should behave in-game.
+    /// </summary>
+    public enum CharacterType
+    {
+        Boss    = 0,
+        Grunt   = 1,
+        NPC     = 2
+    }
+
+
+    /// <summary>
+    /// Used to specify what the interactive tile is actually capable of doing.
+    /// </summary>
+    public enum InteractiveType
+    {
+        PlayerSpawn = 0,
+        RegenPoint  = 1,
+        Treasure    = 2,
+        Door        = 3,
+        Village     = 4,
+        Goal        = 5,
+        Boundary    = 6
+    }
+
+
+    /// <summary>
+    /// Used to specify the type of terrain tile in place and determines who can walk on them in-game.
+    /// </summary>
+    public enum TerrainType
+    {
+        Normal      = 0,
+        Sand        = 1,
+        Forest      = 2,
+        Mountain    = 3,
+        River       = 4,
+        Sea         = 5,
+        Bridge      = 6,
+        Village     = 7,
+        Throne      = 8,
+        Pillar      = 9
+    }
+
+
+    /// <summary>
+    /// An enumeration of every class that exists in the game. This effects what the character has access to.
+    /// </summary>
+    public enum Class
+    {
+        Ranger          = 0,
+        Lord            = 1,
+        Hero            = 2,
+        Myrmidon        = 3,
+        Swordmaster     = 4,
+        Soldier         = 5,
+        Halberdier      = 6,
+        Fighter         = 7,
+        Warrior         = 8,
+        Archer          = 9,
+        Sniper          = 10,
+        Knight          = 11,
+        General         = 12,
+        SwordKnight     = 13,
+        LanceKnight     = 14,
+        AxeKnight       = 15,
+        BowKnight       = 16,
+        Paladin         = 17,
+        PegasusKnight   = 18,
+        FalconKnight    = 19,
+        Princess        = 20,
+        WyvernRider     = 21,
+        WyvernLord      = 22,
+        King            = 23,
+        Mage            = 24,
+        Sage            = 25,
+        Priest          = 26,
+        Bishop          = 27,
+        Cleric          = 28,
+        Valkyrie        = 29,
+        Thief           = 30,
+        Assassin        = 31,
+        Bandit          = 32,
+        Berserker       = 33,
+        Civilian        = 34,
+        Child           = 35
+    }
+
+    /// <summary>
+    /// An enumeration of every element in the game. This is used for character elemental affinity.
+    /// </summary>
+    public enum Element
+    {
+        Anima   = 0,
+        Dark    = 1,
+        Fire    = 2,
+        Ice     = 3,
+        Light   = 4,
+        Thunder = 5,
+        Wind    = 6,
+        Water   = 7,
+        Earth   = 8,
+        Heaven  = 9
+    }
+
+    /// <summary>
     /// Defines the type of item, useful for knowing what type to cast down to without run-time type checking.
     /// </summary>
     public enum ItemType
@@ -35,7 +139,7 @@ namespace WaterTokenLevelEditor
 
 
     /// <summary>
-    /// An enumerator of each available weapon rank in the game. Determines whether characters have enough skill to weild the weapon or not.
+    /// An enumeration of each available weapon rank in the game. Determines whether characters have enough skill to weild the weapon or not.
     /// </summary>
     public enum WeaponRank
     {
@@ -47,7 +151,4 @@ namespace WaterTokenLevelEditor
         A       = 5,
         S       = 6
     }
-
-
-    
 }
