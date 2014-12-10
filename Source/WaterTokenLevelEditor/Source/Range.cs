@@ -54,7 +54,7 @@ namespace WaterTokenLevelEditor
         /// </summary>
         /// <param name="range">The object to check.</param>
         /// <returns>Whether the object is a null pointer.</returns>
-        public implicit operator bool (Range<T> range)
+        public static implicit operator bool (Range<T> range)
         {
             return range != null;
         }
