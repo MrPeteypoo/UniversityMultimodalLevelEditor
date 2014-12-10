@@ -12,8 +12,8 @@ namespace WaterTokenLevelEditor
     /// </summary>
     public sealed enum ItemType
     {
-        Weapon = 0,
-        Supply = 1
+        Weapon  = 0,
+        Supply  = 1
     }
 
 
