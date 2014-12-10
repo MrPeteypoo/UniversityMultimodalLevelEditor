@@ -94,6 +94,7 @@ namespace WaterTokenLevelEditor
         Child           = 35
     }
 
+
     /// <summary>
     /// An enumeration of every element in the game. This is used for character elemental affinity.
     /// </summary>

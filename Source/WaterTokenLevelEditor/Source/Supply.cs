@@ -31,7 +31,7 @@ namespace WaterTokenLevelEditor
         /// <summary>
         /// The default copy constructor for the supply class. This will make a copy of all data instead of sharing pointers.
         /// </summary>
-        /// <param name="copy"></param>
+        /// <param name="copy">The object to copy data from.</param>
         public Supply (Supply copy)
         {
             m_supplyType = copy.m_supplyType;
