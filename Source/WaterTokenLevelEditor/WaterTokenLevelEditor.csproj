@@ -63,6 +63,7 @@
     <Compile Include="Source\Stats.cs" />
     <Compile Include="Source\Supply.cs" />
     <Compile Include="Source\Weapon.cs" />
+    <Compile Include="Source\WeaponRanks.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
