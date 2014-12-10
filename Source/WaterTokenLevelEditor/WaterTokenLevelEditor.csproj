@@ -57,6 +57,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Source\Enumerations.cs" />
     <Compile Include="Source\IItem.cs" />
     <Compile Include="Source\Range.cs" />
     <Compile Include="Source\Weapon.cs" />

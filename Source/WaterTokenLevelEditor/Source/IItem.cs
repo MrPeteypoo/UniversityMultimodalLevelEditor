@@ -8,16 +8,6 @@ using System.Threading.Tasks;
 namespace WaterTokenLevelEditor
 {
     /// <summary>
-    /// Defines the type of item, useful for knowing what type to cast down to without run-time type checking.
-    /// </summary>
-    public enum ItemType
-    {
-        Weapon  = 0,
-        Supply  = 1
-    }
-
-
-    /// <summary>
     /// An abtract base class for every Item class in the game, this is the interface used by weapons, supplies and accessories.
     /// </summary>
     public abstract class IItem
