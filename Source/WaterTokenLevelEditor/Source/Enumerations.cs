@@ -8,6 +8,17 @@ using System.Threading.Tasks;
 namespace WaterTokenLevelEditor
 {
     /// <summary>
+    /// An enumeration used to specify what layer a particular object is to be displayed on.
+    /// </summary>
+    public enum LayerType
+    {
+        Terrain     = 0,
+        Interactive = 1,
+        Character   = 2
+    }
+
+
+    /// <summary>
     /// Used to specify how a character should behave in-game.
     /// </summary>
     public enum CharacterType

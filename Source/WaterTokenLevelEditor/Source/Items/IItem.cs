@@ -22,6 +22,21 @@ namespace WaterTokenLevelEditor
         #endregion
 
 
+        #region Operators
+
+        /// <summary>
+        /// A simple operator overload for the "if (variable) ;" shorthand.
+        /// </summary>
+        /// <param name="iItem">The object to check.</param>
+        /// <returns>Whether the object is a null pointer.</returns>
+        public static implicit operator bool (IItem iItem)
+        {
+            return iItem != null;
+        }
+
+        #endregion
+
+
         #region Getters, setters and properties
 
         /// <summary>

@@ -20,7 +20,7 @@ namespace WaterTokenLevelEditor
         #endregion
 
 
-        #region Constructors and operators
+        #region Constructors
 
         /// <summary>
         /// The default constructor for the Supply class.
@@ -29,25 +29,26 @@ namespace WaterTokenLevelEditor
 
 
         /// <summary>
-        /// The default copy constructor for the supply class. This will make a copy of all data instead of sharing pointers.
+        /// The default copy constructor for the Supply class. This will make a copy of all data instead of sharing pointers.
         /// </summary>
         /// <param name="copy">The object to copy data from.</param>
         public Supply (Supply copy)
         {
-            m_supplyType = copy.m_supplyType;
+            if (copy)
+            {
+                m_supplyType = copy.m_supplyType;
+                m_effect = new Stats (copy.m_effect);
 
-            m_effect = new Stats (copy.m_effect);
-        }
+                m_name = copy.m_name;
+                m_uses = copy.m_uses;
+                m_worth = copy.m_worth;
+                m_weight = copy.m_weight;
+            }
 
-
-        /// <summary>
-        /// A simple operator overload for the "if (variable) ;" shorthand.
-        /// </summary>
-        /// <param name="supply">The object to check.</param>
-        /// <returns>Whether the object is a null pointer.</returns>
-        public static implicit operator bool (Supply supply)
-        {
-            return supply != null;
+            else
+            {
+                throw new ArgumentNullException ("Attempt to initialise a Supply object from a null pointer.");
+            }
         }
 
         #endregion

@@ -29,7 +29,7 @@ namespace WaterTokenLevelEditor
         #endregion
 
 
-        #region Constructors and operators
+        #region Constructors
 
         /// <summary>
         /// The default constructor for the Weapon class.
@@ -38,7 +38,7 @@ namespace WaterTokenLevelEditor
 
 
         /// <summary>
-        /// The default copy constructor for the Weapon class.
+        /// The default copy constructor for the Weapon class. All data will be copied, no pointers will be shared.
         /// </summary>
         /// <param name="weapon">The object to copy data from.</param>
         public Weapon (Weapon weapon)
@@ -56,23 +56,17 @@ namespace WaterTokenLevelEditor
                 m_range = new Range<uint> (weapon.m_range);
 
                 m_experience = weapon.m_experience;
+
+                m_name = weapon.m_name;
+                m_uses = weapon.m_uses;
+                m_worth = weapon.m_worth;
+                m_weight = weapon.m_weight;
             }
 
             else
             {
                 throw new ArgumentNullException ("Attempt to initialise a Weapon object using the copy constructor with a null pointer.");
             }
-        }
-
-
-        /// <summary>
-        /// A simple operator overload for the "if (variable) ;" shorthand.
-        /// </summary>
-        /// <param name="weapon">The object to check.</param>
-        /// <returns>Whether the object is a null pointer.</returns>
-        public static implicit operator bool (Weapon weapon)
-        {
-            return weapon != null;
         }
 
         #endregion
