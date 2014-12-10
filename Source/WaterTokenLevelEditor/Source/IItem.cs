@@ -17,7 +17,7 @@ namespace WaterTokenLevelEditor
         protected string    m_name      = "";   //!< The name of the item as it should be displayed in-game.
         protected uint      m_uses      = 1;    //!< How many times the item can be used by characters.
         protected uint      m_worth     = 2;    //!< How much the item is worth, therefore how much it can be bought and sold for.
-        protected uint      m_weight    = 0;    //!< How quickly the item can be used by characters, effects turn order.
+        protected uint      m_weight    = 0;    //!< How much the item effects a characters attack speed, if at all.
 
         #endregion
 
@@ -61,7 +61,7 @@ namespace WaterTokenLevelEditor
 
 
         /// <summary>
-        /// Gets or sets the weight of the item. This effects how quickly characters can use it in-game.
+        /// Gets or sets the weight of the item. This effects a characters attack speed.
         /// </summary>
         public uint weight
         {
