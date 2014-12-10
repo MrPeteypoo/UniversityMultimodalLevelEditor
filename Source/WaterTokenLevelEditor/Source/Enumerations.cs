@@ -139,6 +139,9 @@ namespace WaterTokenLevelEditor
     }
 
 
+    /// <summary>
+    /// The type of supply an item is, this changes the impact that the effects have.
+    /// </summary>
     public enum SupplyType
     {
         Healing     = 0,
