@@ -83,6 +83,7 @@ namespace WaterTokenLevelEditor
         /// <summary>
         /// Gets type of item the object is, useful for knowing how to cast.
         /// </summary>
+        /// <returns>ItemType.Weapon</returns>
         public override ItemType GetItemType()
         {
             return ItemType.Weapon;
