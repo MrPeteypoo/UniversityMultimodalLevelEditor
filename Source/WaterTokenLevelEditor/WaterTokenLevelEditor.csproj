@@ -60,6 +60,8 @@
     <Compile Include="Source\Enumerations.cs" />
     <Compile Include="Source\IItem.cs" />
     <Compile Include="Source\Range.cs" />
+    <Compile Include="Source\Stats.cs" />
+    <Compile Include="Source\Supply.cs" />
     <Compile Include="Source\Weapon.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
