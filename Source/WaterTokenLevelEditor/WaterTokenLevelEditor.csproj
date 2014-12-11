@@ -57,15 +57,16 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Source\Characters\Character.cs" />
-    <Compile Include="Source\TileLayer.cs" />
+    <Compile Include="Source\Tiles\Character.cs" />
+    <Compile Include="Source\Tiles\Terrain.cs" />
+    <Compile Include="Source\Tiles\TileLayer.cs" />
     <Compile Include="Source\Enumerations.cs" />
     <Compile Include="Source\Items\IItem.cs" />
     <Compile Include="Source\Range.cs" />
     <Compile Include="Source\Stats.cs" />
     <Compile Include="Source\Items\Supply.cs" />
     <Compile Include="Source\Items\Weapon.cs" />
-    <Compile Include="Source\Characters\WeaponRanks.cs" />
+    <Compile Include="Source\Tiles\WeaponRanks.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
