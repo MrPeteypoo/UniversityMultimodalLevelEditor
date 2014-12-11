@@ -58,6 +58,8 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Source\Tiles\Character.cs" />
+    <Compile Include="Source\Tiles\Interactive.cs" />
+    <Compile Include="Source\Tiles\InteractiveTiles.cs" />
     <Compile Include="Source\Tiles\Terrain.cs" />
     <Compile Include="Source\Tiles\TileLayer.cs" />
     <Compile Include="Source\Enumerations.cs" />

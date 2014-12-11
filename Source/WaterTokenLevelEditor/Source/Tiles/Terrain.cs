@@ -61,7 +61,7 @@ namespace WaterTokenLevelEditor
         /// Gets the enumeration represting the type of derived class.
         /// </summary>
         /// <returns>LayerType.Terrain.</returns>
-        public LayerType GetLayerType()
+        public sealed override LayerType GetLayerType()
         {
             return LayerType.Terrain;
         }

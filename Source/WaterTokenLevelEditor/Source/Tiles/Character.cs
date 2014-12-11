@@ -77,7 +77,7 @@ namespace WaterTokenLevelEditor
         /// Obtains the type of the children layer classes.
         /// </summary>
         /// <returns>LayerType.Character</returns>
-        public override LayerType GetLayerType()
+        public sealed override LayerType GetLayerType()
         {
             return LayerType.Character;
         }
