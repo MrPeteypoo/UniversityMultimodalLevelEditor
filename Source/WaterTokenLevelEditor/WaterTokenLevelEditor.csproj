@@ -60,6 +60,7 @@
     <Compile Include="GridSize.xaml.cs">
       <DependentUpon>GridSize.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Source\LevelGrid.cs" />
     <Compile Include="Source\Tiles\Character.cs" />
     <Compile Include="Source\Tiles\GameTile.cs" />
     <Compile Include="Source\Tiles\Interactive.cs" />
