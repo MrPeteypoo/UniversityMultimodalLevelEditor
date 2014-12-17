@@ -23,17 +23,21 @@ namespace WaterTokenLevelEditor
     public partial class MainWindow : Window
     {
         #region Implementation data
-
-        private ObservableCollection<Image[]>   m_images            = new ObservableCollection<Image[]>();  //!< The list of images which are displayed on the grid.
-        private List<GameTile>                  m_data              = new List<GameTile>();                 //!< The list of GameTile data which is saved and loaded into XML.
         
-        private uint                            m_gridWidth         = 0;                                    //!< The current width of the level grid.
-        private uint                            m_gridHeight        = 0;                                    //!< The current height of the level grid.
+        private uint                            m_gridWidth         = 10;                                   //!< The current width of the level grid.
+        private uint                            m_gridHeight        = 10;                                   //!< The current height of the level grid.
+
+        private const uint                       m_kTileSize         = 32;                                   //!< How wide and tall each displayed tile should be in the application, multiplied by the zoom factor.
 
         private bool                            m_unsavedChanges    = false;                                //!< Prompts the user to save when they risk losing data.
+        
+        private List<GameTile>                  m_data              = new List<GameTile>();                 //!< The list of GameTile data which is saved and loaded into XML.
+        private ObservableCollection<Image[]>   m_images            = new ObservableCollection<Image[]>();  //!< The list of images which are displayed on the grid.
 
         #endregion
 
+
+        #region Constructor and operators
 
         /// <summary>
         /// The entry point for the WPF application.
@@ -42,6 +46,40 @@ namespace WaterTokenLevelEditor
         {
             InitializeComponent();
         }
+
+       
+        /// <summary>
+        /// A simple operator overload for the "if (variable) ;" shorthand.
+        /// </summary>
+        /// <param name="window">The object to check.</param>
+        /// <returns>Whether the object is a null pointer.</returns>
+        public static implicit operator bool (MainWindow window)
+        {
+            return window != null;
+        }
+
+        #endregion
+
+
+        #region Grid creation and maniuplation
+
+        /// <summary>
+        /// Creates a blank level grid, discarding all current data and starting afresh.
+        /// </summary>
+        private void CreateGrid()
+        {
+            // Start by clearing data.
+            m_data.Clear();
+            m_images.Clear();
+            grd_levelGrid.ColumnDefinitions.Clear();
+            grd_levelGrid.RowDefinitions.Clear();
+            grd_levelGrid.Children.Clear();
+
+            // Now start afresh.
+
+        }
+
+        #endregion
 
 
         /// <summary>
@@ -78,8 +116,6 @@ namespace WaterTokenLevelEditor
             grd_levelGrid.Height = 32 * 12;
 
             lbl_statusLabel.Content = "Level grid loaded...";
-
-
         }
 
 
@@ -157,7 +193,19 @@ namespace WaterTokenLevelEditor
             // Check whether the user wants to change anything. Ignore the OK click if the values won't be changed.
             if (gridSize.DialogResult == true && (gridSize.gridWidth != m_gridWidth || gridSize.gridHeight != m_gridHeight))
             {
+                string message = "Resizing the grid could result in the loss of data. Are you sure you wish to continue?";
+                MessageBoxResult result = MessageBox.Show (message, "Warning", MessageBoxButton.OKCancel);
 
+                switch (result)
+                {
+                    case MessageBoxResult.OK:
+                        // TODO: Grid resizing.
+                        break;
+                    
+                    case MessageBoxResult.Cancel:
+                        // Do nothing.
+                        break; 
+                }
             }
         }
 
@@ -194,6 +242,20 @@ namespace WaterTokenLevelEditor
             {
                 control.Background = Brushes.Transparent;
                 control.Foreground = Brushes.Black;
+            }
+        }
+
+
+        /// <summary>
+        /// Handles the zooming functionality of the level grid.
+        /// </summary>
+        private void Slider_ZoomValueChanged (object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            if (grd_levelGrid.Children.Count != 0)
+            {
+                // Adjust the zoom level of the grid.
+                grd_levelGrid.Width = m_kTileSize * sdr_zoom.Value;
+                grd_levelGrid.Height = m_kTileSize * sdr_zoom.Value;
             }
         }
 

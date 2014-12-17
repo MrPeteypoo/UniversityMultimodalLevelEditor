@@ -40,10 +40,6 @@
                 <MenuItem Header="_Grid Size" Click="Menu_GridSizeClick" />
             </MenuItem>
 
-            <MenuItem Header="_Help">
-                <MenuItem Header="_About" />
-            </MenuItem>
-
         </Menu>
 
 
@@ -141,7 +137,17 @@
         <!-- |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||| -->
 
 
-        <Label Grid.ColumnSpan ="3" Grid.Row="2" x:Name="lbl_statusLabel" Height="36" Margin="0" VerticalAlignment="Bottom" BorderThickness="0,1,0,0" Background="{DynamicResource {x:Static SystemColors.ControlLightBrushKey}}" BorderBrush="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}" Content="Label" Padding="5,8"/>
+        <Label Grid.ColumnSpan ="2" Grid.Row="2" x:Name="lbl_statusLabel" Height="36" Margin="0" VerticalAlignment="Bottom" BorderThickness="0,1,0,0" Background="{DynamicResource {x:Static SystemColors.ControlLightBrushKey}}" BorderBrush="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}" Content="Label" Padding="5,8"/>
+
+        <Grid Grid.Column="2" Grid.Row="2" Background="{DynamicResource {x:Static SystemColors.ControlLightBrushKey}}" >
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="40" MinWidth="40"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <Label x:Name="lbl_zoomLabel" Height="36" Margin="0" VerticalAlignment="Bottom" BorderThickness="0,1,0,0" Padding="5,8" Content="{ Binding ElementName=sdr_zoom, Path=Value }" ContentStringFormat="{}{0}%" BorderBrush="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}" Grid.ColumnSpan="2"/>
+            <Slider x:Name="sdr_zoom" SmallChange="10" Value="100" Maximum="200" Minimum="50" LargeChange="100" IsSnapToTickEnabled="True" Grid.Column="1" Margin="0,0,10,0" ValueChanged="Slider_ZoomValueChanged" BorderBrush="{x:Null}" BorderThickness="0" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Padding="0" VerticalAlignment="Center" />
+        </Grid>
 
     </Grid>
 </Window>
