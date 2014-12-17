@@ -1,0 +1,34 @@
+﻿<Window x:Class="WaterTokenLevelEditor.GridSize"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Grid Size" Height="192" Width="300" WindowStartupLocation="CenterOwner" ResizeMode="NoResize">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="3*"/>
+            <RowDefinition Height="3*"/>
+            <RowDefinition Height="2*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition Width="2*"/>
+        </Grid.ColumnDefinitions>
+
+        
+        <Label Grid.Column="0" Grid.Row="0" Content="Width" VerticalAlignment="Center" HorizontalContentAlignment="Center" />
+        <Label Grid.Column="0" Grid.Row="1" Content="Height" VerticalAlignment="Center" HorizontalContentAlignment="Center" />
+
+
+        <Slider x:Name="sdr_width" Grid.Column="1" Grid.Row="0" Grid.ColumnSpan="3" VerticalAlignment="Center" SmallChange="1" Value="40" Maximum="100" Minimum="1" LargeChange="10" IsSnapToTickEnabled="True" />
+        <Slider x:Name="sdr_height" Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="3" VerticalAlignment="Center" SmallChange="1" Value="40" Maximum="100" Minimum="1" LargeChange="10" IsSnapToTickEnabled="True" />
+
+        <Label x:Name="lbl_width" Grid.Column="4" Grid.Row="0" Content="{ Binding ElementName=sdr_width, Path=Value }" VerticalAlignment="Center" HorizontalContentAlignment="Center" />
+        <Label x:Name="lbl_height" Grid.Column="4" Grid.Row="1" Content="{ Binding ElementName=sdr_height, Path=Value }" VerticalAlignment="Center" HorizontalContentAlignment="Center" />
+
+        <Button x:Name="btn_accept" Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="2" Content="Accept" HorizontalAlignment="Center" Margin="0"  VerticalAlignment="Center" Width="80" Click="Button_AcceptClick" />
+        <Button x:Name="btn_cancel" Grid.Column="3" Grid.Row="2" Grid.ColumnSpan="2" Content="Cancel" HorizontalAlignment="Center" Margin="0"  VerticalAlignment="Center" Width="80" Click="Button_CancelClick" />
+        
+    </Grid>
+</Window>

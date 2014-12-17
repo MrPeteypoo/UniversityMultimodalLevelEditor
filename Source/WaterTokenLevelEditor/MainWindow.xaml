@@ -26,7 +26,7 @@
         <Menu Grid.ColumnSpan ="3" Grid.Row="0" x:Name="men_mainMenu" Margin="0" BorderBrush="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}" BorderThickness="0,0,0,1" MaxHeight="20" MinHeight="20" Background="#FFF0F0F0">
 
             <MenuItem Header="_File" >
-                <MenuItem Header="_New" />
+                <MenuItem Header="_New" Click="Menu_NewClick" />
                 <Separator Padding="0" Margin="0,5"></Separator>
                 <MenuItem Header="_Load" />
                 <Separator Margin="0,5"></Separator>
@@ -37,7 +37,7 @@
             </MenuItem>
 
             <MenuItem Header="_Layout">
-                <MenuItem Header="_Grid Size" />
+                <MenuItem Header="_Grid Size" Click="Menu_GridSizeClick" />
             </MenuItem>
 
             <MenuItem Header="_Help">
@@ -61,7 +61,7 @@
             <ScrollViewer Margin="0,0,3,0" HorizontalContentAlignment="Stretch" DockPanel.Dock="Top" VerticalContentAlignment="Stretch" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
                 <ItemsControl Cursor="Hand">
 
-                    <Expander Header="Characters" HorizontalContentAlignment="Stretch" RenderTransformOrigin="0.5,0.5" VerticalContentAlignment="Stretch" Foreground="{DynamicResource {x:Static SystemColors.ActiveCaptionTextBrushKey}}" Background="#00000000" BorderThickness="0,0,0,0" Padding="5,5,0,0" BorderBrush="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}" >
+                    <Expander x:Name="exp_characters" Header="Characters" HorizontalContentAlignment="Stretch" RenderTransformOrigin="0.5,0.5" VerticalContentAlignment="Stretch" Foreground="{DynamicResource {x:Static SystemColors.ActiveCaptionTextBrushKey}}" Background="#00000000" BorderThickness="0,0,0,0" Padding="5,5,0,0" BorderBrush="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}" >
                         <ItemsControl>
                             <Label Content="Boss" Padding="30,3,0,3" MouseEnter="Button_MouseEnter" MouseLeave="Button_MouseLeave" Margin="-5,0,0,0"/>
                             <Label Content="Grunt" Padding="30,3,0,3" MouseEnter="Button_MouseEnter" MouseLeave="Button_MouseLeave" Margin="-5,0,0,0"/>
@@ -71,7 +71,7 @@
 
                     <Separator Background="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}" Margin="0,5,0,5" Padding="0" BorderBrush="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}" BorderThickness="0" />
 
-                    <Expander Header="Interactive" HorizontalContentAlignment="Stretch" RenderTransformOrigin="0.5,0.5" VerticalContentAlignment="Stretch" Foreground="{DynamicResource {x:Static SystemColors.ActiveCaptionTextBrushKey}}" Background="#00000000" BorderThickness="0,0,0,0" Padding="5,5,0,0" BorderBrush="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}" >
+                    <Expander x:Name="exp_interactive" Header="Interactive" HorizontalContentAlignment="Stretch" RenderTransformOrigin="0.5,0.5" VerticalContentAlignment="Stretch" Foreground="{DynamicResource {x:Static SystemColors.ActiveCaptionTextBrushKey}}" Background="#00000000" BorderThickness="0,0,0,0" Padding="5,5,0,0" BorderBrush="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}" >
                         <ItemsControl>
                             <Label Content="Player Spawn" Padding="30,3,0,3" MouseEnter="Button_MouseEnter" MouseLeave="Button_MouseLeave" Margin="-5,0,0,0"/>
                             <Label Content="Regen Point" Padding="30,3,0,3" MouseEnter="Button_MouseEnter" MouseLeave="Button_MouseLeave" Margin="-5,0,0,0"/>
@@ -85,7 +85,7 @@
 
                     <Separator Background="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}" Margin="0,5,0,5" Padding="0" BorderBrush="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}" BorderThickness="0" />
 
-                    <Expander Header="Terrain" HorizontalContentAlignment="Stretch" RenderTransformOrigin="0.5,0.5" VerticalContentAlignment="Stretch" Foreground="{DynamicResource {x:Static SystemColors.ActiveCaptionTextBrushKey}}" Background="#00000000" BorderThickness="0,0,0,0" Padding="5,5,0,0" BorderBrush="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}" Margin="0,0,0,5" >
+                    <Expander x:Name="exp_terrain" Header="Terrain" HorizontalContentAlignment="Stretch" RenderTransformOrigin="0.5,0.5" VerticalContentAlignment="Stretch" Foreground="{DynamicResource {x:Static SystemColors.ActiveCaptionTextBrushKey}}" Background="#00000000" BorderThickness="0,0,0,0" Padding="5,5,0,0" BorderBrush="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}" Margin="0,0,0,5" >
                         <ItemsControl>
                             <Label Content="Normal" Padding="30,3,0,3" MouseEnter="Button_MouseEnter" MouseLeave="Button_MouseLeave" Margin="-5,0,0,0"/>
                             <Label Content="Sand" Padding="30,3,0,3" MouseEnter="Button_MouseEnter" MouseLeave="Button_MouseLeave" Margin="-5,0,0,0"/>

@@ -14,6 +14,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
+
 namespace WaterTokenLevelEditor
 {
     /// <summary>
@@ -21,14 +22,25 @@ namespace WaterTokenLevelEditor
     /// </summary>
     public partial class MainWindow : Window
     {
+        #region Implementation data
+
+        private ObservableCollection<Image[]>   m_images            = new ObservableCollection<Image[]>();  //!< The list of images which are displayed on the grid.
+        private List<GameTile>                  m_data              = new List<GameTile>();                 //!< The list of GameTile data which is saved and loaded into XML.
+        
+        private uint                            m_gridWidth         = 0;                                    //!< The current width of the level grid.
+        private uint                            m_gridHeight        = 0;                                    //!< The current height of the level grid.
+
+        private bool                            m_unsavedChanges    = false;                                //!< Prompts the user to save when they risk losing data.
+
+        #endregion
+
+
         /// <summary>
         /// The entry point for the WPF application.
         /// </summary>
         public MainWindow()
         {
             InitializeComponent();
-
-            MainWindowLoaded();
         }
 
 
@@ -50,7 +62,7 @@ namespace WaterTokenLevelEditor
                 grd_levelGrid.RowDefinitions.Add (new RowDefinition());
                 for (int x = 0; x < 24; ++x)
                 {
-                    Image tile = new Image() { Source = new BitmapImage (new Uri (@"Images/alphaThing.png", UriKind.Relative)), Stretch = Stretch.Fill };
+                    Image tile = new Image() {};// Source = new BitmapImage (new Uri (@"Images/alphaThing.png", UriKind.Relative)), Stretch = Stretch.Fill };
                     tile.SetValue (Grid.ColumnProperty, x);
                     tile.SetValue (Grid.RowProperty, y);
                     collection.Add (tile);
@@ -66,10 +78,88 @@ namespace WaterTokenLevelEditor
             grd_levelGrid.Height = 32 * 12;
 
             lbl_statusLabel.Content = "Level grid loaded...";
+
+
         }
 
 
+        #region Utility functions
+
+
+
+        #endregion
+
+
         #region WPF Events
+
+        /// <summary>
+        /// The button up event called when the new button is pressed. This will cause a completely blank level to be generated.
+        /// </summary>
+        private void Menu_NewClick (object sender, RoutedEventArgs e)
+        {
+            if (m_unsavedChanges)
+            {
+                string message = "There are unsaved changes, do you wish to save them before continuing?";
+                MessageBoxResult result = MessageBox.Show (message, "Warning", MessageBoxButton.YesNoCancel);
+
+                switch (result)
+                {
+                    case MessageBoxResult.Yes:
+                        //TODO: Save
+                        break;
+                    
+                    case MessageBoxResult.No:
+                        //Input
+                        break;
+
+                    case MessageBoxResult.Cancel:
+                        break;                    
+                }
+            }
+
+            else
+            {
+
+            }
+        }
+
+
+        /// <summary>
+        /// The exit event which will close the window.
+        /// </summary>
+        private void Menu_ExitClick (object sender, RoutedEventArgs e)
+        {
+            if (m_unsavedChanges)
+            {
+
+            }
+
+            win_mainWindow.Close();
+        }
+
+
+        /// <summary>
+        /// Opens the grid-size dialog box for the user to modify the current grid.
+        /// </summary>
+        private void Menu_GridSizeClick (object sender, RoutedEventArgs e)
+        {
+            // Create the dialog box.
+            GridSize gridSize = new GridSize();
+            gridSize.Owner = this;
+
+            // Copy over the current grid values.
+            gridSize.gridWidth = m_gridWidth;
+            gridSize.gridHeight = m_gridHeight;
+
+            // Open the dialog box.
+            gridSize.ShowDialog();
+
+            // Check whether the user wants to change anything. Ignore the OK click if the values won't be changed.
+            if (gridSize.DialogResult == true && (gridSize.gridWidth != m_gridWidth || gridSize.gridHeight != m_gridHeight))
+            {
+
+            }
+        }
 
 
         /// <summary>
@@ -107,17 +197,6 @@ namespace WaterTokenLevelEditor
             }
         }
 
-
-        /// <summary>
-        /// The exit event which will close the window.
-        /// </summary>
-        private void Menu_ExitClick (object sender, RoutedEventArgs e)
-        {
-            win_mainWindow.Close();
-        }
-
-
         #endregion
-
     }
 }
