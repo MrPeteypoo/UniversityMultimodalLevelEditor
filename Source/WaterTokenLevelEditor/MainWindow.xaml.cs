@@ -23,9 +23,12 @@ namespace WaterTokenLevelEditor
     {
         #region Implementation data
         
-        private LevelGrid   m_grid              = null;     //!< The management class for the displayable grid.
+        private LevelGrid   m_grid              = null;             //!< The management class for the displayable grid.
+        
+        private Control     m_selected          = null;             //!< The currently selected UI control.
+        //private LayerType   m_selectedCategory  = LayerType.Null;   //!< The category of the selected control.
 
-        private bool        m_unsavedChanges    = false;    //!< Prompts the user to save when they risk losing data.
+        private bool        m_unsavedChanges    = false;            //!< Prompts the user to save when they risk losing data.
 
         #endregion
 
@@ -41,10 +44,12 @@ namespace WaterTokenLevelEditor
 
             // Initialise the grid system.
             m_grid = new LevelGrid (grd_levelGrid);
-            sdr_zoom.Value = sdr_zoom.Value;
             m_grid.CreateGrid();
 
-            lbl_statusLabel.Content = "Level grid loaded...";
+            // Force the zoom level to update.
+            sdr_zoom.Value = sdr_zoom.Value;
+
+            lbl_statusLabel.Content = "Application ready...";
         }
 
        
@@ -73,6 +78,8 @@ namespace WaterTokenLevelEditor
             if (gridSize)
             {
                 m_grid.CreateGrid (gridSize.gridWidth, gridSize.gridHeight);
+
+                lbl_statusLabel.Content = "Level ready for editing...";
             }
         }
 
@@ -115,7 +122,7 @@ namespace WaterTokenLevelEditor
         {
             if (m_unsavedChanges)
             {
-                string message = "There are unsaved changes, do you wish to save them before continuing?";
+                string message = "There are unsaved changes, do you wish to save before continuing?";
                 MessageBoxResult result = MessageBox.Show (message, "Warning", MessageBoxButton.YesNoCancel);
 
                 switch (result)
@@ -151,10 +158,29 @@ namespace WaterTokenLevelEditor
         {
             if (m_unsavedChanges)
             {
+                string message = "There are unsaved changes, do you wish to save before exiting?";
+                MessageBoxResult result = MessageBox.Show (message, "Warning", MessageBoxButton.YesNoCancel);
 
+                switch (result)
+                {
+                    case MessageBoxResult.Yes:
+                        //TODO: Save
+                        win_mainWindow.Close();
+                        break;
+                    
+                    case MessageBoxResult.No:
+                        win_mainWindow.Close();
+                        break;
+
+                    case MessageBoxResult.Cancel:
+                        break;                    
+                }
             }
 
-            win_mainWindow.Close();
+            else
+            {
+                win_mainWindow.Close();
+            }
         }
 
 
@@ -177,8 +203,10 @@ namespace WaterTokenLevelEditor
 
                     switch (result)
                     {
-                        case MessageBoxResult.OK:
+                        case MessageBoxResult.OK:                            
                             m_grid.ResizeGrid (gridSize.gridWidth, gridSize.gridHeight);
+                            
+                            lbl_statusLabel.Content = "Grid resized...";
                             break;
                     
                         case MessageBoxResult.Cancel:
@@ -190,6 +218,8 @@ namespace WaterTokenLevelEditor
                 else
                 {
                     m_grid.ResizeGrid (gridSize.gridWidth, gridSize.gridHeight);
+
+                    lbl_statusLabel.Content = "Grid resized...";
                 }
             }
         }
@@ -197,12 +227,12 @@ namespace WaterTokenLevelEditor
         #endregion
 
 
-        #region Button events
+        #region Label events
 
         /// <summary>
         /// Colours any given control a dark gray colour with aqua text.
         /// </summary>
-        private void Button_MouseEnter (object sender, MouseEventArgs e)
+        private void Label_MouseEnter (object sender, MouseEventArgs e)
         {
             // Cast the sender to a Control so we can modify the colour.
             Control control = sender as Control;
@@ -221,17 +251,40 @@ namespace WaterTokenLevelEditor
         /// <summary>
         /// Colours any given control transparent with black text.
         /// </summary>
-        private void Button_MouseLeave (object sender, MouseEventArgs e)
+        private void Label_MouseLeave (object sender, MouseEventArgs e)
         {
             // Cast the sender to a Control so we can modify the colour.
             Control control = sender as Control;
 
             // Check whether the sender was indeed a Control.
-            if (control != null)
+            if (control != null && control != m_selected)
             {
                 control.Background = Brushes.Transparent;
                 control.Foreground = Brushes.Black;
             }
+        }
+
+
+        /// <summary>
+        /// Handles the selection and deselection of the labels. Maintains the currently selected object.
+        /// </summary>
+        private void Label_MouseDoubleClick (object sender, MouseButtonEventArgs e)
+        {
+            // Attempt to cast the label.
+            Label label = sender as Label;
+            Label current = m_selected as Label;
+            
+            // Selection
+            if (label != current)
+            {
+                m_selected = label;
+            }
+
+            // Deselection
+            else
+            {
+                m_selected = null;
+            }            
         }
 
         #endregion

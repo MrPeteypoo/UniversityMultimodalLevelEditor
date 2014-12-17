@@ -29,7 +29,7 @@ namespace WaterTokenLevelEditor
             InitializeComponent();
         }
 
-       
+        
         /// <summary>
         /// A simple operator overload for the "if (variable) ;" shorthand.
         /// </summary>
