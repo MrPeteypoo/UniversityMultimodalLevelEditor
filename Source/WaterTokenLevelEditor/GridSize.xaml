@@ -20,7 +20,6 @@
         <Label Grid.Column="0" Grid.Row="0" Content="Width" VerticalAlignment="Center" HorizontalContentAlignment="Center" />
         <Label Grid.Column="0" Grid.Row="1" Content="Height" VerticalAlignment="Center" HorizontalContentAlignment="Center" />
 
-
         <Slider x:Name="sdr_width" Grid.Column="1" Grid.Row="0" Grid.ColumnSpan="3" VerticalAlignment="Center" SmallChange="1" Value="20" Maximum="50" Minimum="1" LargeChange="5" IsSnapToTickEnabled="True" />
         <Slider x:Name="sdr_height" Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="3" VerticalAlignment="Center" SmallChange="1" Value="20" Maximum="50" Minimum="1" LargeChange="5" IsSnapToTickEnabled="True" />
 
