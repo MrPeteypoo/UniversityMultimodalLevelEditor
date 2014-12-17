@@ -63,12 +63,50 @@ namespace WaterTokenLevelEditor
 
         #region Utility functions
 
+        /// <summary>
+        /// Clears the current level grid and makes the editor appear as new for the user.
+        /// </summary>
+        /// <param name="gridSize">The GridSize object with the data required. Null values are silently ignored and nothing will happen.</param>
+        private void CreateNewLevel (GridSize gridSize)
+        {
+            // Ensure we actually need to create a new level.
+            if (gridSize)
+            {
+                m_grid.CreateGrid (gridSize.gridWidth, gridSize.gridHeight);
+            }
+        }
 
+
+        /// <summary>
+        /// Opens a Grid Size window, waits for the user to choose a size and returns the object if they do. Null will be returned if no changes are required.
+        /// </summary>
+        private GridSize ProcessGridSize()
+        {
+            // Create the dialog box.
+            GridSize gridSize = new GridSize();
+            gridSize.Owner = this;
+
+            // Copy over the current grid values.
+            gridSize.gridWidth = m_grid.width;
+            gridSize.gridHeight = m_grid.height;
+
+            // Open the dialog box.
+            gridSize.ShowDialog();
+
+            // Check whether the user wants to change anything.
+            if (gridSize.DialogResult == true)
+            {
+                return gridSize;
+            }
+
+            // No changes required? Just return null.
+            return null;
+        }
 
         #endregion
 
 
-        #region WPF events
+        #region Menu events
 
         /// <summary>
         /// The button up event called when the new button is pressed. This will cause a completely blank level to be generated.
@@ -84,10 +122,13 @@ namespace WaterTokenLevelEditor
                 {
                     case MessageBoxResult.Yes:
                         //TODO: Save
+                        // Just pass in the returned value in case the user decides to cancel their action.
+                        CreateNewLevel (ProcessGridSize());
                         break;
                     
                     case MessageBoxResult.No:
-                        //Input
+                        // Just pass in the returned value in case the user decides to cancel their action.
+                        CreateNewLevel (ProcessGridSize());
                         break;
 
                     case MessageBoxResult.Cancel:
@@ -97,7 +138,8 @@ namespace WaterTokenLevelEditor
 
             else
             {
-
+                // Just pass in the returned value in case the user decides to cancel their action.
+                CreateNewLevel (ProcessGridSize());
             }
         }
 
@@ -121,36 +163,41 @@ namespace WaterTokenLevelEditor
         /// </summary>
         private void Menu_GridSizeClick (object sender, RoutedEventArgs e)
         {
-            // Create the dialog box.
-            GridSize gridSize = new GridSize();
-            gridSize.Owner = this;
-
-            // Copy over the current grid values.
-            gridSize.gridWidth = m_grid.width;
-            gridSize.gridHeight = m_grid.height;
-
-            // Open the dialog box.
-            gridSize.ShowDialog();
-
-            // Check whether the user wants to change anything. Ignore the OK click if the values won't be changed.
-            if (gridSize.DialogResult == true && (gridSize.gridWidth != m_grid.width || gridSize.gridHeight != m_grid.height))
+            // Run through the Grid Size menu.
+            GridSize gridSize = ProcessGridSize();
+            
+            // Check whether any changes are required.
+            if (gridSize && (gridSize.gridWidth != m_grid.width || gridSize.gridHeight != m_grid.height))
             {
-                string message = "Resizing the grid could result in the loss of data. Are you sure you wish to continue?";
-                MessageBoxResult result = MessageBox.Show (message, "Warning", MessageBoxButton.OKCancel);
-
-                switch (result)
+                // Output a warning message if data will be lost.
+                if (gridSize.gridWidth < m_grid.width || gridSize.gridHeight < m_grid.height)
                 {
-                    case MessageBoxResult.OK:
-                        // TODO: Grid resizing.
-                        break;
+                    string message = "Resizing the grid will result in the loss of some data. Are you sure you wish to continue?";
+                    MessageBoxResult result = MessageBox.Show (message, "Warning", MessageBoxButton.OKCancel);
+
+                    switch (result)
+                    {
+                        case MessageBoxResult.OK:
+                            m_grid.ResizeGrid (gridSize.gridWidth, gridSize.gridHeight);
+                            break;
                     
-                    case MessageBoxResult.Cancel:
-                        // Do nothing.
-                        break; 
+                        case MessageBoxResult.Cancel:
+                            // Do nothing.
+                            break; 
+                    }
+                }
+                
+                else
+                {
+                    m_grid.ResizeGrid (gridSize.gridWidth, gridSize.gridHeight);
                 }
             }
         }
 
+        #endregion
+
+
+        #region Button events
 
         /// <summary>
         /// Colours any given control a dark gray colour with aqua text.
@@ -187,6 +234,10 @@ namespace WaterTokenLevelEditor
             }
         }
 
+        #endregion
+
+
+        #region Misc events
 
         /// <summary>
         /// Handles the zooming functionality of the level grid.

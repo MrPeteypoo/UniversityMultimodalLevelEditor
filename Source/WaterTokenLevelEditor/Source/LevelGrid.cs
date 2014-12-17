@@ -230,7 +230,7 @@ namespace WaterTokenLevelEditor
                 ResetToZero();
             }
 
-            else
+            else if (newWidth != m_width || newHeight != m_height)
             {
                 // Start by preparing the grid.
                 m_grid.Children.Clear();
@@ -297,10 +297,6 @@ namespace WaterTokenLevelEditor
 
         private void FillResizedGrid (uint newWidth, uint newHeight)
         {
-            // Determine the maximum values to use when translating data, useful for avoiding out-of-range exceptions.
-            uint maxWidth = Math.Min (m_width, newWidth);
-            uint maxHeight = Math.Min (m_height, newHeight);
-
             // Create the new containers.
             List<GameTile> newData = new List<GameTile>();
             ObservableCollection<Image[]> newImages = new ObservableCollection<Image[]>();
@@ -347,8 +343,8 @@ namespace WaterTokenLevelEditor
                         }
 
                         // Add the game data.
-                        m_data.Add (new GameTile());
-                        m_images.Add (layers);
+                        newData.Add (new GameTile());
+                        newImages.Add (layers);
                     }
                 }
             }
