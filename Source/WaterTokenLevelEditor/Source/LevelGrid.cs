@@ -1,7 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Data;
+using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Windows.Shapes;
 
 
 namespace WaterTokenLevelEditor
@@ -14,18 +20,20 @@ namespace WaterTokenLevelEditor
 
         #region Implementation data
         
-        private const uint                      tileSize    = 32;                                   //!< How wide and tall each displayed tile should be in the application, multiplied by the zoom factor.
+        private const uint                      tileSize        = 32;                                       //!< How wide and tall each displayed tile should be in the application, multiplied by the zoom factor.
         
-        private uint                            m_width     = 10;                                   //!< How many tiles wide the level grid is.
-        private uint                            m_height    = 10;                                   //!< How many tiles tall the level grid is.
-        private uint                            m_tileCount = 100;                                  //!< The total tile count.
+        private uint                            m_width         = 10;                                       //!< How many tiles wide the level grid is.
+        private uint                            m_height        = 10;                                       //!< How many tiles tall the level grid is.
+        private uint                            m_tileCount     = 100;                                      //!< The total tile count.
 
-        private double                          m_zoomLevel = 1.0;                                  //!< Is used to control the width and height value of the level grid.
+        private double                          m_zoomLevel     = 1.0;                                      //!< Is used to control the width and height value of the level grid.
 
-        private Grid                            m_grid      = null;                                 //!< A pointer to the Grid control which is displayed to the user.
+        private Grid                            m_grid          = null;                                     //!< A pointer to the Grid control which is displayed to the user.
+        private MouseButtonEventHandler         m_leftMouse     = null;                                     //!< The event handler for the left mouse-down event.
+        private MouseButtonEventHandler         m_rightMouse    = null;                                     //!< The event handler for the right mouse-down event.
         
-        private List<GameTile>                  m_data      = new List<GameTile>();                 //!< The list of GameTile data which is saved and loaded into XML.
-        private ObservableCollection<Image[]>   m_images    = new ObservableCollection<Image[]>();  //!< The list of images which are displayed on the grid.
+        private List<GameTile>                  m_data          = new List<GameTile>();                     //!< The list of GameTile data which is saved and loaded into XML.
+        private List<Tuple<Rectangle, Image[]>> m_images        = new List<Tuple<Rectangle, Image[]>>();    //!< The list of images which are displayed on the grid. A rectangle is used to handle mouse events in case the image has dimensions of 0 x 0.
 
         #endregion
 
@@ -36,16 +44,18 @@ namespace WaterTokenLevelEditor
         /// The default constructor for the LevelGrid class. LevelGrid required a Grid object so that it may perform itss functionality.
         /// </summary>
         /// <param name="grid">The Grid object to manipulate.</param>
-        public LevelGrid (Grid grid)
+        public LevelGrid (Grid grid, MouseButtonEventHandler leftMouse, MouseButtonEventHandler rightMouse)
         {
-            if (grid != null)
+            if (grid != null && leftMouse != null && rightMouse != null)
             {
                 m_grid = grid;
+                m_leftMouse = leftMouse;
+                m_rightMouse = rightMouse;
             }
 
             else
             {
-                throw new ArgumentNullException ("Attempt to initialise a LevelGrid with a null Grid argument.");
+                throw new ArgumentNullException ("Attempt to initialise a LevelGrid with a null argument.");
             }
         }
 
@@ -187,26 +197,16 @@ namespace WaterTokenLevelEditor
         {
             if (m_tileCount != 0)
             {   
+                m_data.Capacity = (int) (m_width * m_height);
+                m_images.Capacity = (int) (m_width * m_height);
+
                 for (uint y = 0; y < m_height; ++y)
                 {
                     for (uint x = 0; x < m_width; ++x)
                     {
-                        // We need three images, one for each layer.
-                        Image[] layers = { new Image() {}, new Image() {}, new Image() {} };
-
-                        // Initialise each layer.
-                        for (int i = 0; i < layers.Length; ++i)
-                        {
-                            layers[i].SetValue (Grid.ColumnProperty, (int) x);
-                            layers[i].SetValue (Grid.RowProperty, (int) y);
-                            layers[i].SetValue (Grid.ZIndexProperty, i);
-
-                            m_grid.Children.Add (layers[i]);
-                        }
-
-                        // Add the game data.
+                        // Fill the containers with blank data!
                         m_data.Add (new GameTile());
-                        m_images.Add (layers);
+                        m_images.Add (CreateBlankTile ((int) x, (int) y));
                     }
                 }
             }
@@ -298,8 +298,12 @@ namespace WaterTokenLevelEditor
         private void FillResizedGrid (uint newWidth, uint newHeight)
         {
             // Create the new containers.
-            List<GameTile> newData = new List<GameTile>();
-            ObservableCollection<Image[]> newImages = new ObservableCollection<Image[]>();
+            List<GameTile>                  newData = new List<GameTile>();
+            List<Tuple<Rectangle, Image[]>> newImages = new List<Tuple<Rectangle, Image[]>>();
+            
+            newData.Capacity = (int) (newWidth * newHeight);
+            newImages.Capacity = (int) (newWidth * newHeight);
+
 
             // Move the data.
             for (uint y = 0; y < newHeight; ++y)
@@ -312,39 +316,27 @@ namespace WaterTokenLevelEditor
                         // Calculate where the data should be moved to.
                         int offset = (int) (x + y * m_width);
 
-                        // Move the GameTile data.
-                        newData.Add (m_data[offset]);
-
                         // Move the images data and add it to the grid again.
-                        Image[] images = m_images[offset];
+                        Tuple<Rectangle, Image[]> tile = m_images[offset];
 
-                        foreach (Image image in images)
+                        m_grid.Children.Add (tile.Item1);
+
+                        foreach (Image image in tile.Item2)
                         {
                             m_grid.Children.Add (image);
                         }
+                        
 
+                        // Move the data.
+                        newData.Add (m_data[offset]);
                         newImages.Add (m_images[offset]);
                     }
 
                     // Otherwise create blank data.
                     else
                     {
-                        // We need three images, one for each layer.
-                        Image[] layers = { new Image() {}, new Image() {}, new Image() {} };
-
-                        // Initialise each layer.
-                        for (int i = 0; i < layers.Length; ++i)
-                        {
-                            layers[i].SetValue (Grid.ColumnProperty, (int) x);
-                            layers[i].SetValue (Grid.RowProperty, (int) y);
-                            layers[i].SetValue (Grid.ZIndexProperty, i);
-
-                            m_grid.Children.Add (layers[i]);
-                        }
-
-                        // Add the game data.
                         newData.Add (new GameTile());
-                        newImages.Add (layers);
+                        newImages.Add (CreateBlankTile ((int) x, (int) y));
                     }
                 }
             }
@@ -357,6 +349,54 @@ namespace WaterTokenLevelEditor
 
 
         #region Utility functions
+
+        /// <summary>
+        /// Constructs a new array of Images which act as a layer in the level grid.
+        /// </summary>
+        /// <param name="column">The column where the layer should exist.</param>
+        /// <param name="row">The row where the layer should exist.</param>
+        /// <returns>A tuple of a clickable rectangle and the image layers.</returns>
+        private Tuple<Rectangle, Image[]> CreateBlankTile (int column, int row)
+        {
+            // We need three images, one for each layer. The rectangle provides the clickable area for events.
+            Tuple<Rectangle, Image[]> tile = new Tuple<Rectangle, Image[]>
+            (
+                new Rectangle () { Fill = Brushes.Black, VerticalAlignment = VerticalAlignment.Stretch, HorizontalAlignment = HorizontalAlignment.Stretch },
+                new Image[3] 
+                { 
+                    new Image() { Stretch = Stretch.Fill },
+                    new Image() { Stretch = Stretch.Fill },
+                    new Image() { Stretch = Stretch.Fill }
+                }
+            );
+
+            // Place the rectangle in the right area.
+            tile.Item1.SetValue (Grid.ColumnProperty, column);
+            tile.Item1.SetValue (Grid.RowProperty, row);
+            tile.Item1.SetValue (Grid.ZIndexProperty, -1);
+
+            m_grid.Children.Add (tile.Item1);
+
+            Image[] layers = tile.Item2;
+
+            // Initialise each layer.
+            for (int i = 0; i < layers.Length; ++i)
+            {
+                // Position the images correctly.
+                layers[i].SetValue (Grid.ColumnProperty, column);
+                layers[i].SetValue (Grid.RowProperty, row);
+                layers[i].SetValue (Grid.ZIndexProperty, i);
+                
+                m_grid.Children.Add (layers[i]);
+            }
+
+            // Ensure the top-most layer is the only one to handle the event.
+            tile.Item1.MouseLeftButtonDown += m_leftMouse;
+            tile.Item1.MouseRightButtonDown += m_rightMouse;
+            
+            return tile;
+        }
+
 
         /// <summary>
         /// Hopefully a function that will never be used, will set the width and height to zero as well as clearing all data.

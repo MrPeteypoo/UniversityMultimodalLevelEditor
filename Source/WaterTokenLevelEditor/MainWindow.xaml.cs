@@ -43,13 +43,14 @@ namespace WaterTokenLevelEditor
             InitializeComponent();
 
             // Initialise the grid system.
-            m_grid = new LevelGrid (grd_levelGrid);
+            m_grid = new LevelGrid (grd_levelGrid, Image_MouseLeftButtonDown, Image_MouseRightButtonDown);
             m_grid.CreateGrid();
 
             // Force the zoom level to update.
             sdr_zoom.Value = sdr_zoom.Value;
 
             lbl_statusLabel.Content = "Application ready...";
+            lbl_statusLabel.Content = grd_levelGrid.ColumnDefinitions[0].ActualWidth;
         }
 
        
@@ -288,6 +289,17 @@ namespace WaterTokenLevelEditor
         }
 
         #endregion
+
+        private void Image_MouseLeftButtonDown (object sender, MouseButtonEventArgs e)
+        {
+
+        }
+
+
+        private void Image_MouseRightButtonDown (object sender, MouseButtonEventArgs e)
+        {
+
+        }
 
 
         #region Misc events
