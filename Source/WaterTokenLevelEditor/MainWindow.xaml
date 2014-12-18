@@ -6,7 +6,7 @@
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="120" MinWidth="120"/>
             <ColumnDefinition Width="*" MinWidth="120" />
-            <ColumnDefinition Width="120" MinWidth="120"/>
+            <ColumnDefinition Width="150" MinWidth="150"/>
         </Grid.ColumnDefinitions>
 
         <Grid.RowDefinitions>
@@ -125,6 +125,28 @@
 
         <DockPanel x:Name="dck_properties" Grid.Column="2" Grid.Row="1" LastChildFill="False" Margin="0" VerticalAlignment="Stretch" Background="{DynamicResource {x:Static SystemColors.ControlLightBrushKey}}" Panel.ZIndex="1" >
             <Label Content="Properties" VerticalAlignment="Top" ScrollViewer.VerticalScrollBarVisibility="Disabled" DockPanel.Dock="Top" Foreground="White" Background="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}"/>
+
+            <Expander x:Name="exp_charProp" Header="Characters" HorizontalContentAlignment="Stretch" RenderTransformOrigin="0.5,0.5" VerticalContentAlignment="Stretch" Foreground="{DynamicResource {x:Static SystemColors.ActiveCaptionTextBrushKey}}" Background="#00000000" BorderThickness="0,0,0,0" Padding="5,5,0,0" BorderBrush="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}" Margin="0,0,0,5" Tag="2" DockPanel.Dock="Top" >
+                <ItemsControl HorizontalContentAlignment="Stretch" VerticalContentAlignment="Center">
+
+                    <DockPanel Margin="25,0,0,5" LastChildFill="True">
+                        <Label Content="Sprite" Padding="0" Margin="0" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                        <TextBox DockPanel.Dock="Top" Margin="9,0,10,0" ToolTip="Enter the relative file location here. If it's valid then the sprite will be displayed on the level grid." TextChanged="TextBox_SpriteBox" Tag="2"/>
+                    </DockPanel>
+                    
+                    <DockPanel Margin="25,0,0,0" LastChildFill="True">
+                        <Label Content="Type" Padding="0" Margin="0" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                        <ComboBox x:Name="cmb_charType" Margin="15,0,10,0" VerticalAlignment="Center" SelectedIndex="0" VerticalContentAlignment="Center" DockPanel.Dock="Top">
+                            <ComboBoxItem Content="Boss"/>
+                            <ComboBoxItem Content="Grunt"/>
+                            <ComboBoxItem Content="NPC"/>
+                        </ComboBox>
+                    </DockPanel>
+
+                    
+
+                </ItemsControl>
+            </Expander>
         </DockPanel>
 
         <GridSplitter Grid.Column="2" Grid.Row="1" HorizontalAlignment="Left" Width="3" ScrollViewer.VerticalScrollBarVisibility="Disabled" ResizeDirection="Columns" BorderThickness="0" Background="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}" Panel.ZIndex="1" />

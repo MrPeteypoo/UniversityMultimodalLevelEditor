@@ -73,7 +73,30 @@ namespace WaterTokenLevelEditor
         #endregion
 
 
-        #region Properties
+        #region Getters, setters and properties
+
+        /// <summary>
+        /// Gets the GameTile corresponding to a particular tile. This gives access to the actual tile data which will be written to a file.
+        /// </summary>
+        /// <param name="tile">The tile to obtain.</param>
+        /// <returns>The GameTile object, null if the tile does not exist.</returns>
+        public GameTile GetGameTile (int tile)
+        {
+            return IsValid (tile) ? m_data[tile] : null;
+        }
+
+
+        /// <summary>
+        /// Gets the desired Image object which corresponds to a particular layer. This is what is displayed on the level grid.
+        /// </summary>
+        /// <param name="tile">The tile to obtain.</param>
+        /// <param name="layer">The image layer to obtain.</param>
+        /// <returns>The Image object, null if the tile does not exist.</returns>
+        public Image GetImageLayer (int tile, LayerType layer)
+        {
+            return IsValid (tile) ? m_images[tile].Item2[(int) layer] : null;
+        }
+
         
         /// <summary>
         /// Gets the how wide the level grid is in number of tiles.
@@ -114,6 +137,15 @@ namespace WaterTokenLevelEditor
             }
         }
 
+
+        /// <summary>
+        /// Gets the total number of tiles on the current level grid.
+        /// </summary>
+        public uint tileCount
+        {
+            get { return m_tileCount; }
+        }
+        
         #endregion
 
 
@@ -349,6 +381,17 @@ namespace WaterTokenLevelEditor
 
 
         #region Utility functions
+        
+        /// <summary>
+        /// Tests whether the input is valid and won't cause range-errors.
+        /// </summary>
+        /// <param name="tile">The tile value to check.</param>
+        /// <returns>The validity of the tile value.</returns>
+        private bool IsValid (int tile)
+        {
+            return tile >= 0 && tile < tileCount;
+        }
+
 
         /// <summary>
         /// Constructs a new array of Images which act as a layer in the level grid.

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -25,7 +26,8 @@ namespace WaterTokenLevelEditor
         
         private LevelGrid   m_grid              = null;             //!< The management class for the displayable grid.
         
-        private Control     m_selected          = null;             //!< The currently selected UI control.
+        private Control     m_selectedControl   = null;             //!< The currently selected UI control.
+        private int         m_selectedTile      = 0;               //!< The currently selected grid tile.
         //private LayerType   m_selectedCategory  = LayerType.Null;   //!< The category of the selected control.
 
         private bool        m_unsavedChanges    = false;            //!< Prompts the user to save when they risk losing data.
@@ -50,7 +52,6 @@ namespace WaterTokenLevelEditor
             sdr_zoom.Value = sdr_zoom.Value;
 
             lbl_statusLabel.Content = "Application ready...";
-            lbl_statusLabel.Content = grd_levelGrid.ColumnDefinitions[0].ActualWidth;
         }
 
        
@@ -228,7 +229,7 @@ namespace WaterTokenLevelEditor
         #endregion
 
 
-        #region Label events
+        #region GameObject events
 
         /// <summary>
         /// Colours any given control a dark gray colour with aqua text.
@@ -258,7 +259,7 @@ namespace WaterTokenLevelEditor
             Control control = sender as Control;
 
             // Check whether the sender was indeed a Control.
-            if (control != null && control != m_selected)
+            if (control != null && control != m_selectedControl)
             {
                 control.Background = Brushes.Transparent;
                 control.Foreground = Brushes.Black;
@@ -273,22 +274,20 @@ namespace WaterTokenLevelEditor
         {
             // Attempt to cast the label.
             Label label = sender as Label;
-            Label current = m_selected as Label;
+            Label current = m_selectedControl as Label;
             
             // Selection
             if (label != current)
             {
-                m_selected = label;
+                m_selectedControl = label;
             }
 
             // Deselection
             else
             {
-                m_selected = null;
+                m_selectedControl = null;
             }            
         }
-
-        #endregion
 
         private void Image_MouseLeftButtonDown (object sender, MouseButtonEventArgs e)
         {
@@ -300,6 +299,60 @@ namespace WaterTokenLevelEditor
         {
 
         }
+
+        #endregion
+                
+        
+        #region Properties panel
+
+        /// <summary>
+        /// Manages the displaying of sprites in the level grid as well as setting sprite variable of each tile.
+        /// </summary>
+        private void TextBox_SpriteBox (object sender, TextChangedEventArgs e)
+        {
+            // If any exceptions are thrown then the given location is not valid for the editor.
+            try
+            {
+                TextBox textBox = sender as TextBox;
+
+                // Ensure text is valid.
+                string text = textBox.Text.Trim();                
+                textBox.Text = text;
+
+                // Obtain the required data.
+                LayerType layer = (LayerType) Convert.ToInt32 (textBox.Tag);
+                Image sprite = m_grid.GetImageLayer (m_selectedTile, layer);
+                TileLayer data = m_grid.GetGameTile (m_selectedTile).GetLayer (layer);
+
+                // Attempt to set the correct values.
+                if (File.Exists (System.AppDomain.CurrentDomain.BaseDirectory + text))
+                {                   
+                    sprite.Source = new BitmapImage (new Uri (@text, UriKind.RelativeOrAbsolute));
+                    
+                    if (data)
+                    {
+                        data.sprite = text;
+                    }                    
+                }
+
+                else
+                {
+                    sprite.Source = null;
+
+                    if (data)
+                    {
+                        data.sprite = "";
+                    }
+                }
+            }
+
+            catch (Exception error)
+            {
+                lbl_statusLabel.Content = "Unable to load sprite: " + error.Message;
+            }
+        }
+
+        #endregion
 
 
         #region Misc events
@@ -317,5 +370,8 @@ namespace WaterTokenLevelEditor
         }
 
         #endregion
+
+
+
     }
 }

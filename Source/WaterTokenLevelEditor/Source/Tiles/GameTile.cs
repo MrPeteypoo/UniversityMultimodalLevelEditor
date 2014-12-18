@@ -38,6 +38,25 @@ namespace WaterTokenLevelEditor
 
         #region Getters, setters and properties
 
+        public TileLayer GetLayer (LayerType layer)
+        {
+            switch (layer)
+            {
+                case LayerType.Terrain:
+                    return m_terrain;
+
+                case LayerType.Interactive:
+                    return m_interactive;
+
+                case LayerType.Character:
+                    return m_character;
+
+                default:
+                    throw new ArgumentException ("Attempt to obtain a tile on layer \"" + layer + "\", this is not handled by GameTile.GetLayer().");
+            }
+        }
+
+
         /// <summary>
         /// Gets or sets the terrain tile, this can never be null and any attempt to set to null will throw an ArgumentNullException.
         /// </summary>
