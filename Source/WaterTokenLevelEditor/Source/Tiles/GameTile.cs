@@ -38,6 +38,11 @@ namespace WaterTokenLevelEditor
 
         #region Getters, setters and properties
 
+        /// <summary>
+        /// Gets the TileLayer associated with the given LayerType. This can return null if the layer does not exist.
+        /// </summary>
+        /// <param name="layer">The layer to return.</param>
+        /// <returns>The desired layer, null if it does not exist.</returns>
         public TileLayer GetLayer (LayerType layer)
         {
             switch (layer)

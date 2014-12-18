@@ -229,7 +229,7 @@ namespace WaterTokenLevelEditor
         #endregion
 
 
-        #region GameObject events
+        #region GameObject placement events
 
         /// <summary>
         /// Colours any given control a dark gray colour with aqua text.
@@ -279,7 +279,9 @@ namespace WaterTokenLevelEditor
             // Selection
             if (label != current)
             {
+                // Assign the new control and deselect the previous.
                 m_selectedControl = label;
+                Label_MouseLeave (current, null);
             }
 
             // Deselection
