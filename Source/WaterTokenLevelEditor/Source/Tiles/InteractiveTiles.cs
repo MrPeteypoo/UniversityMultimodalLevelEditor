@@ -4,7 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-
+/*
+ * This was going to be how the interactive tile system worked, time said no. * 
+ * 
 namespace WaterTokenLevelEditor
 {
     /// <summary>
@@ -295,3 +297,4 @@ namespace WaterTokenLevelEditor
         }
     }
 }
+*/
