@@ -131,6 +131,37 @@ namespace WaterTokenLevelEditor
             return element;
         }
 
+
+        /// <summary>
+        /// Creates a GameTile object from an XElement node.
+        /// </summary>
+        /// <param name="element">The XML of the object.</param>
+        /// <returns>The duplicated tile.</returns>
+        public static GameTile FromXElement (XElement element)
+        {
+            // Terrain tiles are guaranteed.
+            GameTile tile = new GameTile();
+            tile.terrain = Terrain.FromXElement (element.Element ("Terrain"));
+
+            // We need to actually check for interactive tiles.
+            XElement optional = element.Element ("Interactive");
+
+            if (optional != null)
+            {
+                tile.interactive = Interactive.FromXElement (optional);
+            }
+
+            // Same with character tiles.
+            optional = element.Element ("Character");
+
+            if (optional != null)
+            {
+                tile.character = Character.FromXElement (optional);
+            }
+
+            return tile;
+        }
+
         #endregion
 
     }

@@ -91,7 +91,7 @@ namespace WaterTokenLevelEditor
         /// Converts the data stored within the object into XML.
         /// </summary>
         /// <returns>An XML version of the object.</returns>
-        public override XElement ToXElement()
+        public sealed override XElement ToXElement()
         {
             XElement element = new XElement ("Interactive");
 
@@ -100,6 +100,26 @@ namespace WaterTokenLevelEditor
                             new XAttribute ("Effect", m_effect));
 
             return element;
+        }
+
+
+        /// <summary>
+        /// Creates an Interactive object from an XElement node.
+        /// </summary>
+        /// <param name="element">The XML of the object.</param>
+        /// <returns>The duplicated object.</returns>
+        public static Interactive FromXElement (XElement element)
+        {
+            // Create a tile object.
+            Interactive tile        = new Interactive();
+            
+            // Fill it with data. Use properties to handle corrupt data.
+            tile.sprite             =                                       element.Attribute ("Sprite").Value;
+            tile.interactiveType    = (InteractiveType) Convert.ToInt32 (   element.Attribute ("Type").Value);
+            tile.effect             = Convert.ToUInt32 (                    element.Attribute ("Effect").Value);
+           
+            // Return the processed object.
+            return tile;
         }
 
         #endregion

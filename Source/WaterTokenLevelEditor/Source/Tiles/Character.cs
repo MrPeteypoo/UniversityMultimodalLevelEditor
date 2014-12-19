@@ -266,6 +266,32 @@ namespace WaterTokenLevelEditor
             return element;
         }
 
+
+        /// <summary>
+        /// Creates a Character object from an XElement node.
+        /// </summary>
+        /// <param name="element">The XML of the object.</param>
+        /// <returns>The duplicated object.</returns>
+        public static Character FromXElement (XElement element)
+        {
+            // Create a tile object.
+            Character tile          = new Character();
+            
+            // Fill it with data. Use properties to handle corrupt data.
+            tile.sprite         =                                               element.Attribute ("Sprite").Value;
+            tile.characterType  = (CharacterType)   Convert.ToInt32 (           element.Attribute ("Type").Value);
+            tile.name           =                                               element.Attribute ("Name").Value;
+            tile.characterClass = (Class)           Convert.ToInt32 (           element.Attribute ("Class").Value);
+            tile.affinity       = (Element)         Convert.ToInt32 (           element.Attribute ("Affinity").Value);
+            tile.level          =                   Convert.ToUInt32 (          element.Attribute ("Level").Value);
+
+            tile.stats          =                   Stats.FromXElement (        element.Element ("Stats"));
+            tile.ranks          =                   WeaponRanks.FromXElement (  element.Element ("WeaponRanks"));
+           
+            // Return the processed object.
+            return tile;
+        }
+
         #endregion
 
     }

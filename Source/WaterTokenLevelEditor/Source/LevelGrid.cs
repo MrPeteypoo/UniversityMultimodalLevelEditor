@@ -33,9 +33,12 @@ namespace WaterTokenLevelEditor
         private string                          m_workingDirectory  = "";                                       //!< The working directory for default images.
         private string                          m_terrainInit       = "";                                       //!< The relative file location for terrain images.
 
+        private BitmapImage                     m_defaultTerrain    = null;                                     //!< The default image used on terains
+
         private Grid                            m_grid              = null;                                     //!< A pointer to the Grid control which is displayed to the user.
         private MouseButtonEventHandler         m_leftMouse         = null;                                     //!< The event handler for the left mouse-down event.
         private MouseButtonEventHandler         m_rightMouse        = null;                                     //!< The event handler for the right mouse-down event.
+        private ContextMenu                     m_contextMenu       = null;                                     //!< The menu which appears upon right-clicking a tile.
         
         private List<GameTile>                  m_data              = new List<GameTile>();                     //!< The list of GameTile data which is saved and loaded into XML.
         private List<Tuple<Rectangle, Image[]>> m_images            = new List<Tuple<Rectangle, Image[]>>();    //!< The list of images which are displayed on the grid. A rectangle is used to handle mouse events in case the image has dimensions of 0 x 0.
@@ -53,13 +56,14 @@ namespace WaterTokenLevelEditor
         /// <param name="rightMouse"></param>
         /// <param name="workingDirectory">The working directory to search for default images.</param>
         /// <param name="defaultTerrainImage">The default file that every image should be initialised to. This should be relative to the working directory.</param>
-        public LevelGrid (Grid grid, MouseButtonEventHandler leftMouse, MouseButtonEventHandler rightMouse, string workingDirectory, string defaultTerrainImage)
+        public LevelGrid (Grid grid, MouseButtonEventHandler leftMouse, MouseButtonEventHandler rightMouse, ContextMenu menu, string workingDirectory, string defaultTerrainImage)
         {
-            if (grid != null && leftMouse != null && rightMouse != null)
+            if (grid != null && leftMouse != null && rightMouse != null && menu != null)
             {
                 m_grid = grid;
                 m_leftMouse = leftMouse;
                 m_rightMouse = rightMouse;
+                m_contextMenu = menu;
 
                 SetDefaultTerrainImage (workingDirectory, defaultTerrainImage);
             }
@@ -120,6 +124,8 @@ namespace WaterTokenLevelEditor
             {
                 m_workingDirectory = workingDirectory;
                 m_terrainInit = defaultTerrainImage;
+
+                m_defaultTerrain = new BitmapImage (new Uri (m_workingDirectory + m_terrainInit, UriKind.RelativeOrAbsolute));
             }
         }
 
@@ -297,7 +303,7 @@ namespace WaterTokenLevelEditor
                     {
                         // Fill the containers with blank data!
                         m_data.Add (CreateBlankGameTile());
-                        m_images.Add (CreateBlankVisualTile ((int) x, (int) y));
+                        m_images.Add (CreateBlankVisualTile ((int) x, (int) y, m_defaultTerrain));
                     }
                 }
             }
@@ -444,7 +450,7 @@ namespace WaterTokenLevelEditor
                     else
                     {
                         newData.Add (CreateBlankGameTile());
-                        newImages.Add (CreateBlankVisualTile ((int) x, (int) y));
+                        newImages.Add (CreateBlankVisualTile ((int) x, (int) y, m_defaultTerrain));
                     }
                 }
             }
@@ -488,7 +494,7 @@ namespace WaterTokenLevelEditor
         /// <param name="column">The column where the layer should exist.</param>
         /// <param name="row">The row where the layer should exist.</param>
         /// <returns>A tuple of a clickable rectangle and the image layers.</returns>
-        private Tuple<Rectangle, Image[]> CreateBlankVisualTile (int column, int row)
+        private Tuple<Rectangle, Image[]> CreateBlankVisualTile (int column, int row, BitmapImage terrainImage)
         {
             // We need three images, one for each layer. The rectangle provides the clickable area for events.
             Tuple<Rectangle, Image[]> tile = new Tuple<Rectangle, Image[]>
@@ -496,7 +502,7 @@ namespace WaterTokenLevelEditor
                 new Rectangle () { Fill = Brushes.Black, VerticalAlignment = VerticalAlignment.Stretch, HorizontalAlignment = HorizontalAlignment.Stretch },
                 new Image[3] 
                 { 
-                    new Image() { Stretch = Stretch.Fill, Source = new BitmapImage (new Uri (m_workingDirectory + m_terrainInit, UriKind.RelativeOrAbsolute)) },
+                    new Image() { Stretch = Stretch.Fill, Source = terrainImage },
                     new Image() { Stretch = Stretch.Fill },
                     new Image() { Stretch = Stretch.Fill }
                 }
@@ -521,6 +527,7 @@ namespace WaterTokenLevelEditor
             
                 layers[i].MouseLeftButtonDown += m_leftMouse;
                 layers[i].MouseRightButtonDown += m_rightMouse;
+                layers[i].ContextMenu = m_contextMenu;
                 
                 m_grid.Children.Add (layers[i]);
             }
@@ -528,6 +535,7 @@ namespace WaterTokenLevelEditor
             // Ensure there is always a rectangle available for clicking so image malfunctions don't break the application.
             tile.Item1.MouseLeftButtonDown += m_leftMouse;
             tile.Item1.MouseRightButtonDown += m_rightMouse;
+            tile.Item1.ContextMenu = m_contextMenu;
             
             return tile;
         }
@@ -568,6 +576,20 @@ namespace WaterTokenLevelEditor
             m_grid.Height = actualTileSize * m_height;
         }
 
+
+        /// <summary>
+        /// Completely resets all variables to safe values, useful in case of faulty loading.
+        /// </summary>
+        private void ResetToSafeValues()
+        {
+            ResetToZero();
+
+            SetDefaultTerrainImage ("", "");
+
+            m_images = new List<Tuple<Rectangle,Image[]>>();
+            m_data = new List<GameTile>();
+        }
+
         #endregion
 
 
@@ -600,6 +622,105 @@ namespace WaterTokenLevelEditor
             xml.Add (grid);
 
             return xml;
+        }
+
+
+        /// <summary>
+        /// Causes the level grid to load completely from an XML document.
+        /// </summary>
+        /// <returns>Whether the load was successful or not.</returns>
+        public bool CreateFromXML (XDocument xml)
+        {
+            // Attempt the loading process.
+            try
+            {
+                // Obtain the working set of data.
+                XElement root = xml.Root;
+                UpdateDimensions (Convert.ToUInt32 (root.Attribute ("Width").Value), Convert.ToUInt32 (root.Attribute ("Height").Value));
+                SetDefaultTerrainImage (root.Attribute ("WorkingDirectory").Value, root.Attribute ("TerrainDefault").Value);
+
+                // Attempt to construct the grid.
+                ClearData();
+                CreateColumnsRows();
+                FillFromXElement (root.Element ("GameTiles"));
+
+                UpdateGridVisuals();
+
+                return true; // ?
+            }
+
+            catch (Exception)
+            {
+                // Take care of illegal data by simply clearing it.
+                ResetToSafeValues();
+                ClearData();
+                UpdateGridVisuals();
+            }
+
+            return false;
+        }
+
+
+        private void FillFromXElement (XElement gameTiles)
+        {
+            IEnumerable<XElement> elements = gameTiles.Elements ("GameTile");
+            m_data.Capacity = (int) m_tileCount;
+
+            // Attempt to read all the data.
+            foreach (XElement element in elements)
+            {
+                GameTile data = GameTile.FromXElement (element);
+                m_data.Add (data);
+            }
+
+            // Ensure we haven't been given too much or too little data.
+            if (m_data.Count > m_tileCount)
+            {
+                m_data.RemoveRange ((int) m_tileCount, m_data.Count - (int) m_tileCount);
+            }
+
+            else if (m_data.Count < m_tileCount)
+            {
+                for (uint i = (uint) m_data.Count; i < m_tileCount; ++i)
+                {
+                    m_data.Add (CreateBlankGameTile());
+                }
+            }
+
+            // Fill the image data.
+            m_images.Capacity = m_data.Count;
+            
+            // Really wish I never decided to use uints now.....
+            for (uint y = 0; y < m_height; ++y)
+            {
+                for (uint x = 0; x < m_width; ++x)
+                {
+                    m_images.Add (CreateBlankVisualTile ((int) x, (int) y, null));
+                }
+            }
+
+            // Update visual sprites to reflect the changes.
+            for (int i = 0; i < m_data.Count; ++i)
+            {
+                Image[] images = m_images[i].Item2;
+
+                for (int j = 0; j < images.Length; ++j)
+                {
+                    // Determine the layer we need and obtain it.
+                    LayerType layerType = (LayerType) j;
+                    TileLayer layer = m_data[i].GetLayer (layerType);
+
+                    // If it is valid we should change the sprite to reflect it.
+                    if (layer)
+                    {
+                        string location = m_workingDirectory + layer.sprite;
+                        if (File.Exists (location))
+                        {
+                            images[j].Source = new BitmapImage (new Uri (location, UriKind.RelativeOrAbsolute));
+                        }
+                    }
+                }
+            }
         }
 
         #endregion

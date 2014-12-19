@@ -29,12 +29,13 @@ namespace WaterTokenLevelEditor
         private LevelGrid       m_grid              = null;                         //!< The management class for the displayable grid.
 
         private string          m_workingDirectory  = "";                           //!< Used for setting the sprite location of tiles.
-        private string          defaultTerrain      = "Defaults/terrain.png";       //!< The default terrain image.
-        private string          defaultInteractive  = "Defaults/interactive.png";   //!< The default interactive image.
-        private string          defaultCharacter    = "Defaults/character.png";     //!< The default character image.
+        private const string    defaultTerrain      = "Defaults/terrain.png";       //!< The default terrain image.
+        private const string    defaultInteractive  = "Defaults/interactive.png";   //!< The default interactive image.
+        private const string    defaultCharacter    = "Defaults/character.png";     //!< The default character image.
         
         private Control         m_selectedControl   = null;                         //!< The currently selected UI control.
         private int             m_selectedTile      = -1;                           //!< The currently selected grid tile.
+        private int             m_rightClickTile    = -1;                           //!< Used to remember where the user clicked to bring up the context menu.
 
         private ContextMenu     m_tileMenu          = null;                         //!< The context menu used when tiles are right-clicked.
 
@@ -56,8 +57,10 @@ namespace WaterTokenLevelEditor
             // Now initialise the window itself.
             m_workingDirectory = System.AppDomain.CurrentDomain.BaseDirectory;
 
+            SetupContextMenu();
+
             // Initialise the grid system.
-            m_grid = new LevelGrid (grd_levelGrid, Image_MouseLeftButtonDown, Image_MouseRightButtonDown, m_workingDirectory, defaultTerrain);
+            m_grid = new LevelGrid (grd_levelGrid, Image_MouseLeftButtonDown, Image_MouseRightButtonDown, m_tileMenu, m_workingDirectory, defaultTerrain);
             m_grid.CreateGrid();
 
             // Force the zoom level to update.
@@ -100,13 +103,50 @@ namespace WaterTokenLevelEditor
 
 
         /// <summary>
+        /// Loads a level from an XML document.
+        /// </summary>
+        /// <returns>Indicates whether the load was successful.</returns>
+        private bool LoadLevel()
+        {
+            // Create the dialog box.
+            OpenFileDialog openBox = new OpenFileDialog();
+            openBox.Filter = "XML Files|*.xml"; 
+
+            // Proceed with saving if necessary.
+            if (openBox.ShowDialog() == true)
+            {
+                try
+                {
+                    // Attempt to load the XML.
+                    XDocument xml = XDocument.Load (openBox.FileName);
+                    
+                    if (m_grid.CreateFromXML (xml))
+                    {
+                        return true;
+                    }
+
+                    throw new FileFormatException ("Unable to load from XML, likely a corrupt file.");
+                }
+
+                catch (Exception error)
+                {
+                    string message = "An error occurred whilst attempting to load.\nError details: " + error.Message;
+                    MessageBox.Show (this, message, "Error", MessageBoxButton.OK);
+                }
+            }
+
+            return false;
+        }
+
+
+        /// <summary>
         /// Saves the level to an XML document.
         /// </summary>
         /// <returns>Indicates whether the save was successful.</returns>
         private bool SaveCurrentLevel()
         {
             // Create the dialog box.
-            SaveFileDialog saveBox = new Microsoft.Win32.SaveFileDialog();
+            SaveFileDialog saveBox = new SaveFileDialog();
             saveBox.Filter = "XML Files|*.xml"; 
 
             // Proceed with saving if necessary.
@@ -169,6 +209,18 @@ namespace WaterTokenLevelEditor
             MenuItem reset = new MenuItem () { Header = "_Reset to default", Tag = 0 };
             MenuItem interactive = new MenuItem () { Header = "_Remove interactive object", Tag = 1 };
             MenuItem character = new MenuItem () { Header = "_Remove character object", Tag = 2  };
+            
+            // Add the events.
+            reset.Click += Menu_TileContextMenuClick;
+            interactive.Click += Menu_TileContextMenuClick;
+            character.Click += Menu_TileContextMenuClick;
+            
+            // Add the menu items to the menu.
+            menu.Items.Add (reset);
+            menu.Items.Add (interactive);
+            menu.Items.Add (character);
+
+            m_tileMenu = menu;
         }
 
 
@@ -283,6 +335,43 @@ namespace WaterTokenLevelEditor
 
 
         /// <summary>
+        /// The load event which will attempt to load from a file.
+        /// </summary>
+        private void Menu_LoadClick (object sender, RoutedEventArgs e)
+        {
+            DeselectTile (m_selectedTile);
+
+            if (m_unsavedChanges)
+            {
+                string message = "There are unsaved changes, do you wish to save before exiting?";
+                MessageBoxResult result = MessageBox.Show (this, message, "Warning", MessageBoxButton.YesNoCancel);
+
+                switch (result)
+                {
+                    case MessageBoxResult.Yes:
+                        if (SaveCurrentLevel())
+                        {
+                            LoadLevel();
+                        }
+                        break;
+                    
+                    case MessageBoxResult.No:
+                        LoadLevel();
+                        break;
+
+                    case MessageBoxResult.Cancel:
+                        break;                    
+                }
+            }
+
+            else
+            {
+                LoadLevel();
+            }
+        }
+
+
+        /// <summary>
         /// The save event which writes all data to storage.
         /// </summary>
         private void Menu_SaveClick (object sender, RoutedEventArgs e)
@@ -302,7 +391,7 @@ namespace WaterTokenLevelEditor
             if (m_unsavedChanges)
             {
                 string message = "There are unsaved changes, do you wish to save before exiting?";
-                MessageBoxResult result = MessageBox.Show (message, "Warning", MessageBoxButton.YesNoCancel);
+                MessageBoxResult result = MessageBox.Show (this, message, "Warning", MessageBoxButton.YesNoCancel);
 
                 switch (result)
                 {
@@ -369,6 +458,59 @@ namespace WaterTokenLevelEditor
                     lbl_statusLabel.Content = "Grid resized...";
                 }
             }
+        }
+
+
+        /// <summary>
+        /// The context menu allows the resetting of the terrain tile and the removal of optional tiles. This function handles these cases.
+        /// </summary>
+        private void Menu_TileContextMenuClick (object sender, RoutedEventArgs e)
+        {           
+            FrameworkElement menu = sender as FrameworkElement;
+
+            try
+            {
+                if (m_grid.IsValid (m_rightClickTile))
+                {
+                    // Start by resetting or removing the tiles.
+                    LayerType layerType = (LayerType) Convert.ToInt32 (menu.Tag);
+                    switch (layerType)
+                    {
+                        case LayerType.Terrain:
+                            m_grid.GetGameTile (m_rightClickTile).terrain = new Terrain();
+                            break;
+                        case LayerType.Interactive:
+                            m_grid.GetGameTile (m_rightClickTile).interactive = null;
+                            break;
+                        case LayerType.Character:
+                            m_grid.GetGameTile (m_rightClickTile).character = null;
+                            break;     
+                    }
+
+                    // Next change the image
+                    TileLayer layer = m_grid.GetGameTile (m_rightClickTile).GetLayer (layerType);
+                    
+                    // Check if both the layer and default terrain image exist.
+                    if (layer && File.Exists (m_workingDirectory + defaultTerrain))
+                    {
+                        layer.sprite = defaultTerrain;
+                        m_grid.GetImageLayer (m_rightClickTile, layerType).Source = new BitmapImage (new Uri (m_workingDirectory + defaultTerrain, UriKind.RelativeOrAbsolute));
+                    }
+
+                    else
+                    { 
+                        // Reset the image.
+                        m_grid.GetImageLayer (m_rightClickTile, layerType).Source = null;
+                    }
+                }
+            }
+
+            catch (Exception)
+            {
+
+            }
+
+            m_unsavedChanges = true;
         }
 
         #endregion
@@ -488,7 +630,10 @@ namespace WaterTokenLevelEditor
 
         private void Image_MouseRightButtonDown (object sender, MouseButtonEventArgs e)
         {
+            m_rightClickTile = CalcGridTile (sender as FrameworkElement);
 
+            // Ensure the properties window doesn't get screwed up.
+            DeselectTile (m_selectedTile);
         }
 
         #endregion

@@ -101,6 +101,33 @@ namespace WaterTokenLevelEditor
             return element;
         }
 
+
+        /// <summary>
+        /// Creates a WeaponRanks object from an XElement node.
+        /// </summary>
+        /// <param name="element">The XML of the object.</param>
+        /// <returns>The duplicated object.</returns>
+        public static WeaponRanks FromXElement (XElement element)
+        {
+            // Create a stats object.
+            WeaponRanks ranks   = new WeaponRanks();
+            
+            // Fill it with data. Use properties to handle corrupt data.
+            ranks.sword     = (WeaponRank) Convert.ToInt32 (element.Attribute ("Sword").Value);
+            ranks.axe       = (WeaponRank) Convert.ToInt32 (element.Attribute ("Axe").Value);
+            ranks.lance     = (WeaponRank) Convert.ToInt32 (element.Attribute ("Lance").Value);
+            ranks.bow       = (WeaponRank) Convert.ToInt32 (element.Attribute ("Bow").Value);
+            ranks.fire      = (WeaponRank) Convert.ToInt32 (element.Attribute ("Fire").Value);
+            ranks.thunder   = (WeaponRank) Convert.ToInt32 (element.Attribute ("Thunder").Value);
+            ranks.wind      = (WeaponRank) Convert.ToInt32 (element.Attribute ("Wind").Value);
+            ranks.light     = (WeaponRank) Convert.ToInt32 (element.Attribute ("Light").Value);
+            ranks.staff     = (WeaponRank) Convert.ToInt32 (element.Attribute ("Staff").Value);
+            ranks.knife     = (WeaponRank) Convert.ToInt32 (element.Attribute ("Knife").Value);
+           
+            // Return the processed object.
+            return ranks;
+        }
+
         #endregion
 
     }

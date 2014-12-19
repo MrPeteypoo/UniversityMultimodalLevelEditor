@@ -215,6 +215,34 @@ namespace WaterTokenLevelEditor
             return element;
         }
 
+
+        /// <summary>
+        /// Creates a Stats object from an XElement node.
+        /// </summary>
+        /// <param name="element">The XML of the object.</param>
+        /// <returns>The duplicated object.</returns>
+        public static Stats FromXElement (XElement element)
+        {
+            // Create a stats object.
+            Stats stats        = new Stats();
+            
+            // Fill it with data. Use properties to handle corrupt data.
+            stats.hp            = Convert.ToUInt32 (element.Attribute ("HP").Value);
+            stats.strength      = Convert.ToUInt32 (element.Attribute ("STR").Value);
+            stats.magic         = Convert.ToUInt32 (element.Attribute ("MAG").Value);
+            stats.skill         = Convert.ToUInt32 (element.Attribute ("SKL").Value);
+            stats.speed         = Convert.ToUInt32 (element.Attribute ("SPD").Value);
+            stats.luck          = Convert.ToUInt32 (element.Attribute ("LCK").Value);
+            stats.defense       = Convert.ToUInt32 (element.Attribute ("DEF").Value);
+            stats.resistance    = Convert.ToUInt32 (element.Attribute ("RES").Value);
+            stats.constitution  = Convert.ToUInt32 (element.Attribute ("CON").Value);
+            stats.weight        = Convert.ToUInt32 (element.Attribute ("WEI").Value);
+            stats.movement      = Convert.ToUInt32 (element.Attribute ("MOV").Value);
+           
+            // Return the processed object.
+            return stats;
+        }
+
         #endregion
 
     }

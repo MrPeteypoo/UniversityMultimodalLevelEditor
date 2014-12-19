@@ -144,7 +144,7 @@ namespace WaterTokenLevelEditor
         /// Converts the data stored within the object into XML.
         /// </summary>
         /// <returns>An XML version of the object.</returns>
-        public override XElement ToXElement()
+        public sealed override XElement ToXElement()
         {
             XElement element = new XElement ("Terrain");
 
@@ -156,6 +156,29 @@ namespace WaterTokenLevelEditor
                             new XAttribute ("MovementCost", m_moveCost));
 
             return element;
+        }
+
+
+        /// <summary>
+        /// Creates a Terrain object from an XElement node.
+        /// </summary>
+        /// <param name="element">The XML of the object.</param>
+        /// <returns>The duplicated object.</returns>
+        public static Terrain FromXElement (XElement element)
+        {
+            // Create a tile object.
+            Terrain tile        = new Terrain();
+            
+            // Fill it with data. Use properties to handle corrupt data.
+            tile.sprite             =                                   element.Attribute ("Sprite").Value;
+            tile.terrainType        = (TerrainType) Convert.ToInt32 (   element.Attribute ("Type").Value);
+            tile.defenseBonus       = Convert.ToUInt32 (                element.Attribute ("Defense").Value);
+            tile.resistanceBonus    = Convert.ToUInt32 (                element.Attribute ("Resistance").Value);
+            tile.evasionBonus       = Convert.ToDouble (                element.Attribute ("Evasion").Value);
+            tile.moveCost           = Convert.ToUInt32 (                element.Attribute ("MovementCost").Value);
+           
+            // Return the processed object.
+            return tile;
         }
 
         #endregion

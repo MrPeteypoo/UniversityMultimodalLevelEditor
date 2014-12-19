@@ -28,7 +28,7 @@
             <MenuItem Header="_File" >
                 <MenuItem Header="_New" Click="Menu_NewClick" />
                 <Separator Padding="0" Margin="0,5"></Separator>
-                <MenuItem Header="_Load" />
+                <MenuItem Header="_Load" Click="Menu_LoadClick"/>
                 <Separator Margin="0,5"></Separator>
                 <MenuItem Header="_Save As" Click="Menu_SaveClick" />
                 <Separator Margin="0,5"></Separator>
