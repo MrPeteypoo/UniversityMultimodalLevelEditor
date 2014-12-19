@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -20,20 +21,23 @@ namespace WaterTokenLevelEditor
 
         #region Implementation data
         
-        private const uint                      tileSize        = 32;                                       //!< How wide and tall each displayed tile should be in the application, multiplied by the zoom factor.
+        private const uint                      tileSize            = 32;                                       //!< How wide and tall each displayed tile should be in the application, multiplied by the zoom factor.
         
-        private uint                            m_width         = 10;                                       //!< How many tiles wide the level grid is.
-        private uint                            m_height        = 10;                                       //!< How many tiles tall the level grid is.
-        private uint                            m_tileCount     = 100;                                      //!< The total tile count.
+        private uint                            m_width             = 10;                                       //!< How many tiles wide the level grid is.
+        private uint                            m_height            = 10;                                       //!< How many tiles tall the level grid is.
+        private uint                            m_tileCount         = 100;                                      //!< The total tile count.
 
-        private double                          m_zoomLevel     = 1.0;                                      //!< Is used to control the width and height value of the level grid.
+        private double                          m_zoomLevel         = 1.0;                                      //!< Is used to control the width and height value of the level grid.
 
-        private Grid                            m_grid          = null;                                     //!< A pointer to the Grid control which is displayed to the user.
-        private MouseButtonEventHandler         m_leftMouse     = null;                                     //!< The event handler for the left mouse-down event.
-        private MouseButtonEventHandler         m_rightMouse    = null;                                     //!< The event handler for the right mouse-down event.
+        private string                          m_workingDirectory  = "";                                       //!< The working directory for default images.
+        private string                          m_terrainInit       = "";                                       //!< The relative file location for terrain images.
+
+        private Grid                            m_grid              = null;                                     //!< A pointer to the Grid control which is displayed to the user.
+        private MouseButtonEventHandler         m_leftMouse         = null;                                     //!< The event handler for the left mouse-down event.
+        private MouseButtonEventHandler         m_rightMouse        = null;                                     //!< The event handler for the right mouse-down event.
         
-        private List<GameTile>                  m_data          = new List<GameTile>();                     //!< The list of GameTile data which is saved and loaded into XML.
-        private List<Tuple<Rectangle, Image[]>> m_images        = new List<Tuple<Rectangle, Image[]>>();    //!< The list of images which are displayed on the grid. A rectangle is used to handle mouse events in case the image has dimensions of 0 x 0.
+        private List<GameTile>                  m_data              = new List<GameTile>();                     //!< The list of GameTile data which is saved and loaded into XML.
+        private List<Tuple<Rectangle, Image[]>> m_images            = new List<Tuple<Rectangle, Image[]>>();    //!< The list of images which are displayed on the grid. A rectangle is used to handle mouse events in case the image has dimensions of 0 x 0.
 
         #endregion
 
@@ -43,14 +47,20 @@ namespace WaterTokenLevelEditor
         /// <summary>
         /// The default constructor for the LevelGrid class. LevelGrid required a Grid object so that it may perform itss functionality.
         /// </summary>
-        /// <param name="grid">The Grid object to manipulate.</param>
-        public LevelGrid (Grid grid, MouseButtonEventHandler leftMouse, MouseButtonEventHandler rightMouse)
+        /// <param name="grid">The Grid which the LevelGrid object should manage.</param>
+        /// <param name="leftMouse"></param>
+        /// <param name="rightMouse"></param>
+        /// <param name="workingDirectory">The working directory to search for default images.</param>
+        /// <param name="defaultTerrainImage">The default file that every image should be initialised to. This should be relative to the working directory.</param>
+        public LevelGrid (Grid grid, MouseButtonEventHandler leftMouse, MouseButtonEventHandler rightMouse, string workingDirectory, string defaultTerrainImage)
         {
             if (grid != null && leftMouse != null && rightMouse != null)
             {
                 m_grid = grid;
                 m_leftMouse = leftMouse;
                 m_rightMouse = rightMouse;
+
+                SetDefaultTerrainImage (workingDirectory, defaultTerrainImage);
             }
 
             else
@@ -95,6 +105,21 @@ namespace WaterTokenLevelEditor
         public Image GetImageLayer (int tile, LayerType layer)
         {
             return IsValid (tile) ? m_images[tile].Item2[(int) layer] : null;
+        }
+
+
+        /// <summary>
+        /// Sets the default terrain image that every newly create terrain tile is initialised to.
+        /// </summary>
+        /// <param name="workingDirectory">The working directory to search for default images.</param>
+        /// <param name="defaultTerrainImage">The default file that every image should be initialised to. This should be relative to the working directory.</param>
+        public void SetDefaultTerrainImage (string workingDirectory, string defaultTerrainImage)
+        {
+            if (File.Exists (workingDirectory + defaultTerrainImage))
+            {
+                m_workingDirectory = workingDirectory;
+                m_terrainInit = defaultTerrainImage;
+            }
         }
 
         
@@ -237,8 +262,8 @@ namespace WaterTokenLevelEditor
                     for (uint x = 0; x < m_width; ++x)
                     {
                         // Fill the containers with blank data!
-                        m_data.Add (new GameTile());
-                        m_images.Add (CreateBlankTile ((int) x, (int) y));
+                        m_data.Add (CreateBlankGameTile());
+                        m_images.Add (CreateBlankVisualTile ((int) x, (int) y));
                     }
                 }
             }
@@ -248,6 +273,23 @@ namespace WaterTokenLevelEditor
 
 
         #region Grid manipulation
+
+        /// <summary>
+        /// Sets every terrain to the image source given.
+        /// </summary>
+        /// <param name="imageSource">The file location of the image source. This must be an absolute location.</param>
+        public void FillTerrainWithImage (string imageSource)
+        {
+            if (File.Exists (imageSource))
+            {
+                for (int i = 0; i < m_data.Count; ++i)
+                {
+                    m_data[i].terrain.sprite = imageSource;
+                    m_images[i].Item2[0].Source = new BitmapImage (new Uri (@imageSource, UriKind.RelativeOrAbsolute));
+                }
+            }
+        }
+
 
         /// <summary>
         /// Attempts to resize the level grid whilst maintaining as much data as possible. Slower than the CreateGrid function.
@@ -367,8 +409,8 @@ namespace WaterTokenLevelEditor
                     // Otherwise create blank data.
                     else
                     {
-                        newData.Add (new GameTile());
-                        newImages.Add (CreateBlankTile ((int) x, (int) y));
+                        newData.Add (CreateBlankGameTile());
+                        newImages.Add (CreateBlankVisualTile ((int) x, (int) y));
                     }
                 }
             }
@@ -387,9 +429,22 @@ namespace WaterTokenLevelEditor
         /// </summary>
         /// <param name="tile">The tile value to check.</param>
         /// <returns>The validity of the tile value.</returns>
-        private bool IsValid (int tile)
+        public bool IsValid (int tile)
         {
             return tile >= 0 && tile < tileCount;
+        }
+
+
+        /// <summary>
+        /// Creates a blank GameTile object with a default terrain sprite.
+        /// </summary>
+        /// <returns>The created object.</returns>
+        private GameTile CreateBlankGameTile()
+        {
+            GameTile tile = new GameTile();
+            tile.terrain.sprite = m_terrainInit;
+
+            return tile;
         }
 
 
@@ -399,7 +454,7 @@ namespace WaterTokenLevelEditor
         /// <param name="column">The column where the layer should exist.</param>
         /// <param name="row">The row where the layer should exist.</param>
         /// <returns>A tuple of a clickable rectangle and the image layers.</returns>
-        private Tuple<Rectangle, Image[]> CreateBlankTile (int column, int row)
+        private Tuple<Rectangle, Image[]> CreateBlankVisualTile (int column, int row)
         {
             // We need three images, one for each layer. The rectangle provides the clickable area for events.
             Tuple<Rectangle, Image[]> tile = new Tuple<Rectangle, Image[]>
@@ -407,7 +462,7 @@ namespace WaterTokenLevelEditor
                 new Rectangle () { Fill = Brushes.Black, VerticalAlignment = VerticalAlignment.Stretch, HorizontalAlignment = HorizontalAlignment.Stretch },
                 new Image[3] 
                 { 
-                    new Image() { Stretch = Stretch.Fill },
+                    new Image() { Stretch = Stretch.Fill, Source = new BitmapImage (new Uri (m_workingDirectory + m_terrainInit, UriKind.RelativeOrAbsolute)) },
                     new Image() { Stretch = Stretch.Fill },
                     new Image() { Stretch = Stretch.Fill }
                 }
@@ -429,11 +484,14 @@ namespace WaterTokenLevelEditor
                 layers[i].SetValue (Grid.ColumnProperty, column);
                 layers[i].SetValue (Grid.RowProperty, row);
                 layers[i].SetValue (Grid.ZIndexProperty, i);
+            
+                layers[i].MouseLeftButtonDown += m_leftMouse;
+                layers[i].MouseRightButtonDown += m_rightMouse;
                 
                 m_grid.Children.Add (layers[i]);
             }
 
-            // Ensure the top-most layer is the only one to handle the event.
+            // Ensure there is always a rectangle available for clicking so image malfunctions don't break the application.
             tile.Item1.MouseLeftButtonDown += m_leftMouse;
             tile.Item1.MouseRightButtonDown += m_rightMouse;
             

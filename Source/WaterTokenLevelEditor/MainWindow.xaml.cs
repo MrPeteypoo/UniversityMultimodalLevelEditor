@@ -24,16 +24,19 @@ namespace WaterTokenLevelEditor
     {
         #region Implementation data
         
-        private LevelGrid   m_grid              = null;                 //!< The management class for the displayable grid.
+        private LevelGrid       m_grid              = null;                         //!< The management class for the displayable grid.
 
-        private string      m_workingDirectory  = "";                   //!< Used for setting the sprite location of tiles.
+        private string          m_workingDirectory  = "";                           //!< Used for setting the sprite location of tiles.
+        private const string    defaultTerrain      = "Defaults/terrain.png";       //!< The default terrain image.
+        private const string    defaultInteractive  = "Defaults/interactive.png";   //!< The default interactive image.
+        private const string    defaultCharacter    = "Defaults/character.png";     //!< The default character image.
         
-        private Control     m_selectedControl   = null;                 //!< The currently selected UI control.
-        private int         m_selectedTile      = 0;                    //!< The currently selected grid tile.
+        private Control         m_selectedControl   = null;                         //!< The currently selected UI control.
+        private int             m_selectedTile      = 0;                            //!< The currently selected grid tile.
 
-        private ContextMenu m_tileMenu          = null;                 //!< The context menu used when tiles are right-clicked.
+        private ContextMenu     m_tileMenu          = null;                         //!< The context menu used when tiles are right-clicked.
 
-        private bool        m_unsavedChanges    = false;                //!< Prompts the user to save when they risk losing data.
+        private bool            m_unsavedChanges    = false;                        //!< Prompts the user to save when they risk losing data.
 
         #endregion
 
@@ -46,15 +49,16 @@ namespace WaterTokenLevelEditor
         public MainWindow()
         {
             InitializeComponent();
+            
+            // Now initialise the window itself.
+            m_workingDirectory = System.AppDomain.CurrentDomain.BaseDirectory;
 
             // Initialise the grid system.
-            m_grid = new LevelGrid (grd_levelGrid, Image_MouseLeftButtonDown, Image_MouseRightButtonDown);
+            m_grid = new LevelGrid (grd_levelGrid, Image_MouseLeftButtonDown, Image_MouseRightButtonDown, m_workingDirectory, defaultTerrain);
             m_grid.CreateGrid();
 
             // Force the zoom level to update.
             sdr_zoom.Value = sdr_zoom.Value;
-
-            m_workingDirectory = System.AppDomain.CurrentDomain.BaseDirectory;
 
             lbl_statusLabel.Content = "Application ready...";
         }
@@ -129,6 +133,57 @@ namespace WaterTokenLevelEditor
             MenuItem reset = new MenuItem () { Header = "_Reset to default", Tag = 0 };
             MenuItem interactive = new MenuItem () { Header = "_Remove interactive object", Tag = 1 };
             MenuItem character = new MenuItem () { Header = "_Remove character object", Tag = 2  };
+        }
+
+
+        /// <summary>
+        /// Calculates the tile number of the given FrameworkElement.
+        /// </summary>
+        /// <param name="element">An object which should exist within a grid.</param>
+        /// <returns>The calculated value.</returns>
+        private int CalcGridTile (FrameworkElement element)
+        {
+            if (element != null)
+            {
+                int column = (int) element.GetValue (Grid.ColumnProperty);
+                int row = (int) element.GetValue (Grid.RowProperty);
+
+                return column + row * (int) m_grid.width;
+            }
+
+            return -1;
+        }
+
+
+        /// <summary>
+        /// Using the tag of the parent of the selected control we calculate the correct LayerType selected.
+        /// </summary>
+        /// <returns>The LayerType of the selected control.</returns>
+        private LayerType CalcSelectedLayerType()
+        {
+            if (m_selectedControl == null)
+            {
+                throw new NullReferenceException ("Attempt to call MainWindow.CalcSelectedLayerType() when there is no control selected.");
+            }
+
+            // We can use the tag of the parent object to determine the layer type.
+            int enumValue = Convert.ToInt32 (m_selectedControl.Parent.GetValue (Control.TagProperty));
+
+            return (LayerType) enumValue;
+        }
+
+        
+        /// <summary>
+        /// Displays a message box to confirm that the user is OK with overwriting a tile.
+        /// </summary>
+        /// <param name="layer">The layer name, this is displayed in the message.</param>
+        /// <returns>Whether to proceed or not.</returns>
+        private bool ConfirmTilePlacement (string layer)
+        {
+            string message          = "This tile already contains " + layer + " layer, this will modify the current layer.";
+            MessageBoxResult result = MessageBox.Show (this, message, "Warning", MessageBoxButton.OKCancel);
+
+            return result == MessageBoxResult.OK;
         }
 
         #endregion
@@ -250,7 +305,7 @@ namespace WaterTokenLevelEditor
         #endregion
 
 
-        #region GameObject placement events
+        #region GameObject selection
 
         /// <summary>
         /// Colours any given control a dark gray colour with aqua text.
@@ -312,9 +367,48 @@ namespace WaterTokenLevelEditor
             }
         }
 
+        #endregion
+
+
+        #region Level grid UI
+
+        /// <summary>
+        /// The main handler of all tile selection and placement of object.
+        /// </summary>
         private void Image_MouseLeftButtonDown (object sender, MouseButtonEventArgs e)
         {
+            // We need to start by calculating the current tile.
+            FrameworkElement element = sender as FrameworkElement;
+            int tile = CalcGridTile (element);
 
+            // We must first check if we're supposed to be placing a tile.
+            if (m_selectedControl != null)
+            {
+                // Place the selected object.
+                switch (CalcSelectedLayerType())
+                {
+                    case LayerType.Terrain:
+                        PlaceTerrain (m_grid.GetGameTile (tile));
+                        break;
+
+                    case LayerType.Interactive:
+                        PlaceInteractive (m_grid.GetGameTile (tile), tile);
+                        break;
+
+                    case LayerType.Character:
+                        PlaceCharacter (m_grid.GetGameTile (tile), tile);
+                        break;
+
+                    default:
+                        throw new NotImplementedException ("Attempt to place unhandled LayerType in MainWindow.Image_MouseLeftButtonDown().");
+                }
+            }
+
+            // We must be selecting a tile so do that instead!
+            else
+            {
+                SelectTile (tile);
+            }
         }
 
 
@@ -322,6 +416,113 @@ namespace WaterTokenLevelEditor
         {
 
         }
+
+
+        /// <summary>
+        /// Places a terrain object at the given tile.
+        /// </summary>
+        /// <param name="tile">The tile to place the terrain at.</param>
+        private void PlaceTerrain (GameTile tile)
+        {
+            // Obtain the terrain tile.
+            Terrain terrain = tile.terrain;
+            
+            // Calculate the correct terrain type.
+            TerrainType type = (TerrainType) Convert.ToInt32 (m_selectedControl.Tag);
+
+            // Swap over the values. TODO: Have the default terrain values set via the application configuration.
+            terrain.terrainType = type;
+        }
+
+
+        /// <summary>
+        /// Places an interactive object at the given tile.
+        /// </summary>
+        /// <param name="tile">The tile to place the object at.</param>
+        /// <param name="tileNumber">The tile number of the object, used if intialising a new object is required.</param>
+        private void PlaceInteractive (GameTile tile, int tileNumber = -1)
+        {
+            // Check if we need to create the Interactive tile or just modify the existing tile.
+            Interactive interactive = tile.interactive;
+            bool writeData = true;
+
+            if (!interactive)
+            {
+                // We need to create the tile with a default image.
+                interactive = new Interactive();
+
+                if (m_grid.IsValid (tileNumber) && File.Exists (m_workingDirectory + defaultInteractive))
+                {
+                    Image image = m_grid.GetImageLayer (tileNumber, LayerType.Interactive);
+
+                    image.Source = new BitmapImage (new Uri (m_workingDirectory + defaultInteractive, UriKind.RelativeOrAbsolute));
+                    interactive.sprite = defaultInteractive;
+                }
+            }
+
+            else
+            {
+                // Check whether they want to overwrite data.
+                writeData = ConfirmTilePlacement ("an interactive");
+            }
+
+            if (writeData)
+            {
+                // Carry on where we left off.
+                InteractiveType type = (InteractiveType) Convert.ToInt32 (m_selectedControl.Tag);
+
+                interactive.interactiveType = type;
+
+                tile.interactive = interactive;
+            }            
+        }
+
+
+        /// <summary>
+        /// Places a character object at the given tile.
+        /// </summary>
+        /// <param name="tile">The tile to place the character at.</param>
+        /// <param name="tileNumber">The tile number of the object, used if intialising a new object is required.</param>
+        private void PlaceCharacter (GameTile tile, int tileNumber = -1)
+        {
+            // Check if we need to create the Interactive tile or just modify the existing tile.
+            Character character = tile.character;
+            bool writeData = true;
+
+            if (!character)
+            {
+                // We need to create the tile with a default image.
+                character = new Character();
+
+                if (m_grid.IsValid (tileNumber) && File.Exists (m_workingDirectory + defaultCharacter))
+                {
+                    Image image = m_grid.GetImageLayer (tileNumber, LayerType.Character);
+
+                    image.Source = new BitmapImage (new Uri (m_workingDirectory + defaultCharacter, UriKind.RelativeOrAbsolute));
+                    character.sprite = defaultCharacter;
+                }
+            }
+
+            else
+            {
+                // Check whether they want to overwrite data.
+                writeData = ConfirmTilePlacement ("a character");
+            }
+
+            if (writeData)
+            {
+                // Carry on where we left off.
+                CharacterType type = (CharacterType) Convert.ToInt32 (m_selectedControl.Tag);
+
+                character.characterType = type;
+                
+                // TODO: NEEDZ MOR DEFOLTZ!
+                tile.character = character;
+            }
+        }
+
+
+
 
         #endregion
 
