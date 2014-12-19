@@ -32,11 +32,12 @@ namespace WaterTokenLevelEditor
         private const string    defaultCharacter    = "Defaults/character.png";     //!< The default character image.
         
         private Control         m_selectedControl   = null;                         //!< The currently selected UI control.
-        private int             m_selectedTile      = 0;                            //!< The currently selected grid tile.
+        private int             m_selectedTile      = -1;                            //!< The currently selected grid tile.
 
         private ContextMenu     m_tileMenu          = null;                         //!< The context menu used when tiles are right-clicked.
 
         private bool            m_unsavedChanges    = false;                        //!< Prompts the user to save when they risk losing data.
+        private bool            m_updateData        = true;                         //!< Used to prevent events from firing whilst loading in data.
 
         #endregion
 
@@ -88,6 +89,7 @@ namespace WaterTokenLevelEditor
             // Ensure we actually need to create a new level.
             if (gridSize)
             {
+                DeselectTile (m_selectedTile);
                 m_grid.CreateGrid (gridSize.gridWidth, gridSize.gridHeight);
 
                 lbl_statusLabel.Content = "Level ready for editing...";
@@ -186,6 +188,21 @@ namespace WaterTokenLevelEditor
             return result == MessageBoxResult.OK;
         }
 
+
+        /// <summary>
+        /// Sets the given expanders enabled and expanded values to the given value.
+        /// </summary>
+        /// <param name="expander">The expander to modify.</param>
+        /// <param name="enabledAndExpanded">Whether it should be expanded and enabled.</param>
+        private void SetExpanderStatus (Expander expander, bool enabledAndExpanded)
+        {
+            if (expander != null)
+            {
+                expander.IsExpanded = enabledAndExpanded;
+                expander.IsEnabled = enabledAndExpanded;
+            }
+        }
+
         #endregion
 
 
@@ -281,7 +298,8 @@ namespace WaterTokenLevelEditor
 
                     switch (result)
                     {
-                        case MessageBoxResult.OK:                            
+                        case MessageBoxResult.OK:
+                            DeselectTile (m_selectedTile);
                             m_grid.ResizeGrid (gridSize.gridWidth, gridSize.gridHeight);
                             
                             lbl_statusLabel.Content = "Grid resized...";
@@ -295,6 +313,7 @@ namespace WaterTokenLevelEditor
                 
                 else
                 {
+                    DeselectTile (m_selectedTile);
                     m_grid.ResizeGrid (gridSize.gridWidth, gridSize.gridHeight);
 
                     lbl_statusLabel.Content = "Grid resized...";
@@ -365,12 +384,15 @@ namespace WaterTokenLevelEditor
             {
                 m_selectedControl = null;
             }
+
+            // Ensure no tile is selected.
+            DeselectTile (m_selectedTile);
         }
 
         #endregion
 
 
-        #region Level grid UI
+        #region Level grid events
 
         /// <summary>
         /// The main handler of all tile selection and placement of object.
@@ -417,6 +439,10 @@ namespace WaterTokenLevelEditor
 
         }
 
+        #endregion
+
+
+        #region Tile placement
 
         /// <summary>
         /// Places a terrain object at the given tile.
@@ -521,8 +547,200 @@ namespace WaterTokenLevelEditor
             }
         }
 
+        #endregion
 
 
+        #region Tile selection
+
+        /// <summary>
+        /// Selects the given tile, this enables the properties panel and gives it the correct data for the user to modify.
+        /// </summary>
+        /// <param name="tile">The tile to select.</param>
+        private void SelectTile (int tile)
+        {
+            // Stop the updating of data.
+            m_updateData = false;
+
+            // First check if we should actually be deselecting the tile.
+            if (tile == m_selectedTile)
+            {
+                DeselectTile (tile);
+            }
+
+            else
+            {
+                // Ensure the value is valid before populating the properties panel.
+                if (m_grid.IsValid (tile))
+                {
+                    // Visually set the tile.
+                    m_grid.SetTileBorder (tile, new Thickness (5), Brushes.Aqua);
+
+                    // Fill the properties panel with lovely data.
+                    GameTile data = m_grid.GetGameTile (tile);
+                    
+                    FillTerrainProperties (data.terrain);
+                    FillInteractiveProperties (data.interactive);
+                    FillCharacterProperties (data.character);
+
+                    // Set the expanders status to avoid potential errors from arising. 
+                    SetExpanderStatus (exp_terrainProp, data.terrain);
+                    SetExpanderStatus (exp_interProp, data.interactive);
+                    SetExpanderStatus (exp_charProp, data.character);
+
+                    // We have to deselect the old tile after selecting the current to ensure expanders don't unnecessarily close.
+                    int oldTile = m_selectedTile;
+                    m_selectedTile = tile;
+
+                    DeselectTile (oldTile);
+                }
+            }
+
+            // Allow updating again.
+            m_updateData = true;
+        }
+
+
+        /// <summary>
+        /// Deselects the given tile, this will remove all borders and disable all property controls.
+        /// </summary>
+        /// <param name="tile">The tile to disable.</param>
+        private void DeselectTile (int tile)
+        {
+            if (tile != -1)
+            {            
+                // We can assume the set function will check if the tile is valid.
+                m_grid.SetTileBorder (tile, new Thickness (0), Brushes.Transparent);
+
+                // Close the properties window since it is no longer useful.
+                if (tile == m_selectedTile)
+                {
+                    SetExpanderStatus (exp_terrainProp, false);
+                    SetExpanderStatus (exp_interProp, false);
+                    SetExpanderStatus (exp_charProp, false);
+
+                    m_selectedTile = -1;
+                }
+            }
+        }
+
+
+        /// <summary>
+        /// Simply extracts the data from a given Terrain object and displays it in the properties panel.
+        /// </summary>
+        /// <param name="data">The data to retrieve.</param>
+        private void FillTerrainProperties (Terrain data)
+        {
+            if (data)
+            {
+                // Simply move the data across.
+                txt_terrainSprite.Text          = data.sprite;
+
+                cmb_terrainType.SelectedIndex   = (int) data.terrainType;
+
+                sdr_terrainDEF.Value            = data.defenseBonus;
+                sdr_terrainRES.Value            = data.resistanceBonus;
+                sdr_terrainEVA.Value            = data.evasionBonus * 100.0;
+                sdr_terrainMOV.Value            = data.moveCost;
+            }
+        }
+
+
+        /// <summary>
+        /// Simply extracts the data from a given Interactive object and displays it in the properties panel.
+        /// </summary>
+        /// <param name="data">The data to retrieve.</param>
+        private void FillInteractiveProperties (Interactive data)
+        {
+            if (data)
+            {
+                // Not much to move really.....
+                txt_interSprite.Text        = data.sprite;
+
+                cmb_interType.SelectedIndex = (int) data.interactiveType;
+
+                sdr_interEffect.Value       = data.effect;
+            }
+        }
+
+
+        /// <summary>
+        /// Simply extracts the data from a given Character object and displays it in the properties panel.
+        /// </summary>
+        /// <param name="data">The data to retrieve.</param>
+        private void FillCharacterProperties (Character data)
+        {
+            if (data)
+            {
+                // We have a lot of data to deal with so lets just call some functions.
+                FillCharacterPropertiesCore (data);
+                FillCharacterPropertiesStats (data.stats);
+                FillCharacterPropertiesWeaponRanks (data.ranks);
+            }
+        }
+
+
+        /// <summary>
+        /// Only updates the core character properties.
+        /// </summary>
+        /// <param name="data">The data to read from.</param>
+        private void FillCharacterPropertiesCore (Character data)
+        {
+            if (data)
+            {
+                txt_charSprite.Text             = data.sprite;
+
+                cmb_charType.SelectedIndex      = (int) data.characterType;
+                cmb_charClass.SelectedIndex     = (int) data.characterClass;
+                cmb_charAffinity.SelectedIndex  = (int) data.affinity;
+                
+                sdr_charLevel.Value             = data.level;
+            }
+        }
+
+
+        /// <summary>
+        /// Only updates the stats part of the character properties.
+        /// </summary>
+        /// <param name="data">The data to read from.</param>
+        private void FillCharacterPropertiesStats (Stats data)
+        {
+            if (data)
+            {
+                sdr_charHP.Value    = data.hp;
+                sdr_charSTR.Value   = data.strength;
+                sdr_charMAG.Value   = data.magic;
+                sdr_charSKL.Value   = data.skill;
+                sdr_charSPD.Value   = data.speed;
+                sdr_charLCK.Value   = data.luck;
+                sdr_charDEF.Value   = data.defense;
+                sdr_charRES.Value   = data.resistance;
+                sdr_charCON.Value   = data.constitution;
+                sdr_charWEI.Value   = data.weight;
+                sdr_charMOV.Value   = data.movement;
+            }
+        }
+
+
+        /// <summary>
+        /// Only updates the weapon ranks part of the character properties.
+        /// </summary>
+        /// <param name="data"></param>
+        private void FillCharacterPropertiesWeaponRanks (WeaponRanks data)
+        {
+            if (data)
+            {
+                cmb_charRankSword.SelectedIndex     = (int) data.sword;
+                cmb_charRankAxe.SelectedIndex       = (int) data.axe;
+                cmb_charRankLance.SelectedIndex     = (int) data.lance;
+                cmb_charRankBow.SelectedIndex       = (int) data.bow;
+                cmb_charRankFire.SelectedIndex      = (int) data.fire;
+                cmb_charRankThunder.SelectedIndex   = (int) data.thunder;
+                cmb_charRankWind.SelectedIndex      = (int) data.wind;
+                cmb_charRankLight.SelectedIndex     = (int) data.light;
+                cmb_charRankStaff.SelectedIndex     = (int) data.staff;
+                cmb_charRankKnife.SelectedIndex     = (int) data.knife;
+            }
+        }
 
         #endregion
 
@@ -534,7 +752,7 @@ namespace WaterTokenLevelEditor
         /// </summary>
         private void UpdateTerrainLayer()
         {
-            if (IsInitialized)
+            if (IsInitialized && m_selectedTile != -1 && m_updateData)
             {
                 try
                 {
@@ -545,9 +763,12 @@ namespace WaterTokenLevelEditor
                     layer.terrainType       = (TerrainType) cmb_terrainType.SelectedIndex;
                     layer.defenseBonus      = (uint) sdr_terrainDEF.Value;
                     layer.resistanceBonus   = (uint) sdr_terrainRES.Value;
-                    layer.evasionBonus      = sdr_terrainEVA.Value / 100.0;
-                    layer.moveCost          = (uint) sdr_terrainMOV.Value;                      
-                    
+
+                    // Avoid divide-by-zero errors.
+                    layer.evasionBonus      = sdr_terrainEVA.Value != 0.0 ? sdr_terrainEVA.Value / 100.0 : 0.0;
+                    layer.moveCost          = (uint) sdr_terrainMOV.Value;
+
+                    m_unsavedChanges = true;
                 }
 
                 catch (Exception error)
@@ -561,7 +782,7 @@ namespace WaterTokenLevelEditor
         /// <summary>
         /// This simply requests that the terrain information be updated.
         /// </summary>
-        private void ComboBox_UpdateTerrain(object sender, SelectionChangedEventArgs e)
+        private void ComboBox_UpdateTerrain (object sender, SelectionChangedEventArgs e)
         {
             UpdateTerrainLayer();
         }
@@ -585,7 +806,7 @@ namespace WaterTokenLevelEditor
         /// </summary>
         private void UpdateInteractiveLayer()
         {
-            if (IsInitialized)
+            if (IsInitialized && m_selectedTile != -1 && m_updateData)
             {
                 try
                 {
@@ -595,6 +816,8 @@ namespace WaterTokenLevelEditor
                     // Set the current values.
                     layer.interactiveType   = (InteractiveType) cmb_interType.SelectedIndex;
                     layer.effect            = (uint) sdr_interEffect.Value;
+
+                    m_unsavedChanges = true;
                 }
 
                 catch (Exception error)
@@ -641,7 +864,7 @@ namespace WaterTokenLevelEditor
         /// </summary>
         private void UpdateCharacterLayer()
         {
-            if (IsInitialized)
+            if (IsInitialized && m_selectedTile != -1 && m_updateData)
             {
                 try
                 {
@@ -651,6 +874,8 @@ namespace WaterTokenLevelEditor
                     UpdateCharacterCore (character);
                     UpdateCharacterStats (character);
                     UpdateCharacterWeaponRanks (character);
+
+                    m_unsavedChanges = true;
                 }
 
                 catch (Exception error)
@@ -695,8 +920,7 @@ namespace WaterTokenLevelEditor
             stats.resistance    = (uint) sdr_charRES.Value;
             stats.constitution  = (uint) sdr_charCON.Value;
             stats.weight        = (uint) sdr_charWEI.Value;
-            stats.movement      = (uint) sdr_charMOV.Value;
-            
+            stats.movement      = (uint) sdr_charMOV.Value;            
         }
 
 
@@ -758,49 +982,52 @@ namespace WaterTokenLevelEditor
         /// </summary>
         private void TextBox_SpriteBox (object sender, TextChangedEventArgs e)
         {
-            // If any exceptions are thrown then the given location is not valid for the editor.
-            try
+            if (IsInitialized && m_selectedTile != -1 && m_updateData)
             {
-                TextBox textBox = sender as TextBox;
-
-                // Ensure text is valid.
-                string text = textBox.Text.Trim();
-                textBox.Text = text;
-
-                // Obtain the required data.
-                LayerType layer = (LayerType) Convert.ToInt32 (textBox.Tag);
-
-                Image sprite = m_grid.GetImageLayer (m_selectedTile, layer);
-                TileLayer data = m_grid.GetGameTile (m_selectedTile).GetLayer (layer);
-
-                string location = m_workingDirectory + text;
-
-                // Attempt to set the correct values.
-                if (File.Exists (location))
-                {   
-                    if (data)
-                    {
-                        sprite.Source = new BitmapImage (new Uri (@location, UriKind.RelativeOrAbsolute));
-                        data.sprite = text;
-                    }
-                }
-
-                else
+                // If any exceptions are thrown then the given location is not valid for the editor.
+                try
                 {
-                    if (data)
+                    TextBox textBox = sender as TextBox;
+
+                    // Ensure text is valid.
+                    string text = textBox.Text.Trim();
+                    textBox.Text = text;
+
+                    // Obtain the required data.
+                    LayerType layer = (LayerType) Convert.ToInt32 (textBox.Tag);
+
+                    Image sprite = m_grid.GetImageLayer (m_selectedTile, layer);
+                    TileLayer data = m_grid.GetGameTile (m_selectedTile).GetLayer (layer);
+
+                    string location = m_workingDirectory + text;
+
+                    // Attempt to set the correct values.
+                    if (File.Exists (location))
+                    {   
+                        if (data)
+                        {
+                            sprite.Source = new BitmapImage (new Uri (@location, UriKind.RelativeOrAbsolute));
+                            data.sprite = text;
+                        }
+                    }
+
+                    else
                     {
-                        sprite.Source = null;
-                        data.sprite = "";
+                        if (data)
+                        {
+                            sprite.Source = null;
+                            data.sprite = "";
+                        }
                     }
                 }
-            }
 
-            catch (Exception error)
-            {
-                lbl_statusLabel.Content = "Unable to load sprite: " + error.Message;
-            }
+                catch (Exception error)
+                {
+                    lbl_statusLabel.Content = "Unable to load sprite: " + error.Message;
+                }
 
-            m_unsavedChanges = true;
+                m_unsavedChanges = true;
+            }
         }
 
 

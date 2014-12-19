@@ -122,6 +122,39 @@ namespace WaterTokenLevelEditor
             }
         }
 
+
+        /// <summary>
+        /// Configures the border around each layer of a particular tile.
+        /// </summary>
+        /// <param name="tile">The tile to colour.</param>
+        /// <param name="borderThickness">The thickness values for the tile.</param>
+        /// <param name="colour">The colour of the border.</param>
+        public void SetTileBorder (int tile, Thickness borderThickness, Brush colour)
+        {
+            if (IsValid (tile))
+            {
+                // Scale the thickness with the zoom level.
+                borderThickness.Left *= m_zoomLevel;
+                borderThickness.Top *= m_zoomLevel;
+                borderThickness.Right *= m_zoomLevel;
+                borderThickness.Bottom *= m_zoomLevel;
+                
+                // Obtain the data.
+                Tuple<Rectangle, Image[]> tuple = m_images[tile];
+                
+                // Colour the rectangle.
+                tuple.Item1.SetValue (Border.BorderThicknessProperty, borderThickness);
+                tuple.Item1.SetValue (Border.BorderBrushProperty, colour);
+
+                // We don't know which images will actual be displayed so just give them all a border.
+                foreach (Image image in tuple.Item2)
+                {
+                    image.SetValue (Border.BorderThicknessProperty, borderThickness);
+                    image.SetValue (Border.BorderBrushProperty, colour);
+                }
+            }
+        }
+
         
         /// <summary>
         /// Gets the how wide the level grid is in number of tiles.

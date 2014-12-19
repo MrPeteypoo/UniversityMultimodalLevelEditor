@@ -39,6 +39,8 @@ namespace WaterTokenLevelEditor
         {
             if (copy)
             {
+                sprite = copy.sprite;
+
                 m_terrainType = copy.m_terrainType;
                 m_defenseBonus = copy.m_defenseBonus;
                 m_resistanceBonus = copy.m_resistanceBonus;
