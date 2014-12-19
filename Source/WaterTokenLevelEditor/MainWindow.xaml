@@ -4,9 +4,9 @@
         Title="Water Token Level Editor" MinWidth="525" MinHeight="350">
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="120" MinWidth="120"/>
+            <ColumnDefinition Width="135" MinWidth="135"/>
             <ColumnDefinition Width="*" MinWidth="120" />
-            <ColumnDefinition Width="150" MinWidth="150"/>
+            <ColumnDefinition Width="200" MinWidth="200"/>
         </Grid.ColumnDefinitions>
 
         <Grid.RowDefinitions>
@@ -126,285 +126,400 @@
         <DockPanel x:Name="dck_properties" Grid.Column="2" Grid.Row="1" LastChildFill="False" Margin="0" VerticalAlignment="Stretch" Background="{DynamicResource {x:Static SystemColors.ControlLightBrushKey}}" Panel.ZIndex="1" >
             <Label Content="Properties" VerticalAlignment="Top" ScrollViewer.VerticalScrollBarVisibility="Disabled" DockPanel.Dock="Top" Foreground="White" Background="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}"/>
 
-            <Expander x:Name="exp_charProp" Header="Character Layer" HorizontalContentAlignment="Stretch" RenderTransformOrigin="0.5,0.5" VerticalContentAlignment="Stretch" Foreground="{DynamicResource {x:Static SystemColors.ActiveCaptionTextBrushKey}}" Background="#00000000" BorderThickness="0,0,0,0" Padding="5,5,0,0" BorderBrush="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}" Margin="0,0,0,5" Tag="2" DockPanel.Dock="Top" >
-                <ItemsControl HorizontalContentAlignment="Stretch" VerticalContentAlignment="Center">
+            <ScrollViewer Margin="3,0,0,0" HorizontalContentAlignment="Stretch" DockPanel.Dock="Top" VerticalContentAlignment="Stretch" VerticalScrollBarVisibility="Auto">
+                <ItemsControl>
 
-                    <DockPanel Margin="25,0,0,5" LastChildFill="True">
-                        <Label Content="Sprite" Padding="0" Margin="0" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-                        <TextBox DockPanel.Dock="Top" Margin="24,0,10,0" ToolTip="Enter the relative file location here. If it's valid then the sprite will be displayed on the level grid." TextChanged="TextBox_SpriteBox" Tag="2"/>
-                    </DockPanel>
                     
-                    <DockPanel Margin="25,0,0,5" LastChildFill="True">
-                        <Label Content="Type" Padding="0" Margin="0" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-                        <ComboBox x:Name="cmb_charType" Margin="30,0,10,0" VerticalAlignment="Center" SelectedIndex="0" VerticalContentAlignment="Center" DockPanel.Dock="Top" SelectionChanged="ComboBox_UpdateChar">
-                            <ComboBoxItem Content="Boss"/>
-                            <ComboBoxItem Content="Grunt"/>
-                            <ComboBoxItem Content="NPC"/>
-                        </ComboBox>
-                    </DockPanel>
+                    <!-- |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||| -->
+                    <!-- ||||||||||||||                                                          |||||||||||||| -->
+                    <!-- ||||||||||||||                  Interactive properties                  |||||||||||||| -->
+                    <!-- ||||||||||||||                                                          |||||||||||||| -->
+                    <!-- |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||| -->
 
-                    <DockPanel Margin="25,0,0,5" LastChildFill="True">
-                        <Label Content="Name" Padding="0" Margin="0" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-                        <TextBox x:Name="txt_charName" DockPanel.Dock="Top" Margin="23,0,10,0" TextChanged="TextBox_UpdateChar" Tag="2"/>
-                    </DockPanel>
 
-                    <DockPanel Margin="25,0,0,5" LastChildFill="True">
-                        <Label Content="Class" Padding="0" Margin="0" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-                        <ComboBox x:Name="cmb_charClass" Margin="28,0,10,0" VerticalAlignment="Center" SelectedIndex="0" VerticalContentAlignment="Center" DockPanel.Dock="Top" SelectionChanged="ComboBox_UpdateChar">
-                            <ComboBoxItem Content="Ranger"/>
-                            <ComboBoxItem Content="Lord"/>
-                            <ComboBoxItem Content="Hero"/>
-                            <ComboBoxItem Content="Myrmidon"/>
-                            <ComboBoxItem Content="Swordmaster"/>
-                            <ComboBoxItem Content="Soldier"/>
-                            <ComboBoxItem Content="Fighter"/>
-                            <ComboBoxItem Content="Warrior"/>
-                            <ComboBoxItem Content="Archer"/>
-                            <ComboBoxItem Content="Sniper"/>
-                            <ComboBoxItem Content="Knight"/>
-                            <ComboBoxItem Content="General"/>
-                            <ComboBoxItem Content="Sword Knight"/>
-                            <ComboBoxItem Content="Lance Knight"/>
-                            <ComboBoxItem Content="Axe Knight"/>
-                            <ComboBoxItem Content="Bow Knight"/>
-                            <ComboBoxItem Content="Paladin"/>
-                            <ComboBoxItem Content="Pegasus Knight"/>
-                            <ComboBoxItem Content="Falcon Knight"/>
-                            <ComboBoxItem Content="Princess"/>
-                            <ComboBoxItem Content="Wyvern Rider"/>
-                            <ComboBoxItem Content="Wyvern Lord"/>
-                            <ComboBoxItem Content="King"/>
-                            <ComboBoxItem Content="Mage"/>
-                            <ComboBoxItem Content="Sage"/>
-                            <ComboBoxItem Content="Priest"/>
-                            <ComboBoxItem Content="Bishop"/>
-                            <ComboBoxItem Content="Cleric"/>
-                            <ComboBoxItem Content="Valkyrie"/>
-                            <ComboBoxItem Content="Thief"/>
-                            <ComboBoxItem Content="Assassin"/>
-                            <ComboBoxItem Content="Bandit"/>
-                            <ComboBoxItem Content="Berserker"/>
-                            <ComboBoxItem Content="Civilian"/>
-                            <ComboBoxItem Content="Child"/>
-                        </ComboBox>
-                    </DockPanel>
+                    <Expander x:Name="exp_terrainProp" Header="Terrain Layer" HorizontalContentAlignment="Stretch" RenderTransformOrigin="0.5,0.5" VerticalContentAlignment="Stretch" Foreground="{DynamicResource {x:Static SystemColors.ActiveCaptionTextBrushKey}}" Background="#00000000" BorderThickness="0,0,0,0" Padding="5,5,0,0" BorderBrush="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}" Margin="0" Tag="2" DockPanel.Dock="Top" >
+                        <ItemsControl HorizontalContentAlignment="Stretch" VerticalContentAlignment="Center">
 
-                    <DockPanel Margin="25,0,0,5" LastChildFill="True">
-                        <Label Content="Affinity" Padding="0" Margin="0" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-                        <ComboBox x:Name="cmb_charAffinity" Margin="17,0,10,0" VerticalAlignment="Center" SelectedIndex="0" VerticalContentAlignment="Center" DockPanel.Dock="Top" SelectionChanged="ComboBox_UpdateChar">
-                            <ComboBoxItem Content="Anima"/>
-                            <ComboBoxItem Content="Dark"/>
-                            <ComboBoxItem Content="Fire"/>
-                            <ComboBoxItem Content="Ice"/>
-                            <ComboBoxItem Content="Light"/>
-                            <ComboBoxItem Content="Thunder"/>
-                            <ComboBoxItem Content="Wind"/>
-                            <ComboBoxItem Content="Water"/>
-                            <ComboBoxItem Content="Earth"/>
-                            <ComboBoxItem Content="Heaven"/>
-                        </ComboBox>
-                    </DockPanel>
-                    
-                    <Separator Margin="25,5,10,5" />
-                    
-                    <Label Content="Stats" Margin="25, 0, 10, 5" Padding="0"/>
+                            <DockPanel Margin="25,0,0,5" LastChildFill="True">
+                                <Label Content="Sprite" Padding="0" Margin="0" HorizontalAlignment="Left" VerticalAlignment="Center" Width="55" MinWidth="55" MaxWidth="55"/>
+                                <TextBox DockPanel.Dock="Top" Margin="5,0,10,0" ToolTip="Enter the relative file location here. If it's valid then the sprite will be displayed on the level grid, otherwise the value will be ignored." TextChanged="TextBox_SpriteBox" Tag="0"/>
+                            </DockPanel>
 
-                    <DockPanel Margin="25,0,0,5" LastChildFill="True">
-                        <Label Content="{ Binding ElementName=sdr_charLevel, Path=Value }" ContentStringFormat="Level: {0}" Padding="0" Margin="0" HorizontalAlignment="Left" VerticalAlignment="Center" Width="50" MinWidth="50" MaxWidth="50"/>
-                        <Slider x:Name="sdr_charLevel" Margin="5,0,10,0" VerticalAlignment="Center" DockPanel.Dock="Top" Maximum="20" Minimum="1" LargeChange="5" SmallChange="1" Value="10" IsSnapToTickEnabled="True" ValueChanged="Slider_UpdateChar" />
-                    </DockPanel>
+                            <DockPanel Margin="25,0,0,5" LastChildFill="True">
+                                <Label Content="Type" Padding="0" Margin="0" HorizontalAlignment="Left" VerticalAlignment="Center" Width="55" MinWidth="55" MaxWidth="55"/>
+                                <ComboBox x:Name="cmb_terrainType" Margin="5,0,10,0" VerticalAlignment="Center" SelectedIndex="0" VerticalContentAlignment="Center" DockPanel.Dock="Top" SelectionChanged="ComboBox_UpdateTerrain">
+                                    <ComboBoxItem Content="Normal"/>
+                                    <ComboBoxItem Content="Sand"/>
+                                    <ComboBoxItem Content="Forest"/>
+                                    <ComboBoxItem Content="Mountain"/>
+                                    <ComboBoxItem Content="River"/>
+                                    <ComboBoxItem Content="Sea"/>
+                                    <ComboBoxItem Content="Bridge"/>
+                                    <ComboBoxItem Content="Village"/>
+                                    <ComboBoxItem Content="Throne"/>
+                                    <ComboBoxItem Content="Pillar"/>
+                                </ComboBox>
+                            </DockPanel>
 
-                    <DockPanel Margin="25,0,0,5" LastChildFill="True">
-                        <Label Content="{ Binding ElementName=sdr_charHP, Path=Value }" ContentStringFormat="HP: {0}" Padding="0" Margin="0" HorizontalAlignment="Left" VerticalAlignment="Center" Width="50" MinWidth="50" MaxWidth="50"/>
-                        <Slider x:Name="sdr_charHP" Margin="5,0,10,0" VerticalAlignment="Center" DockPanel.Dock="Top" Maximum="80" Minimum="1" LargeChange="10" SmallChange="1" Value="40" IsSnapToTickEnabled="True" ValueChanged="Slider_UpdateChar" ToolTip="The hit points of a character, how much damage they can take before dying." />
-                    </DockPanel>
+                            <Separator Margin="25,5,10,5" />
 
-                    <DockPanel Margin="25,0,0,5" LastChildFill="True">
-                        <Label Content="{ Binding ElementName=sdr_charSTR, Path=Value }" ContentStringFormat="STR: {0}" Padding="0" Margin="0" HorizontalAlignment="Left" VerticalAlignment="Center" Width="50" MinWidth="50" MaxWidth="50"/>
-                        <Slider x:Name="sdr_charSTR" Margin="5,0,10,0" VerticalAlignment="Center" DockPanel.Dock="Top" Maximum="80" Minimum="1" LargeChange="10" SmallChange="1" Value="40" IsSnapToTickEnabled="True" ValueChanged="Slider_UpdateChar" ToolTip="The strength of a character, how much physical damage they inflict on others." />
-                    </DockPanel>
+                            <Label Content="Bonuses" Margin="25, 0, 10, 5" Padding="0"/>
 
-                    <DockPanel Margin="25,0,0,5" LastChildFill="True">
-                        <Label Content="{ Binding ElementName=sdr_charMAG, Path=Value }" ContentStringFormat="MAG: {0}" Padding="0" Margin="0" HorizontalAlignment="Left" VerticalAlignment="Center" Width="50" MinWidth="50" MaxWidth="50"/>
-                        <Slider x:Name="sdr_charMAG" Margin="5,0,10,0" VerticalAlignment="Center" DockPanel.Dock="Top" Maximum="80" Minimum="1" LargeChange="10" SmallChange="1" Value="40" IsSnapToTickEnabled="True" ValueChanged="Slider_UpdateChar" ToolTip="The magical damage that a character can inflict on others." />
-                    </DockPanel>
+                            <DockPanel Margin="25,0,0,5" LastChildFill="True">
+                                <Label Content="{ Binding ElementName=sdr_terrainDEF, Path=Value }" ContentStringFormat="DEF: {0}" Padding="0" Margin="0" HorizontalAlignment="Left" VerticalAlignment="Center" Width="55" MinWidth="55" MaxWidth="55"/>
+                                <Slider x:Name="sdr_terrainDEF" Margin="5,0,10,0" VerticalAlignment="Center" DockPanel.Dock="Top" Maximum="20" Minimum="0" LargeChange="3" SmallChange="1" Value="10" IsSnapToTickEnabled="True" ValueChanged="Slider_UpdateTerrain" ToolTip="How much extra defense is provided by the terrain." />
+                            </DockPanel>
 
-                    <DockPanel Margin="25,0,0,5" LastChildFill="True">
-                        <Label Content="{ Binding ElementName=sdr_charSKL, Path=Value }" ContentStringFormat="SKL: {0}" Padding="0" Margin="0" HorizontalAlignment="Left" VerticalAlignment="Center" Width="50" MinWidth="50" MaxWidth="50"/>
-                        <Slider x:Name="sdr_charSKL" Margin="5,0,10,0" VerticalAlignment="Center" DockPanel.Dock="Top" Maximum="80" Minimum="1" LargeChange="10" SmallChange="1" Value="40" IsSnapToTickEnabled="True" ValueChanged="Slider_UpdateChar" ToolTip="The skill of a character, effects hit rate and evasion." />
-                    </DockPanel>
+                            <DockPanel Margin="25,0,0,5" LastChildFill="True">
+                                <Label Content="{ Binding ElementName=sdr_terrainRES, Path=Value }" ContentStringFormat="RES: {0}" Padding="0" Margin="0" HorizontalAlignment="Left" VerticalAlignment="Center" Width="55" MinWidth="55" MaxWidth="55"/>
+                                <Slider x:Name="sdr_terrainRES" Margin="5,0,10,0" VerticalAlignment="Center" DockPanel.Dock="Top" Maximum="20" Minimum="0" LargeChange="5" SmallChange="1" Value="10" IsSnapToTickEnabled="True" ValueChanged="Slider_UpdateTerrain" ToolTip="How much extra resistance is provided by the terrain." />
+                            </DockPanel>
 
-                    <DockPanel Margin="25,0,0,5" LastChildFill="True">
-                        <Label Content="{ Binding ElementName=sdr_charSPD, Path=Value }" ContentStringFormat="SPD: {0}" Padding="0" Margin="0" HorizontalAlignment="Left" VerticalAlignment="Center" Width="50" MinWidth="50" MaxWidth="50"/>
-                        <Slider x:Name="sdr_charSPD" Margin="5,0,10,0" VerticalAlignment="Center" DockPanel.Dock="Top" Maximum="80" Minimum="1" LargeChange="10" SmallChange="1" Value="40" IsSnapToTickEnabled="True" ValueChanged="Slider_UpdateChar" ToolTip="The speed of a character, determines how many times they hit per turn." />
-                    </DockPanel>
+                            <DockPanel Margin="25,0,0,5" LastChildFill="True">
+                                <Label Content="{ Binding ElementName=sdr_terrainEVA, Path=Value }" ContentStringFormat="EVA: {0}" Padding="0" Margin="0" HorizontalAlignment="Left" VerticalAlignment="Center" Width="55" MinWidth="55" MaxWidth="55"/>
+                                <Slider x:Name="sdr_terrainEVA" Margin="5,0,10,0" VerticalAlignment="Center" DockPanel.Dock="Top" Maximum="100" Minimum="0" LargeChange="10" SmallChange="1" Value="0" IsSnapToTickEnabled="True" ValueChanged="Slider_UpdateTerrain" ToolTip="How much extra evasion chance is provided by the terrain." />
+                            </DockPanel>
 
-                    <DockPanel Margin="25,0,0,5" LastChildFill="True">
-                        <Label Content="{ Binding ElementName=sdr_charLCK, Path=Value }" ContentStringFormat="LCK: {0}" Padding="0" Margin="0" HorizontalAlignment="Left" VerticalAlignment="Center" Width="50" MinWidth="50" MaxWidth="50"/>
-                        <Slider x:Name="sdr_charLCK" Margin="5,0,10,0" VerticalAlignment="Center" DockPanel.Dock="Top" Maximum="80" Minimum="1" LargeChange="10" SmallChange="1" Value="40" IsSnapToTickEnabled="True" ValueChanged="Slider_UpdateChar" ToolTip="How lucky a character is, effects item drop and critical hits." />
-                    </DockPanel>
+                            <Separator Margin="25,5,10,5" />
 
-                    <DockPanel Margin="25,0,0,5" LastChildFill="True">
-                        <Label Content="{ Binding ElementName=sdr_charDEF, Path=Value }" ContentStringFormat="DEF: {0}" Padding="0" Margin="0" HorizontalAlignment="Left" VerticalAlignment="Center" Width="50" MinWidth="50" MaxWidth="50"/>
-                        <Slider x:Name="sdr_charDEF" Margin="5,0,10,0" VerticalAlignment="Center" DockPanel.Dock="Top" Maximum="80" Minimum="1" LargeChange="10" SmallChange="1" Value="40" IsSnapToTickEnabled="True" ValueChanged="Slider_UpdateChar" ToolTip="The defense of a character, how much physical damage is absorbed every time they're hit." />
-                    </DockPanel>
+                            <DockPanel Margin="25,0,0,5" LastChildFill="True">
+                                <Label Content="{ Binding ElementName=sdr_terrainMOV, Path=Value }" ContentStringFormat="Cost: {0}" Padding="0" Margin="0" HorizontalAlignment="Left" VerticalAlignment="Center" Width="55" MinWidth="55" MaxWidth="55"/>
+                                <Slider x:Name="sdr_terrainMOV" Margin="5,0,10,0" VerticalAlignment="Center" DockPanel.Dock="Top" Maximum="10" Minimum="0" LargeChange="3" SmallChange="1" Value="5" IsSnapToTickEnabled="True" ValueChanged="Slider_UpdateTerrain" ToolTip="How many extra movement points are spent when moving on the terrain." />
+                            </DockPanel>
 
-                    <DockPanel Margin="25,0,0,5" LastChildFill="True">
-                        <Label Content="{ Binding ElementName=sdr_charRES, Path=Value }" ContentStringFormat="RES: {0}" Padding="0" Margin="0" HorizontalAlignment="Left" VerticalAlignment="Center" Width="50" MinWidth="50" MaxWidth="50"/>
-                        <Slider x:Name="sdr_charRES" Margin="5,0,10,0" VerticalAlignment="Center" DockPanel.Dock="Top" Maximum="80" Minimum="1" LargeChange="10" SmallChange="1" Value="40" IsSnapToTickEnabled="True" ValueChanged="Slider_UpdateChar" ToolTip="The resistance of a character, how much magical damage is absorbed every time they're hit." />
-                    </DockPanel>
+                        </ItemsControl>
+                    </Expander>
 
-                    <DockPanel Margin="25,0,0,5" LastChildFill="True">
-                        <Label Content="{ Binding ElementName=sdr_charCON, Path=Value }" ContentStringFormat="CON: {0}" Padding="0" Margin="0" HorizontalAlignment="Left" VerticalAlignment="Center" Width="50" MinWidth="50" MaxWidth="50"/>
-                        <Slider x:Name="sdr_charCON" Margin="5,0,10,0" VerticalAlignment="Center" DockPanel.Dock="Top" Maximum="80" Minimum="1" LargeChange="10" SmallChange="1" Value="40" IsSnapToTickEnabled="True" ValueChanged="Slider_UpdateChar" ToolTip="The constitution of a character, effects ability to reduce the weight of weapons and who they can pick up." />
-                    </DockPanel>
+                    <Separator Background="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}" Margin="0,5,0,5" Padding="0" BorderBrush="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}" BorderThickness="0" DockPanel.Dock="Top" />
 
-                    <DockPanel Margin="25,0,0,5" LastChildFill="True">
-                        <Label Content="{ Binding ElementName=sdr_charWEI, Path=Value }" ContentStringFormat="WEI: {0}" Padding="0" Margin="0" HorizontalAlignment="Left" VerticalAlignment="Center" Width="50" MinWidth="50" MaxWidth="50"/>
-                        <Slider x:Name="sdr_charWEI" Margin="5,0,10,0" VerticalAlignment="Center" DockPanel.Dock="Top" Maximum="80" Minimum="1" LargeChange="10" SmallChange="1" Value="40" IsSnapToTickEnabled="True" ValueChanged="Slider_UpdateChar" ToolTip="How much a character weighs, effects their ability to rescue and shove others." />
-                    </DockPanel>
 
-                    <DockPanel Margin="25,0,0,5" LastChildFill="True">
-                        <Label Content="{ Binding ElementName=sdr_charMOV, Path=Value }" ContentStringFormat="MOV: {0}" Padding="0" Margin="0" HorizontalAlignment="Left" VerticalAlignment="Center" Width="50" MinWidth="50" MaxWidth="50"/>
-                        <Slider x:Name="sdr_charMOV" Margin="5,0,10,0" VerticalAlignment="Center" DockPanel.Dock="Top" Maximum="80" Minimum="1" LargeChange="10" SmallChange="1" Value="40" IsSnapToTickEnabled="True" ValueChanged="Slider_UpdateChar" ToolTip="The movement points available to a character, effects how far they can move each turn." />
-                    </DockPanel>
+                    <!-- |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||| -->
+                    <!-- ||||||||||||||                                                          |||||||||||||| -->
+                    <!-- ||||||||||||||                  Interactive properties                  |||||||||||||| -->
+                    <!-- ||||||||||||||                                                          |||||||||||||| -->
+                    <!-- |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||| -->
 
-                    <Separator Margin="25,5,10,5" />
 
-                    <Label Content="Weapon Ranks" Margin="25, 0, 10, 5" Padding="0"/>
+                    <Expander x:Name="exp_interProp" Header="Interactive Layer" HorizontalContentAlignment="Stretch" RenderTransformOrigin="0.5,0.5" VerticalContentAlignment="Stretch" Foreground="{DynamicResource {x:Static SystemColors.ActiveCaptionTextBrushKey}}" Background="#00000000" BorderThickness="0,0,0,0" Padding="5,5,0,0" BorderBrush="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}" Margin="0" Tag="2" DockPanel.Dock="Top" >
+                        <ItemsControl HorizontalContentAlignment="Stretch" VerticalContentAlignment="Center">
 
-                    <DockPanel Margin="25,0,0,5" LastChildFill="True">
-                        <Label Content="Sword" Padding="0" Margin="0" HorizontalAlignment="Left" VerticalAlignment="Center" Width="50" MinWidth="50" MaxWidth="50"/>
-                        <ComboBox x:Name="cmb_charRankSword" Margin="5,0,10,0" VerticalAlignment="Center" SelectedIndex="1" VerticalContentAlignment="Center" DockPanel.Dock="Top" SelectionChanged="ComboBox_UpdateChar">
-                            <ComboBoxItem Content="N/A"/>
-                            <ComboBoxItem Content="E"/>
-                            <ComboBoxItem Content="D"/>
-                            <ComboBoxItem Content="C"/>
-                            <ComboBoxItem Content="B"/>
-                            <ComboBoxItem Content="A"/>
-                            <ComboBoxItem Content="S"/>
-                        </ComboBox>
-                    </DockPanel>
+                            <DockPanel Margin="25,0,0,5" LastChildFill="True">
+                                <Label Content="Sprite" Padding="0" Margin="0" HorizontalAlignment="Left" VerticalAlignment="Center" Width="55" MinWidth="55" MaxWidth="55"/>
+                                <TextBox DockPanel.Dock="Top" Margin="5,0,10,0" ToolTip="Enter the relative file location here. If it's valid then the sprite will be displayed on the level grid, otherwise the value will be ignored." TextChanged="TextBox_SpriteBox" Tag="1"/>
+                            </DockPanel>
 
-                    <DockPanel Margin="25,0,0,5" LastChildFill="True">
-                        <Label Content="Axe" Padding="0" Margin="0" HorizontalAlignment="Left" VerticalAlignment="Center" Width="50" MinWidth="50" MaxWidth="50"/>
-                        <ComboBox x:Name="cmb_charRankAxe" Margin="5,0,10,0" VerticalAlignment="Center" SelectedIndex="0" VerticalContentAlignment="Center" DockPanel.Dock="Top" SelectionChanged="ComboBox_UpdateChar">
-                            <ComboBoxItem Content="N/A"/>
-                            <ComboBoxItem Content="E"/>
-                            <ComboBoxItem Content="D"/>
-                            <ComboBoxItem Content="C"/>
-                            <ComboBoxItem Content="B"/>
-                            <ComboBoxItem Content="A"/>
-                            <ComboBoxItem Content="S"/>
-                        </ComboBox>
-                    </DockPanel>
+                            <DockPanel Margin="25,0,0,5" LastChildFill="True">
+                                <Label Content="Type" Padding="0" Margin="0" HorizontalAlignment="Left" VerticalAlignment="Center" Width="55" MinWidth="55" MaxWidth="55"/>
+                                <ComboBox x:Name="cmb_interType" Margin="5,0,10,0" VerticalAlignment="Center" SelectedIndex="0" VerticalContentAlignment="Center" DockPanel.Dock="Top" SelectionChanged="ComboBox_UpdateInteractive">
+                                    <ComboBoxItem Content="Player Spawn"/>
+                                    <ComboBoxItem Content="Regen Point"/>
+                                    <ComboBoxItem Content="Treasure"/>
+                                    <ComboBoxItem Content="Door"/>
+                                    <ComboBoxItem Content="Village"/>
+                                    <ComboBoxItem Content="Goal"/>
+                                    <ComboBoxItem Content="Boundary"/>
+                                </ComboBox>
+                            </DockPanel>
 
-                    <DockPanel Margin="25,0,0,5" LastChildFill="True">
-                        <Label Content="Lance" Padding="0" Margin="0" HorizontalAlignment="Left" VerticalAlignment="Center" Width="50" MinWidth="50" MaxWidth="50"/>
-                        <ComboBox x:Name="cmb_charRankLance" Margin="5,0,10,0" VerticalAlignment="Center" SelectedIndex="0" VerticalContentAlignment="Center" DockPanel.Dock="Top" SelectionChanged="ComboBox_UpdateChar">
-                            <ComboBoxItem Content="N/A"/>
-                            <ComboBoxItem Content="E"/>
-                            <ComboBoxItem Content="D"/>
-                            <ComboBoxItem Content="C"/>
-                            <ComboBoxItem Content="B"/>
-                            <ComboBoxItem Content="A"/>
-                            <ComboBoxItem Content="S"/>
-                        </ComboBox>
-                    </DockPanel>
+                            <DockPanel Margin="25,0,0,5" LastChildFill="True">
+                                <Label Content="{ Binding ElementName=sdr_interEffect, Path=Value }" ContentStringFormat="Effect: {0}" Padding="0" Margin="0" HorizontalAlignment="Left" VerticalAlignment="Center" Width="55" MinWidth="55" MaxWidth="55"/>
+                                <Slider x:Name="sdr_interEffect" Margin="5,0,10,0" VerticalAlignment="Center" DockPanel.Dock="Top" Maximum="999" Minimum="0" LargeChange="100" SmallChange="1" Value="999" IsSnapToTickEnabled="True" ValueChanged="Slider_UpdateInteractive" ToolTip="This may not be used, it could be the scene ID of the village, item ID of the treasure or the HP recovered each turn from a Regen Point. It depends on the type." />
+                            </DockPanel>
 
-                    <DockPanel Margin="25,0,0,5" LastChildFill="True">
-                        <Label Content="Bow" Padding="0" Margin="0" HorizontalAlignment="Left" VerticalAlignment="Center" Width="50" MinWidth="50" MaxWidth="50"/>
-                        <ComboBox x:Name="cmb_charRankBow" Margin="5,0,10,0" VerticalAlignment="Center" SelectedIndex="0" VerticalContentAlignment="Center" DockPanel.Dock="Top" SelectionChanged="ComboBox_UpdateChar">
-                            <ComboBoxItem Content="N/A"/>
-                            <ComboBoxItem Content="E"/>
-                            <ComboBoxItem Content="D"/>
-                            <ComboBoxItem Content="C"/>
-                            <ComboBoxItem Content="B"/>
-                            <ComboBoxItem Content="A"/>
-                            <ComboBoxItem Content="S"/>
-                        </ComboBox>
-                    </DockPanel>
+                        </ItemsControl>
+                    </Expander>
 
-                    <DockPanel Margin="25,0,0,5" LastChildFill="True">
-                        <Label Content="Fire" Padding="0" Margin="0" HorizontalAlignment="Left" VerticalAlignment="Center" Width="50" MinWidth="50" MaxWidth="50"/>
-                        <ComboBox x:Name="cmb_charRankFire" Margin="5,0,10,0" VerticalAlignment="Center" SelectedIndex="0" VerticalContentAlignment="Center" DockPanel.Dock="Top" SelectionChanged="ComboBox_UpdateChar">
-                            <ComboBoxItem Content="N/A"/>
-                            <ComboBoxItem Content="E"/>
-                            <ComboBoxItem Content="D"/>
-                            <ComboBoxItem Content="C"/>
-                            <ComboBoxItem Content="B"/>
-                            <ComboBoxItem Content="A"/>
-                            <ComboBoxItem Content="S"/>
-                        </ComboBox>
-                    </DockPanel>
+                    <Separator Background="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}" Margin="0,5,0,5" Padding="0" BorderBrush="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}" BorderThickness="0" DockPanel.Dock="Top" />
 
-                    <DockPanel Margin="25,0,0,5" LastChildFill="True">
-                        <Label Content="Thunder" Padding="0" Margin="0" HorizontalAlignment="Left" VerticalAlignment="Center" Width="50" MinWidth="50" MaxWidth="50"/>
-                        <ComboBox x:Name="cmb_charRankThunder" Margin="5,0,10,0" VerticalAlignment="Center" SelectedIndex="0" VerticalContentAlignment="Center" DockPanel.Dock="Top" SelectionChanged="ComboBox_UpdateChar">
-                            <ComboBoxItem Content="N/A"/>
-                            <ComboBoxItem Content="E"/>
-                            <ComboBoxItem Content="D"/>
-                            <ComboBoxItem Content="C"/>
-                            <ComboBoxItem Content="B"/>
-                            <ComboBoxItem Content="A"/>
-                            <ComboBoxItem Content="S"/>
-                        </ComboBox>
-                    </DockPanel>
+                    <!-- |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||| -->
+                    <!-- ||||||||||||||                                                          |||||||||||||| -->
+                    <!-- ||||||||||||||                    Character properties                  |||||||||||||| -->
+                    <!-- ||||||||||||||                                                          |||||||||||||| -->
+                    <!-- |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||| -->
 
-                    <DockPanel Margin="25,0,0,5" LastChildFill="True">
-                        <Label Content="Wind" Padding="0" Margin="0" HorizontalAlignment="Left" VerticalAlignment="Center" Width="50" MinWidth="50" MaxWidth="50"/>
-                        <ComboBox x:Name="cmb_charRankWind" Margin="5,0,10,0" VerticalAlignment="Center" SelectedIndex="0" VerticalContentAlignment="Center" DockPanel.Dock="Top" SelectionChanged="ComboBox_UpdateChar">
-                            <ComboBoxItem Content="N/A"/>
-                            <ComboBoxItem Content="E"/>
-                            <ComboBoxItem Content="D"/>
-                            <ComboBoxItem Content="C"/>
-                            <ComboBoxItem Content="B"/>
-                            <ComboBoxItem Content="A"/>
-                            <ComboBoxItem Content="S"/>
-                        </ComboBox>
-                    </DockPanel>
 
-                    <DockPanel Margin="25,0,0,5" LastChildFill="True">
-                        <Label Content="Light" Padding="0" Margin="0" HorizontalAlignment="Left" VerticalAlignment="Center" Width="50" MinWidth="50" MaxWidth="50"/>
-                        <ComboBox x:Name="cmb_charRankLight" Margin="5,0,10,0" VerticalAlignment="Center" SelectedIndex="0" VerticalContentAlignment="Center" DockPanel.Dock="Top" SelectionChanged="ComboBox_UpdateChar">
-                            <ComboBoxItem Content="N/A"/>
-                            <ComboBoxItem Content="E"/>
-                            <ComboBoxItem Content="D"/>
-                            <ComboBoxItem Content="C"/>
-                            <ComboBoxItem Content="B"/>
-                            <ComboBoxItem Content="A"/>
-                            <ComboBoxItem Content="S"/>
-                        </ComboBox>
-                    </DockPanel>
+                    <Expander x:Name="exp_charProp" Header="Character Layer" HorizontalContentAlignment="Stretch" RenderTransformOrigin="0.5,0.5" VerticalContentAlignment="Stretch" Foreground="{DynamicResource {x:Static SystemColors.ActiveCaptionTextBrushKey}}" Background="#00000000" BorderThickness="0,0,0,0" Padding="5,5,0,0" BorderBrush="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}" Margin="0,0,0,5" Tag="2" DockPanel.Dock="Top" >
+                        <ItemsControl HorizontalContentAlignment="Stretch" VerticalContentAlignment="Center">
 
-                    <DockPanel Margin="25,0,0,5" LastChildFill="True">
-                        <Label Content="Staff" Padding="0" Margin="0" HorizontalAlignment="Left" VerticalAlignment="Center" Width="50" MinWidth="50" MaxWidth="50"/>
-                        <ComboBox x:Name="cmb_charRankStaff" Margin="5,0,10,0" VerticalAlignment="Center" SelectedIndex="0" VerticalContentAlignment="Center" DockPanel.Dock="Top" SelectionChanged="ComboBox_UpdateChar">
-                            <ComboBoxItem Content="N/A"/>
-                            <ComboBoxItem Content="E"/>
-                            <ComboBoxItem Content="D"/>
-                            <ComboBoxItem Content="C"/>
-                            <ComboBoxItem Content="B"/>
-                            <ComboBoxItem Content="A"/>
-                            <ComboBoxItem Content="S"/>
-                        </ComboBox>
-                    </DockPanel>
+                            <DockPanel Margin="25,0,0,5" LastChildFill="True">
+                                <Label Content="Sprite" Padding="0" Margin="0" HorizontalAlignment="Left" VerticalAlignment="Center" Width="55" MinWidth="55" MaxWidth="55"/>
+                                <TextBox DockPanel.Dock="Top" Margin="5,0,10,0" ToolTip="Enter the relative file location here. If it's valid then the sprite will be displayed on the level grid." TextChanged="TextBox_SpriteBox" Tag="2"/>
+                            </DockPanel>
 
-                    <DockPanel Margin="25,0,0,5" LastChildFill="True">
-                        <Label Content="Knife" Padding="0" Margin="0" HorizontalAlignment="Left" VerticalAlignment="Center" Width="50" MinWidth="50" MaxWidth="50"/>
-                        <ComboBox x:Name="cmb_charRankKnife" Margin="5,0,10,0" VerticalAlignment="Center" SelectedIndex="0" VerticalContentAlignment="Center" DockPanel.Dock="Top" SelectionChanged="ComboBox_UpdateChar">
-                            <ComboBoxItem Content="N/A"/>
-                            <ComboBoxItem Content="E"/>
-                            <ComboBoxItem Content="D"/>
-                            <ComboBoxItem Content="C"/>
-                            <ComboBoxItem Content="B"/>
-                            <ComboBoxItem Content="A"/>
-                            <ComboBoxItem Content="S"/>
-                        </ComboBox>
-                    </DockPanel>
+                            <DockPanel Margin="25,0,0,5" LastChildFill="True">
+                                <Label Content="Type" Padding="0" Margin="0" HorizontalAlignment="Left" VerticalAlignment="Center" Width="55" MinWidth="55" MaxWidth="55"/>
+                                <ComboBox x:Name="cmb_charType" Margin="5,0,10,0" VerticalAlignment="Center" SelectedIndex="0" VerticalContentAlignment="Center" DockPanel.Dock="Top" SelectionChanged="ComboBox_UpdateChar">
+                                    <ComboBoxItem Content="Boss"/>
+                                    <ComboBoxItem Content="Grunt"/>
+                                    <ComboBoxItem Content="NPC"/>
+                                </ComboBox>
+                            </DockPanel>
 
+                            <DockPanel Margin="25,0,0,5" LastChildFill="True">
+                                <Label Content="Name" Padding="0" Margin="0" HorizontalAlignment="Left" VerticalAlignment="Center" Width="55"/>
+                                <TextBox x:Name="txt_charName" DockPanel.Dock="Top" Margin="5,0,10,0" TextChanged="TextBox_UpdateChar" Tag="2"/>
+                            </DockPanel>
+
+                            <DockPanel Margin="25,0,0,5" LastChildFill="True">
+                                <Label Content="Class" Padding="0" Margin="0" HorizontalAlignment="Left" VerticalAlignment="Center" Width="55"/>
+                                <ComboBox x:Name="cmb_charClass" Margin="5,0,10,0" VerticalAlignment="Center" SelectedIndex="0" VerticalContentAlignment="Center" DockPanel.Dock="Top" SelectionChanged="ComboBox_UpdateChar">
+                                    <ComboBoxItem Content="Ranger"/>
+                                    <ComboBoxItem Content="Lord"/>
+                                    <ComboBoxItem Content="Hero"/>
+                                    <ComboBoxItem Content="Myrmidon"/>
+                                    <ComboBoxItem Content="Swordmaster"/>
+                                    <ComboBoxItem Content="Soldier"/>
+                                    <ComboBoxItem Content="Fighter"/>
+                                    <ComboBoxItem Content="Warrior"/>
+                                    <ComboBoxItem Content="Archer"/>
+                                    <ComboBoxItem Content="Sniper"/>
+                                    <ComboBoxItem Content="Knight"/>
+                                    <ComboBoxItem Content="General"/>
+                                    <ComboBoxItem Content="Sword Knight"/>
+                                    <ComboBoxItem Content="Lance Knight"/>
+                                    <ComboBoxItem Content="Axe Knight"/>
+                                    <ComboBoxItem Content="Bow Knight"/>
+                                    <ComboBoxItem Content="Paladin"/>
+                                    <ComboBoxItem Content="Pegasus Knight"/>
+                                    <ComboBoxItem Content="Falcon Knight"/>
+                                    <ComboBoxItem Content="Princess"/>
+                                    <ComboBoxItem Content="Wyvern Rider"/>
+                                    <ComboBoxItem Content="Wyvern Lord"/>
+                                    <ComboBoxItem Content="King"/>
+                                    <ComboBoxItem Content="Mage"/>
+                                    <ComboBoxItem Content="Sage"/>
+                                    <ComboBoxItem Content="Priest"/>
+                                    <ComboBoxItem Content="Bishop"/>
+                                    <ComboBoxItem Content="Cleric"/>
+                                    <ComboBoxItem Content="Valkyrie"/>
+                                    <ComboBoxItem Content="Thief"/>
+                                    <ComboBoxItem Content="Assassin"/>
+                                    <ComboBoxItem Content="Bandit"/>
+                                    <ComboBoxItem Content="Berserker"/>
+                                    <ComboBoxItem Content="Civilian"/>
+                                    <ComboBoxItem Content="Child"/>
+                                </ComboBox>
+                            </DockPanel>
+
+                            <DockPanel Margin="25,0,0,5" LastChildFill="True">
+                                <Label Content="Affinity" Padding="0" Margin="0" HorizontalAlignment="Left" VerticalAlignment="Center" Width="55"/>
+                                <ComboBox x:Name="cmb_charAffinity" Margin="5,0,10,0" VerticalAlignment="Center" SelectedIndex="0" VerticalContentAlignment="Center" DockPanel.Dock="Top" SelectionChanged="ComboBox_UpdateChar">
+                                    <ComboBoxItem Content="Anima"/>
+                                    <ComboBoxItem Content="Dark"/>
+                                    <ComboBoxItem Content="Fire"/>
+                                    <ComboBoxItem Content="Ice"/>
+                                    <ComboBoxItem Content="Light"/>
+                                    <ComboBoxItem Content="Thunder"/>
+                                    <ComboBoxItem Content="Wind"/>
+                                    <ComboBoxItem Content="Water"/>
+                                    <ComboBoxItem Content="Earth"/>
+                                    <ComboBoxItem Content="Heaven"/>
+                                </ComboBox>
+                            </DockPanel>
+
+                            <Separator Margin="25,5,10,5" />
+
+                            <Label Content="Stats" Margin="25, 0, 10, 5" Padding="0"/>
+
+                            <DockPanel Margin="25,0,0,5" LastChildFill="True">
+                                <Label Content="{ Binding ElementName=sdr_charLevel, Path=Value }" ContentStringFormat="Level: {0}" Padding="0" Margin="0" HorizontalAlignment="Left" VerticalAlignment="Center" Width="55" MinWidth="55" MaxWidth="55"/>
+                                <Slider x:Name="sdr_charLevel" Margin="5,0,10,0" VerticalAlignment="Center" DockPanel.Dock="Top" Maximum="20" Minimum="1" LargeChange="5" SmallChange="1" Value="10" IsSnapToTickEnabled="True" ValueChanged="Slider_UpdateChar" />
+                            </DockPanel>
+
+                            <DockPanel Margin="25,0,0,5" LastChildFill="True">
+                                <Label Content="{ Binding ElementName=sdr_charHP, Path=Value }" ContentStringFormat="HP: {0}" Padding="0" Margin="0" HorizontalAlignment="Left" VerticalAlignment="Center" Width="55" MinWidth="55" MaxWidth="55"/>
+                                <Slider x:Name="sdr_charHP" Margin="5,0,10,0" VerticalAlignment="Center" DockPanel.Dock="Top" Maximum="80" Minimum="1" LargeChange="10" SmallChange="1" Value="40" IsSnapToTickEnabled="True" ValueChanged="Slider_UpdateChar" ToolTip="The hit points of a character, how much damage they can take before dying." />
+                            </DockPanel>
+
+                            <DockPanel Margin="25,0,0,5" LastChildFill="True">
+                                <Label Content="{ Binding ElementName=sdr_charSTR, Path=Value }" ContentStringFormat="STR: {0}" Padding="0" Margin="0" HorizontalAlignment="Left" VerticalAlignment="Center" Width="55" MinWidth="55" MaxWidth="55"/>
+                                <Slider x:Name="sdr_charSTR" Margin="5,0,10,0" VerticalAlignment="Center" DockPanel.Dock="Top" Maximum="80" Minimum="1" LargeChange="10" SmallChange="1" Value="40" IsSnapToTickEnabled="True" ValueChanged="Slider_UpdateChar" ToolTip="The strength of a character, how much physical damage they inflict on others." />
+                            </DockPanel>
+
+                            <DockPanel Margin="25,0,0,5" LastChildFill="True">
+                                <Label Content="{ Binding ElementName=sdr_charMAG, Path=Value }" ContentStringFormat="MAG: {0}" Padding="0" Margin="0" HorizontalAlignment="Left" VerticalAlignment="Center" Width="55" MinWidth="55" MaxWidth="55"/>
+                                <Slider x:Name="sdr_charMAG" Margin="5,0,10,0" VerticalAlignment="Center" DockPanel.Dock="Top" Maximum="80" Minimum="1" LargeChange="10" SmallChange="1" Value="40" IsSnapToTickEnabled="True" ValueChanged="Slider_UpdateChar" ToolTip="The magical damage that a character can inflict on others." />
+                            </DockPanel>
+
+                            <DockPanel Margin="25,0,0,5" LastChildFill="True">
+                                <Label Content="{ Binding ElementName=sdr_charSKL, Path=Value }" ContentStringFormat="SKL: {0}" Padding="0" Margin="0" HorizontalAlignment="Left" VerticalAlignment="Center" Width="55" MinWidth="55" MaxWidth="55"/>
+                                <Slider x:Name="sdr_charSKL" Margin="5,0,10,0" VerticalAlignment="Center" DockPanel.Dock="Top" Maximum="80" Minimum="1" LargeChange="10" SmallChange="1" Value="40" IsSnapToTickEnabled="True" ValueChanged="Slider_UpdateChar" ToolTip="The skill of a character, effects hit rate and evasion." />
+                            </DockPanel>
+
+                            <DockPanel Margin="25,0,0,5" LastChildFill="True">
+                                <Label Content="{ Binding ElementName=sdr_charSPD, Path=Value }" ContentStringFormat="SPD: {0}" Padding="0" Margin="0" HorizontalAlignment="Left" VerticalAlignment="Center" Width="55" MinWidth="55" MaxWidth="55"/>
+                                <Slider x:Name="sdr_charSPD" Margin="5,0,10,0" VerticalAlignment="Center" DockPanel.Dock="Top" Maximum="80" Minimum="1" LargeChange="10" SmallChange="1" Value="40" IsSnapToTickEnabled="True" ValueChanged="Slider_UpdateChar" ToolTip="The speed of a character, determines how many times they hit per turn." />
+                            </DockPanel>
+
+                            <DockPanel Margin="25,0,0,5" LastChildFill="True">
+                                <Label Content="{ Binding ElementName=sdr_charLCK, Path=Value }" ContentStringFormat="LCK: {0}" Padding="0" Margin="0" HorizontalAlignment="Left" VerticalAlignment="Center" Width="55" MinWidth="55" MaxWidth="55"/>
+                                <Slider x:Name="sdr_charLCK" Margin="5,0,10,0" VerticalAlignment="Center" DockPanel.Dock="Top" Maximum="80" Minimum="1" LargeChange="10" SmallChange="1" Value="40" IsSnapToTickEnabled="True" ValueChanged="Slider_UpdateChar" ToolTip="How lucky a character is, effects item drop and critical hits." />
+                            </DockPanel>
+
+                            <DockPanel Margin="25,0,0,5" LastChildFill="True">
+                                <Label Content="{ Binding ElementName=sdr_charDEF, Path=Value }" ContentStringFormat="DEF: {0}" Padding="0" Margin="0" HorizontalAlignment="Left" VerticalAlignment="Center" Width="55" MinWidth="55" MaxWidth="55"/>
+                                <Slider x:Name="sdr_charDEF" Margin="5,0,10,0" VerticalAlignment="Center" DockPanel.Dock="Top" Maximum="80" Minimum="1" LargeChange="10" SmallChange="1" Value="40" IsSnapToTickEnabled="True" ValueChanged="Slider_UpdateChar" ToolTip="The defense of a character, how much physical damage is absorbed every time they're hit." />
+                            </DockPanel>
+
+                            <DockPanel Margin="25,0,0,5" LastChildFill="True">
+                                <Label Content="{ Binding ElementName=sdr_charRES, Path=Value }" ContentStringFormat="RES: {0}" Padding="0" Margin="0" HorizontalAlignment="Left" VerticalAlignment="Center" Width="55" MinWidth="55" MaxWidth="55"/>
+                                <Slider x:Name="sdr_charRES" Margin="5,0,10,0" VerticalAlignment="Center" DockPanel.Dock="Top" Maximum="80" Minimum="1" LargeChange="10" SmallChange="1" Value="40" IsSnapToTickEnabled="True" ValueChanged="Slider_UpdateChar" ToolTip="The resistance of a character, how much magical damage is absorbed every time they're hit." />
+                            </DockPanel>
+
+                            <DockPanel Margin="25,0,0,5" LastChildFill="True">
+                                <Label Content="{ Binding ElementName=sdr_charCON, Path=Value }" ContentStringFormat="CON: {0}" Padding="0" Margin="0" HorizontalAlignment="Left" VerticalAlignment="Center" Width="55" MinWidth="55" MaxWidth="55"/>
+                                <Slider x:Name="sdr_charCON" Margin="5,0,10,0" VerticalAlignment="Center" DockPanel.Dock="Top" Maximum="80" Minimum="1" LargeChange="10" SmallChange="1" Value="40" IsSnapToTickEnabled="True" ValueChanged="Slider_UpdateChar" ToolTip="The constitution of a character, effects ability to reduce the weight of weapons and who they can pick up." />
+                            </DockPanel>
+
+                            <DockPanel Margin="25,0,0,5" LastChildFill="True">
+                                <Label Content="{ Binding ElementName=sdr_charWEI, Path=Value }" ContentStringFormat="WEI: {0}" Padding="0" Margin="0" HorizontalAlignment="Left" VerticalAlignment="Center" Width="55" MinWidth="55" MaxWidth="55"/>
+                                <Slider x:Name="sdr_charWEI" Margin="5,0,10,0" VerticalAlignment="Center" DockPanel.Dock="Top" Maximum="80" Minimum="1" LargeChange="10" SmallChange="1" Value="40" IsSnapToTickEnabled="True" ValueChanged="Slider_UpdateChar" ToolTip="How much a character weighs, effects their ability to rescue and shove others." />
+                            </DockPanel>
+
+                            <DockPanel Margin="25,0,0,5" LastChildFill="True">
+                                <Label Content="{ Binding ElementName=sdr_charMOV, Path=Value }" ContentStringFormat="MOV: {0}" Padding="0" Margin="0" HorizontalAlignment="Left" VerticalAlignment="Center" Width="55" MinWidth="55" MaxWidth="55"/>
+                                <Slider x:Name="sdr_charMOV" Margin="5,0,10,0" VerticalAlignment="Center" DockPanel.Dock="Top" Maximum="80" Minimum="1" LargeChange="10" SmallChange="1" Value="40" IsSnapToTickEnabled="True" ValueChanged="Slider_UpdateChar" ToolTip="The movement points available to a character, effects how far they can move each turn." />
+                            </DockPanel>
+
+                            <Separator Margin="25,5,10,5" />
+
+                            <Label Content="Weapon Ranks" Margin="25, 0, 10, 5" Padding="0"/>
+
+                            <DockPanel Margin="25,0,0,5" LastChildFill="True">
+                                <Label Content="Sword" Padding="0" Margin="0" HorizontalAlignment="Left" VerticalAlignment="Center" Width="55" MinWidth="55" MaxWidth="55"/>
+                                <ComboBox x:Name="cmb_charRankSword" Margin="5,0,10,0" VerticalAlignment="Center" SelectedIndex="1" VerticalContentAlignment="Center" DockPanel.Dock="Top" SelectionChanged="ComboBox_UpdateChar">
+                                    <ComboBoxItem Content="N/A"/>
+                                    <ComboBoxItem Content="E"/>
+                                    <ComboBoxItem Content="D"/>
+                                    <ComboBoxItem Content="C"/>
+                                    <ComboBoxItem Content="B"/>
+                                    <ComboBoxItem Content="A"/>
+                                    <ComboBoxItem Content="S"/>
+                                </ComboBox>
+                            </DockPanel>
+
+                            <DockPanel Margin="25,0,0,5" LastChildFill="True">
+                                <Label Content="Axe" Padding="0" Margin="0" HorizontalAlignment="Left" VerticalAlignment="Center" Width="55" MinWidth="55" MaxWidth="55"/>
+                                <ComboBox x:Name="cmb_charRankAxe" Margin="5,0,10,0" VerticalAlignment="Center" SelectedIndex="0" VerticalContentAlignment="Center" DockPanel.Dock="Top" SelectionChanged="ComboBox_UpdateChar">
+                                    <ComboBoxItem Content="N/A"/>
+                                    <ComboBoxItem Content="E"/>
+                                    <ComboBoxItem Content="D"/>
+                                    <ComboBoxItem Content="C"/>
+                                    <ComboBoxItem Content="B"/>
+                                    <ComboBoxItem Content="A"/>
+                                    <ComboBoxItem Content="S"/>
+                                </ComboBox>
+                            </DockPanel>
+
+                            <DockPanel Margin="25,0,0,5" LastChildFill="True">
+                                <Label Content="Lance" Padding="0" Margin="0" HorizontalAlignment="Left" VerticalAlignment="Center" Width="55" MinWidth="55" MaxWidth="55"/>
+                                <ComboBox x:Name="cmb_charRankLance" Margin="5,0,10,0" VerticalAlignment="Center" SelectedIndex="0" VerticalContentAlignment="Center" DockPanel.Dock="Top" SelectionChanged="ComboBox_UpdateChar">
+                                    <ComboBoxItem Content="N/A"/>
+                                    <ComboBoxItem Content="E"/>
+                                    <ComboBoxItem Content="D"/>
+                                    <ComboBoxItem Content="C"/>
+                                    <ComboBoxItem Content="B"/>
+                                    <ComboBoxItem Content="A"/>
+                                    <ComboBoxItem Content="S"/>
+                                </ComboBox>
+                            </DockPanel>
+
+                            <DockPanel Margin="25,0,0,5" LastChildFill="True">
+                                <Label Content="Bow" Padding="0" Margin="0" HorizontalAlignment="Left" VerticalAlignment="Center" Width="55" MinWidth="55" MaxWidth="55"/>
+                                <ComboBox x:Name="cmb_charRankBow" Margin="5,0,10,0" VerticalAlignment="Center" SelectedIndex="0" VerticalContentAlignment="Center" DockPanel.Dock="Top" SelectionChanged="ComboBox_UpdateChar">
+                                    <ComboBoxItem Content="N/A"/>
+                                    <ComboBoxItem Content="E"/>
+                                    <ComboBoxItem Content="D"/>
+                                    <ComboBoxItem Content="C"/>
+                                    <ComboBoxItem Content="B"/>
+                                    <ComboBoxItem Content="A"/>
+                                    <ComboBoxItem Content="S"/>
+                                </ComboBox>
+                            </DockPanel>
+
+                            <DockPanel Margin="25,0,0,5" LastChildFill="True">
+                                <Label Content="Fire" Padding="0" Margin="0" HorizontalAlignment="Left" VerticalAlignment="Center" Width="55" MinWidth="55" MaxWidth="55"/>
+                                <ComboBox x:Name="cmb_charRankFire" Margin="5,0,10,0" VerticalAlignment="Center" SelectedIndex="0" VerticalContentAlignment="Center" DockPanel.Dock="Top" SelectionChanged="ComboBox_UpdateChar">
+                                    <ComboBoxItem Content="N/A"/>
+                                    <ComboBoxItem Content="E"/>
+                                    <ComboBoxItem Content="D"/>
+                                    <ComboBoxItem Content="C"/>
+                                    <ComboBoxItem Content="B"/>
+                                    <ComboBoxItem Content="A"/>
+                                    <ComboBoxItem Content="S"/>
+                                </ComboBox>
+                            </DockPanel>
+
+                            <DockPanel Margin="25,0,0,5" LastChildFill="True">
+                                <Label Content="Thunder" Padding="0" Margin="0" HorizontalAlignment="Left" VerticalAlignment="Center" Width="55" MinWidth="55" MaxWidth="55"/>
+                                <ComboBox x:Name="cmb_charRankThunder" Margin="5,0,10,0" VerticalAlignment="Center" SelectedIndex="0" VerticalContentAlignment="Center" DockPanel.Dock="Top" SelectionChanged="ComboBox_UpdateChar">
+                                    <ComboBoxItem Content="N/A"/>
+                                    <ComboBoxItem Content="E"/>
+                                    <ComboBoxItem Content="D"/>
+                                    <ComboBoxItem Content="C"/>
+                                    <ComboBoxItem Content="B"/>
+                                    <ComboBoxItem Content="A"/>
+                                    <ComboBoxItem Content="S"/>
+                                </ComboBox>
+                            </DockPanel>
+
+                            <DockPanel Margin="25,0,0,5" LastChildFill="True">
+                                <Label Content="Wind" Padding="0" Margin="0" HorizontalAlignment="Left" VerticalAlignment="Center" Width="55" MinWidth="55" MaxWidth="55"/>
+                                <ComboBox x:Name="cmb_charRankWind" Margin="5,0,10,0" VerticalAlignment="Center" SelectedIndex="0" VerticalContentAlignment="Center" DockPanel.Dock="Top" SelectionChanged="ComboBox_UpdateChar">
+                                    <ComboBoxItem Content="N/A"/>
+                                    <ComboBoxItem Content="E"/>
+                                    <ComboBoxItem Content="D"/>
+                                    <ComboBoxItem Content="C"/>
+                                    <ComboBoxItem Content="B"/>
+                                    <ComboBoxItem Content="A"/>
+                                    <ComboBoxItem Content="S"/>
+                                </ComboBox>
+                            </DockPanel>
+
+                            <DockPanel Margin="25,0,0,5" LastChildFill="True">
+                                <Label Content="Light" Padding="0" Margin="0" HorizontalAlignment="Left" VerticalAlignment="Center" Width="55" MinWidth="55" MaxWidth="55"/>
+                                <ComboBox x:Name="cmb_charRankLight" Margin="5,0,10,0" VerticalAlignment="Center" SelectedIndex="0" VerticalContentAlignment="Center" DockPanel.Dock="Top" SelectionChanged="ComboBox_UpdateChar">
+                                    <ComboBoxItem Content="N/A"/>
+                                    <ComboBoxItem Content="E"/>
+                                    <ComboBoxItem Content="D"/>
+                                    <ComboBoxItem Content="C"/>
+                                    <ComboBoxItem Content="B"/>
+                                    <ComboBoxItem Content="A"/>
+                                    <ComboBoxItem Content="S"/>
+                                </ComboBox>
+                            </DockPanel>
+
+                            <DockPanel Margin="25,0,0,5" LastChildFill="True">
+                                <Label Content="Staff" Padding="0" Margin="0" HorizontalAlignment="Left" VerticalAlignment="Center" Width="55" MinWidth="55" MaxWidth="55"/>
+                                <ComboBox x:Name="cmb_charRankStaff" Margin="5,0,10,0" VerticalAlignment="Center" SelectedIndex="0" VerticalContentAlignment="Center" DockPanel.Dock="Top" SelectionChanged="ComboBox_UpdateChar">
+                                    <ComboBoxItem Content="N/A"/>
+                                    <ComboBoxItem Content="E"/>
+                                    <ComboBoxItem Content="D"/>
+                                    <ComboBoxItem Content="C"/>
+                                    <ComboBoxItem Content="B"/>
+                                    <ComboBoxItem Content="A"/>
+                                    <ComboBoxItem Content="S"/>
+                                </ComboBox>
+                            </DockPanel>
+
+                            <DockPanel Margin="25,0,0,5" LastChildFill="True">
+                                <Label Content="Knife" Padding="0" Margin="0" HorizontalAlignment="Left" VerticalAlignment="Center" Width="55" MinWidth="55" MaxWidth="55"/>
+                                <ComboBox x:Name="cmb_charRankKnife" Margin="5,0,10,0" VerticalAlignment="Center" SelectedIndex="0" VerticalContentAlignment="Center" DockPanel.Dock="Top" SelectionChanged="ComboBox_UpdateChar">
+                                    <ComboBoxItem Content="N/A"/>
+                                    <ComboBoxItem Content="E"/>
+                                    <ComboBoxItem Content="D"/>
+                                    <ComboBoxItem Content="C"/>
+                                    <ComboBoxItem Content="B"/>
+                                    <ComboBoxItem Content="A"/>
+                                    <ComboBoxItem Content="S"/>
+                                </ComboBox>
+                            </DockPanel>
+
+                        </ItemsControl>
+                    </Expander>
+                
                 </ItemsControl>
-            </Expander>
+            </ScrollViewer>
         </DockPanel>
 
         <GridSplitter Grid.Column="2" Grid.Row="1" HorizontalAlignment="Left" Width="3" ScrollViewer.VerticalScrollBarVisibility="Disabled" ResizeDirection="Columns" BorderThickness="0" Background="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}" Panel.ZIndex="1" />

@@ -324,12 +324,119 @@ namespace WaterTokenLevelEditor
         }
 
         #endregion
-                
-        
-        #region Character properties
+
+
+        #region Terrain properties panel
+
+        /// <summary>
+        /// This function fills the terrain layer of the currently selected tile with all the available information.
+        /// </summary>
+        private void UpdateTerrainLayer()
+        {
+            if (IsInitialized)
+            {
+                try
+                {
+                    // Obtain the correct layer.
+                    Terrain layer           = m_grid.GetGameTile (m_selectedTile).terrain;
+
+                    // Set the current values.
+                    layer.terrainType       = (TerrainType) cmb_terrainType.SelectedIndex;
+                    layer.defenseBonus      = (uint) sdr_terrainDEF.Value;
+                    layer.resistanceBonus   = (uint) sdr_terrainRES.Value;
+                    layer.evasionBonus      = sdr_terrainEVA.Value / 100.0;
+                    layer.moveCost          = (uint) sdr_terrainMOV.Value;                      
+                    
+                }
+
+                catch (Exception error)
+                {
+                    lbl_statusLabel.Content = "Error updating terrain tile: " + error.Message;
+                }
+            }
+        }
+
+
+        /// <summary>
+        /// This simply requests that the terrain information be updated.
+        /// </summary>
+        private void ComboBox_UpdateTerrain(object sender, SelectionChangedEventArgs e)
+        {
+            UpdateTerrainLayer();
+        }
+
+
+        /// <summary>
+        /// This simply requests that the terrain information be updated.
+        /// </summary>
+        private void Slider_UpdateTerrain (object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            UpdateTerrainLayer();
+        }
+
+        #endregion
+
+
+        #region Interactive properties panel
+
+        /// <summary>
+        /// This function fills the interactive layer of the currently selected tile with all the available information.
+        /// </summary>
+        private void UpdateInteractiveLayer()
+        {
+            if (IsInitialized)
+            {
+                try
+                {
+                    // Obtain the correct layer.
+                    Interactive layer       = m_grid.GetGameTile (m_selectedTile).interactive;
+
+                    // Set the current values.
+                    layer.interactiveType   = (InteractiveType) cmb_interType.SelectedIndex;
+                    layer.effect            = (uint) sdr_interEffect.Value;
+                }
+
+                catch (Exception error)
+                {
+                    lbl_statusLabel.Content = "Error updating interactive tile: " + error.Message;
+                }
+            }
+        }
+
         
         /// <summary>
-        /// This nasty function creates a character tile from all the information currently available and assigns it to the selected tile.
+        /// This should simply request the interactive values to be updated.
+        /// </summary>
+        private void ComboBox_UpdateInteractive (object sender, SelectionChangedEventArgs e)
+        {
+            UpdateInteractiveLayer();
+        }
+
+
+        /// <summary>
+        /// This should simply request the interactive values to be updated.
+        /// </summary>
+        private void TextBox_UpdateInteractive (object sender, TextChangedEventArgs e)
+        {
+            UpdateInteractiveLayer();
+        }
+
+
+        /// <summary>
+        /// This should simply request the interactive values to be updated.
+        /// </summary>
+        private void Slider_UpdateInteractive (object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            UpdateInteractiveLayer();
+        }
+
+        #endregion
+                
+        
+        #region Character properties panel
+        
+        /// <summary>
+        /// This function fills the character tile with all the information currently available.
         /// </summary>
         private void UpdateCharacterLayer()
         {
@@ -435,8 +542,6 @@ namespace WaterTokenLevelEditor
         /// <summary>
         /// This is called whenever any character related Slider is updated.
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
         private void Slider_UpdateChar (object sender, RoutedPropertyChangedEventArgs<double> e)
         {
             UpdateCharacterLayer();
@@ -471,21 +576,19 @@ namespace WaterTokenLevelEditor
 
                 // Attempt to set the correct values.
                 if (File.Exists (location))
-                {                   
-                    sprite.Source = new BitmapImage (new Uri (@location, UriKind.RelativeOrAbsolute));
-                    
+                {   
                     if (data)
                     {
+                        sprite.Source = new BitmapImage (new Uri (@location, UriKind.RelativeOrAbsolute));
                         data.sprite = text;
                     }
                 }
 
                 else
                 {
-                    sprite.Source = null;
-
                     if (data)
                     {
+                        sprite.Source = null;
                         data.sprite = "";
                     }
                 }
@@ -513,5 +616,6 @@ namespace WaterTokenLevelEditor
         }
 
         #endregion
+
     }
 }
