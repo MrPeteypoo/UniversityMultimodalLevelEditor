@@ -30,8 +30,7 @@
                 <Separator Padding="0" Margin="0,5"></Separator>
                 <MenuItem Header="_Load" />
                 <Separator Margin="0,5"></Separator>
-                <MenuItem Header="_Save" />
-                <MenuItem Header="_Save As" />
+                <MenuItem Header="_Save As" Click="Menu_SaveClick" />
                 <Separator Margin="0,5"></Separator>
                 <MenuItem Header="_Exit" Click="Menu_ExitClick" />
             </MenuItem>
@@ -59,16 +58,16 @@
 
                     <Expander x:Name="exp_terrain" Header="Terrain" HorizontalContentAlignment="Stretch" RenderTransformOrigin="0.5,0.5" VerticalContentAlignment="Stretch" Foreground="{DynamicResource {x:Static SystemColors.ActiveCaptionTextBrushKey}}" Background="#00000000" BorderThickness="0,0,0,0" Padding="5,5,0,0" BorderBrush="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}">
                         <ItemsControl Tag="0">
-                            <Label Content="Normal" Padding="30,3,0,3" MouseDoubleClick="Label_MouseDoubleClick" MouseEnter="Label_MouseEnter" MouseLeave="Label_MouseLeave" Margin="-5,0,0,0"/>
-                            <Label Content="Sand" Padding="30,3,0,3" MouseDoubleClick="Label_MouseDoubleClick" MouseEnter="Label_MouseEnter" MouseLeave="Label_MouseLeave" Margin="-5,0,0,0"/>
-                            <Label Content="Forest" Padding="30,3,0,3" MouseDoubleClick="Label_MouseDoubleClick" MouseEnter="Label_MouseEnter" MouseLeave="Label_MouseLeave" Margin="-5,0,0,0"/>
-                            <Label Content="Mountain" Padding="30,3,0,3" MouseDoubleClick="Label_MouseDoubleClick" MouseEnter="Label_MouseEnter" MouseLeave="Label_MouseLeave" Margin="-5,0,0,0"/>
-                            <Label Content="River" Padding="30,3,0,3" MouseDoubleClick="Label_MouseDoubleClick" MouseEnter="Label_MouseEnter" MouseLeave="Label_MouseLeave" Margin="-5,0,0,0"/>
-                            <Label Content="Sea" Padding="30,3,0,3" MouseDoubleClick="Label_MouseDoubleClick" MouseEnter="Label_MouseEnter" MouseLeave="Label_MouseLeave" Margin="-5,0,0,0"/>
-                            <Label Content="Bridge" Padding="30,3,0,3" MouseDoubleClick="Label_MouseDoubleClick" MouseEnter="Label_MouseEnter" MouseLeave="Label_MouseLeave" Margin="-5,0,0,0"/>
-                            <Label Content="Village" Padding="30,3,0,3" MouseDoubleClick="Label_MouseDoubleClick" MouseEnter="Label_MouseEnter" MouseLeave="Label_MouseLeave" Margin="-5,0,0,0"/>
-                            <Label Content="Throne" Padding="30,3,0,3" MouseDoubleClick="Label_MouseDoubleClick" MouseEnter="Label_MouseEnter" MouseLeave="Label_MouseLeave" Margin="-5,0,0,0"/>
-                            <Label Content="Pillar" Padding="30,3,0,3" MouseDoubleClick="Label_MouseDoubleClick" MouseEnter="Label_MouseEnter" MouseLeave="Label_MouseLeave" Margin="-5,0,0,0"/>
+                            <Label Content="Normal" Padding="30,3,0,3" MouseDoubleClick="Label_MouseDoubleClick" MouseEnter="Label_MouseEnter" MouseLeave="Label_MouseLeave" Margin="-5,0,0,0" Tag="0"/>
+                            <Label Content="Sand" Padding="30,3,0,3" MouseDoubleClick="Label_MouseDoubleClick" MouseEnter="Label_MouseEnter" MouseLeave="Label_MouseLeave" Margin="-5,0,0,0" Tag="1"/>
+                            <Label Content="Forest" Padding="30,3,0,3" MouseDoubleClick="Label_MouseDoubleClick" MouseEnter="Label_MouseEnter" MouseLeave="Label_MouseLeave" Margin="-5,0,0,0" Tag="2"/>
+                            <Label Content="Mountain" Padding="30,3,0,3" MouseDoubleClick="Label_MouseDoubleClick" MouseEnter="Label_MouseEnter" MouseLeave="Label_MouseLeave" Margin="-5,0,0,0" Tag="3"/>
+                            <Label Content="River" Padding="30,3,0,3" MouseDoubleClick="Label_MouseDoubleClick" MouseEnter="Label_MouseEnter" MouseLeave="Label_MouseLeave" Margin="-5,0,0,0" Tag="4"/>
+                            <Label Content="Sea" Padding="30,3,0,3" MouseDoubleClick="Label_MouseDoubleClick" MouseEnter="Label_MouseEnter" MouseLeave="Label_MouseLeave" Margin="-5,0,0,0" Tag="5"/>
+                            <Label Content="Bridge" Padding="30,3,0,3" MouseDoubleClick="Label_MouseDoubleClick" MouseEnter="Label_MouseEnter" MouseLeave="Label_MouseLeave" Margin="-5,0,0,0" Tag="6"/>
+                            <Label Content="Village" Padding="30,3,0,3" MouseDoubleClick="Label_MouseDoubleClick" MouseEnter="Label_MouseEnter" MouseLeave="Label_MouseLeave" Margin="-5,0,0,0" Tag="7"/>
+                            <Label Content="Throne" Padding="30,3,0,3" MouseDoubleClick="Label_MouseDoubleClick" MouseEnter="Label_MouseEnter" MouseLeave="Label_MouseLeave" Margin="-5,0,0,0" Tag="8"/>
+                            <Label Content="Pillar" Padding="30,3,0,3" MouseDoubleClick="Label_MouseDoubleClick" MouseEnter="Label_MouseEnter" MouseLeave="Label_MouseLeave" Margin="-5,0,0,0" Tag="90"/>
                         </ItemsControl>
                     </Expander>
 
@@ -76,13 +75,13 @@
 
                     <Expander x:Name="exp_interactive" Header="Interactive" HorizontalContentAlignment="Stretch" RenderTransformOrigin="0.5,0.5" VerticalContentAlignment="Stretch" Foreground="{DynamicResource {x:Static SystemColors.ActiveCaptionTextBrushKey}}" Background="#00000000" BorderThickness="0,0,0,0" Padding="5,5,0,0" BorderBrush="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}" Tag="1" >
                         <ItemsControl Tag="1">
-                            <Label Content="Player Spawn" Padding="30,3,0,3" MouseDoubleClick="Label_MouseDoubleClick" MouseEnter="Label_MouseEnter" MouseLeave="Label_MouseLeave" Margin="-5,0,0,0"/>
-                            <Label Content="Regen Point" Padding="30,3,0,3" MouseDoubleClick="Label_MouseDoubleClick" MouseEnter="Label_MouseEnter" MouseLeave="Label_MouseLeave" Margin="-5,0,0,0"/>
-                            <Label Content="Treasure Chest" Padding="30,3,0,3" MouseDoubleClick="Label_MouseDoubleClick" MouseEnter="Label_MouseEnter" MouseLeave="Label_MouseLeave" Margin="-5,0,0,0"/>
-                            <Label Content="Door" Padding="30,3,0,3" MouseDoubleClick="Label_MouseDoubleClick" MouseEnter="Label_MouseEnter" MouseLeave="Label_MouseLeave" Margin="-5,0,0,0"/>
-                            <Label Content="Village" Padding="30,3,0,3" MouseDoubleClick="Label_MouseDoubleClick" MouseEnter="Label_MouseEnter" MouseLeave="Label_MouseLeave" Margin="-5,0,0,0"/>
-                            <Label Content="Goal" Padding="30,3,0,3" MouseDoubleClick="Label_MouseDoubleClick" MouseEnter="Label_MouseEnter" MouseLeave="Label_MouseLeave" Margin="-5,0,0,0"/>
-                            <Label Content="Boundary" Padding="30,3,0,3" MouseDoubleClick="Label_MouseDoubleClick" MouseEnter="Label_MouseEnter" MouseLeave="Label_MouseLeave" Margin="-5,0,0,0"/>
+                            <Label Content="Player Spawn" Padding="30,3,0,3" MouseDoubleClick="Label_MouseDoubleClick" MouseEnter="Label_MouseEnter" MouseLeave="Label_MouseLeave" Margin="-5,0,0,0" Tag="0"/>
+                            <Label Content="Regen Point" Padding="30,3,0,3" MouseDoubleClick="Label_MouseDoubleClick" MouseEnter="Label_MouseEnter" MouseLeave="Label_MouseLeave" Margin="-5,0,0,0" Tag="1"/>
+                            <Label Content="Treasure Chest" Padding="30,3,0,3" MouseDoubleClick="Label_MouseDoubleClick" MouseEnter="Label_MouseEnter" MouseLeave="Label_MouseLeave" Margin="-5,0,0,0" Tag="2"/>
+                            <Label Content="Door" Padding="30,3,0,3" MouseDoubleClick="Label_MouseDoubleClick" MouseEnter="Label_MouseEnter" MouseLeave="Label_MouseLeave" Margin="-5,0,0,0" Tag="3"/>
+                            <Label Content="Village" Padding="30,3,0,3" MouseDoubleClick="Label_MouseDoubleClick" MouseEnter="Label_MouseEnter" MouseLeave="Label_MouseLeave" Margin="-5,0,0,0" Tag="4"/>
+                            <Label Content="Goal" Padding="30,3,0,3" MouseDoubleClick="Label_MouseDoubleClick" MouseEnter="Label_MouseEnter" MouseLeave="Label_MouseLeave" Margin="-5,0,0,0" Tag="5"/>
+                            <Label Content="Boundary" Padding="30,3,0,3" MouseDoubleClick="Label_MouseDoubleClick" MouseEnter="Label_MouseEnter" MouseLeave="Label_MouseLeave" Margin="-5,0,0,0" Tag="6"/>
                         </ItemsControl>
                     </Expander>
 
@@ -90,9 +89,9 @@
 
                     <Expander x:Name="exp_characters" Header="Characters" HorizontalContentAlignment="Stretch" RenderTransformOrigin="0.5,0.5" VerticalContentAlignment="Stretch" Foreground="{DynamicResource {x:Static SystemColors.ActiveCaptionTextBrushKey}}" Background="#00000000" BorderThickness="0,0,0,0" Padding="5,5,0,0" BorderBrush="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}" Margin="0,0,0,5" Tag="2" >
                         <ItemsControl Tag="2">
-                            <Label Content="Boss" Padding="30,3,0,3" MouseDoubleClick="Label_MouseDoubleClick" MouseEnter="Label_MouseEnter" MouseLeave="Label_MouseLeave" Margin="-5,0,0,0"/>
-                            <Label Content="Grunt" Padding="30,3,0,3" MouseDoubleClick="Label_MouseDoubleClick" MouseEnter="Label_MouseEnter" MouseLeave="Label_MouseLeave" Margin="-5,0,0,0"/>
-                            <Label Content="NPC" Padding="30,3,0,3" MouseDoubleClick="Label_MouseDoubleClick" MouseEnter="Label_MouseEnter" MouseLeave="Label_MouseLeave" Margin="-5,0,0,0"/>
+                            <Label Content="Boss" Padding="30,3,0,3" MouseDoubleClick="Label_MouseDoubleClick" MouseEnter="Label_MouseEnter" MouseLeave="Label_MouseLeave" Margin="-5,0,0,0" Tag="0"/>
+                            <Label Content="Grunt" Padding="30,3,0,3" MouseDoubleClick="Label_MouseDoubleClick" MouseEnter="Label_MouseEnter" MouseLeave="Label_MouseLeave" Margin="-5,0,0,0" Tag="1"/>
+                            <Label Content="NPC" Padding="30,3,0,3" MouseDoubleClick="Label_MouseDoubleClick" MouseEnter="Label_MouseEnter" MouseLeave="Label_MouseLeave" Margin="-5,0,0,0" Tag="2"/>
                         </ItemsControl>
                     </Expander>
 

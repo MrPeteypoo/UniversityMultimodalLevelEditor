@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 
 namespace WaterTokenLevelEditor
@@ -31,5 +32,12 @@ namespace WaterTokenLevelEditor
         /// </summary>
         /// <returns>The specific enumeratior for that layer class.</returns>
         public abstract LayerType GetLayerType();
+
+
+        /// <summary>
+        /// Converts the data stored within the TileLayer into XML.
+        /// </summary>
+        /// <returns>An XML version of the object.</returns>
+        public abstract XElement ToXElement();
     }
 }

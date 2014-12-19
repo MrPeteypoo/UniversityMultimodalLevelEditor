@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 
 namespace WaterTokenLevelEditor
@@ -24,8 +25,8 @@ namespace WaterTokenLevelEditor
         private Stats           m_stats         = new Stats();          //!< The stats of the character, this is the effectiveness of the character in-game.
         private WeaponRanks     m_ranks         = new WeaponRanks();    //!< Manages the available weapons to the character.
         
-        private IItem[]         m_inventory     = new IItem[4];         //!< The inventory of the character, can hold up to four items.
-        private double          m_dropChance    = 0.0;                  //!< The chance of the character dropping an item upon death.
+        //private IItem[]         m_inventory     = new IItem[4];         //!< The inventory of the character, can hold up to four items.
+        //private double          m_dropChance    = 0.0;                  //!< The chance of the character dropping an item upon death.
 
         #endregion
 
@@ -56,8 +57,8 @@ namespace WaterTokenLevelEditor
                 m_stats = new Stats (copy.m_stats);
                 m_ranks = new WeaponRanks (copy.m_ranks);
 
-                m_inventory = new IItem[4] { copy.m_inventory[0], copy.m_inventory[1], copy.m_inventory[2], copy.m_inventory[3] };
-                m_dropChance = copy.m_dropChance;
+                //m_inventory = new IItem[4] { copy.m_inventory[0], copy.m_inventory[1], copy.m_inventory[2], copy.m_inventory[3] };
+                //m_dropChance = copy.m_dropChance;
 
                 sprite = copy.sprite;
             }
@@ -191,7 +192,7 @@ namespace WaterTokenLevelEditor
         }
 
 
-        /// <summary>
+        /*/// <summary>
         /// Gets or sets the inventory of the character, can hold up to four items. Any arrays used for setting must have a length of 4.
         /// </summary>
         public IItem[] inventory
@@ -237,8 +238,35 @@ namespace WaterTokenLevelEditor
                     m_dropChance = value;
                 }
             }
+        }*/
+
+        #endregion
+
+
+        #region XML functionality
+
+        /// <summary>
+        /// Converts the data stored within the object into XML.
+        /// </summary>
+        /// <returns>An XML version of the object.</returns>
+        public override XElement ToXElement()
+        {
+            XElement element = new XElement ("Character");
+
+            element.Add (   new XAttribute ("Sprite", sprite),
+                            new XAttribute ("Type", (int) m_characterType),
+                            new XAttribute ("Name", m_name),
+                            new XAttribute ("Class", (int) m_class),
+                            new XAttribute ("Affinity", (int) m_affinity),
+                            new XAttribute ("Level", m_level),
+                            
+                            m_stats.ToXElement(),
+                            m_ranks.ToXElement());
+
+            return element;
         }
 
         #endregion
+
     }
 }

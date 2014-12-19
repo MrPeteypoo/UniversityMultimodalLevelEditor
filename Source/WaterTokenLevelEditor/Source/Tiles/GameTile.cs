@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 
 namespace WaterTokenLevelEditor
@@ -100,6 +101,34 @@ namespace WaterTokenLevelEditor
         {
             get { return m_character; }
             set { m_character = value; }
+        }
+
+        #endregion
+
+
+        #region XML functionality
+
+        /// <summary>
+        /// Creates an XElement containing all the data of the GameTile and it's composed data.
+        /// </summary>
+        /// <returns>An XElement.</returns>
+        public XElement ToXElement()
+        {
+            XElement element = new XElement("GameTile");
+
+            element.Add (m_terrain.ToXElement());
+
+            if (m_interactive)
+            {
+                element.Add (m_interactive.ToXElement());
+            }
+
+            if (m_character)
+            {
+                element.Add (m_character.ToXElement());
+            }
+
+            return element;
         }
 
         #endregion

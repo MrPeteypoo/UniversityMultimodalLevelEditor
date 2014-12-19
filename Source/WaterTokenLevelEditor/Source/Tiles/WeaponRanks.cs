@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 
 namespace WaterTokenLevelEditor
@@ -74,5 +75,33 @@ namespace WaterTokenLevelEditor
         }
 
         #endregion
+
+
+        #region XML functionality
+
+        /// <summary>
+        /// Converts the data stored within the object into XML.
+        /// </summary>
+        /// <returns>An XML version of the object.</returns>
+        public XElement ToXElement()
+        {
+            XElement element = new XElement ("WeaponRanks");
+
+            element.Add (   new XAttribute ("Sword", (int) sword),
+                            new XAttribute ("Axe", (int) axe),
+                            new XAttribute ("Lance", (int) lance),
+                            new XAttribute ("Bow", (int) bow),
+                            new XAttribute ("Fire", (int) fire),
+                            new XAttribute ("Thunder", (int) thunder),
+                            new XAttribute ("Wind", (int) wind),
+                            new XAttribute ("Light", (int) light),
+                            new XAttribute ("Staff", (int) staff),
+                            new XAttribute ("Knife", (int) knife));
+
+            return element;
+        }
+
+        #endregion
+
     }
 }

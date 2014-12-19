@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 
 namespace WaterTokenLevelEditor
@@ -132,6 +133,29 @@ namespace WaterTokenLevelEditor
         {
             get { return m_moveCost; }
             set { m_moveCost = value; }
+        }
+
+        #endregion
+
+
+        #region XML functionality
+
+        /// <summary>
+        /// Converts the data stored within the object into XML.
+        /// </summary>
+        /// <returns>An XML version of the object.</returns>
+        public override XElement ToXElement()
+        {
+            XElement element = new XElement ("Terrain");
+
+            element.Add (   new XAttribute ("Sprite", sprite),
+                            new XAttribute ("Type", (int) m_terrainType),
+                            new XAttribute ("Defense", m_defenseBonus),
+                            new XAttribute ("Resistance", m_resistanceBonus),
+                            new XAttribute ("Evasion", m_evasionBonus),
+                            new XAttribute ("MovementCost", m_moveCost));
+
+            return element;
         }
 
         #endregion

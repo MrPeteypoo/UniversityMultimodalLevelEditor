@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Win32;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -13,6 +14,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Xml.Linq;
 
 
 namespace WaterTokenLevelEditor
@@ -27,12 +29,12 @@ namespace WaterTokenLevelEditor
         private LevelGrid       m_grid              = null;                         //!< The management class for the displayable grid.
 
         private string          m_workingDirectory  = "";                           //!< Used for setting the sprite location of tiles.
-        private const string    defaultTerrain      = "Defaults/terrain.png";       //!< The default terrain image.
-        private const string    defaultInteractive  = "Defaults/interactive.png";   //!< The default interactive image.
-        private const string    defaultCharacter    = "Defaults/character.png";     //!< The default character image.
+        private string          defaultTerrain      = "Defaults/terrain.png";       //!< The default terrain image.
+        private string          defaultInteractive  = "Defaults/interactive.png";   //!< The default interactive image.
+        private string          defaultCharacter    = "Defaults/character.png";     //!< The default character image.
         
         private Control         m_selectedControl   = null;                         //!< The currently selected UI control.
-        private int             m_selectedTile      = -1;                            //!< The currently selected grid tile.
+        private int             m_selectedTile      = -1;                           //!< The currently selected grid tile.
 
         private ContextMenu     m_tileMenu          = null;                         //!< The context menu used when tiles are right-clicked.
 
@@ -98,9 +100,41 @@ namespace WaterTokenLevelEditor
 
 
         /// <summary>
+        /// Saves the level to an XML document.
+        /// </summary>
+        /// <returns>Indicates whether the save was successful.</returns>
+        private bool SaveCurrentLevel()
+        {
+            // Create the dialog box.
+            SaveFileDialog saveBox = new Microsoft.Win32.SaveFileDialog();
+            saveBox.Filter = "XML Files|*.xml"; 
+
+            // Proceed with saving if necessary.
+            if (saveBox.ShowDialog() == true)
+            {
+                try
+                {
+                    // Attempt to save the XML.
+                    XDocument xml = m_grid.GenerateXML();
+                    xml.Save (saveBox.FileName);
+                    return true;
+                }
+
+                catch (Exception error)
+                {
+                    string message = "An error occurred whilst attempting to save, no data was saved.\nError details: " + error.Message;
+                    MessageBox.Show (this, message, "Error", MessageBoxButton.OK);
+                }
+            }
+
+            return false;
+        }
+
+
+        /// <summary>
         /// Opens a Grid Size window, waits for the user to choose a size and returns the object if they do. Null will be returned if no changes are required.
         /// </summary>
-        private GridSize ProcessGridSize()
+        private GridSize ProcessGridSizeWindow()
         {
             // Create the dialog box.
             GridSize gridSize = new GridSize();
@@ -221,16 +255,18 @@ namespace WaterTokenLevelEditor
                 switch (result)
                 {
                     case MessageBoxResult.Yes:
-                        //TODO: Save
-                        // Just pass in the returned value in case the user decides to cancel their action.
-                        m_unsavedChanges = false;
-                        CreateNewLevel (ProcessGridSize());
+                        if (SaveCurrentLevel())
+                        {
+                            m_unsavedChanges = false;
+                            CreateNewLevel (ProcessGridSizeWindow());
+                        }
+                        
                         break;
                     
                     case MessageBoxResult.No:
                         // Just pass in the returned value in case the user decides to cancel their action.
                         m_unsavedChanges = false;
-                        CreateNewLevel (ProcessGridSize());
+                        CreateNewLevel (ProcessGridSizeWindow());
                         break;
 
                     case MessageBoxResult.Cancel:
@@ -241,7 +277,19 @@ namespace WaterTokenLevelEditor
             else
             {
                 // Just pass in the returned value in case the user decides to cancel their action.
-                CreateNewLevel (ProcessGridSize());
+                CreateNewLevel (ProcessGridSizeWindow());
+            }
+        }
+
+
+        /// <summary>
+        /// The save event which writes all data to storage.
+        /// </summary>
+        private void Menu_SaveClick (object sender, RoutedEventArgs e)
+        {
+            if (SaveCurrentLevel())
+            {
+                m_unsavedChanges = false;
             }
         }
 
@@ -259,8 +307,10 @@ namespace WaterTokenLevelEditor
                 switch (result)
                 {
                     case MessageBoxResult.Yes:
-                        //TODO: Save
-                        win_mainWindow.Close();
+                        if (SaveCurrentLevel())
+                        {
+                            win_mainWindow.Close();
+                        }
                         break;
                     
                     case MessageBoxResult.No:
@@ -285,7 +335,7 @@ namespace WaterTokenLevelEditor
         private void Menu_GridSizeClick (object sender, RoutedEventArgs e)
         {
             // Run through the Grid Size menu.
-            GridSize gridSize = ProcessGridSize();
+            GridSize gridSize = ProcessGridSizeWindow();
             
             // Check whether any changes are required.
             if (gridSize && (gridSize.gridWidth != m_grid.width || gridSize.gridHeight != m_grid.height))
@@ -424,6 +474,8 @@ namespace WaterTokenLevelEditor
                     default:
                         throw new NotImplementedException ("Attempt to place unhandled LayerType in MainWindow.Image_MouseLeftButtonDown().");
                 }
+
+                m_unsavedChanges = true;
             }
 
             // We must be selecting a tile so do that instead!
@@ -1002,23 +1054,20 @@ namespace WaterTokenLevelEditor
                     string location = m_workingDirectory + text;
 
                     // Attempt to set the correct values.
-                    if (File.Exists (location))
-                    {   
-                        if (data)
-                        {
-                            sprite.Source = new BitmapImage (new Uri (@location, UriKind.RelativeOrAbsolute));
-                            data.sprite = text;
-                        }
-                    }
-
-                    else
+                    if (data)
                     {
-                        if (data)
+                        data.sprite = text;
+                        
+                        if (File.Exists (location))
+                        {   
+                            sprite.Source = new BitmapImage (new Uri (@location, UriKind.RelativeOrAbsolute));
+                        }
+                        
+                        else
                         {
                             sprite.Source = null;
-                            data.sprite = "";
                         }
-                    }
+                    }                    
                 }
 
                 catch (Exception error)

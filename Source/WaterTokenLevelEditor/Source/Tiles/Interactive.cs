@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 
 namespace WaterTokenLevelEditor
@@ -15,8 +16,8 @@ namespace WaterTokenLevelEditor
 
         #region Implmentation data
 
-        private InteractiveType m_type      = InteractiveType.Boundary; //!< The type of interactive tile.
-        private uint            m_effect    = 0;                        //!< This could be the HP regenerated from a RegenPoint or it could be the sceneID of the village.
+        private InteractiveType m_interactiveType   = InteractiveType.Boundary; //!< The type of interactive tile.
+        private uint            m_effect            = 0;                        //!< This could be the HP regenerated from a RegenPoint or it could be the sceneID of the village.
 
         #endregion
 
@@ -38,7 +39,7 @@ namespace WaterTokenLevelEditor
             if (copy)
             {
                 sprite = copy.sprite;
-                m_type = copy.m_type;
+                m_interactiveType = copy.m_interactiveType;
                 m_effect = copy.m_effect;
             }
 
@@ -67,8 +68,8 @@ namespace WaterTokenLevelEditor
         /// </summary>
         public InteractiveType interactiveType
         {
-            get { return m_type; }
-            set { m_type = value; }
+            get { return m_interactiveType; }
+            set { m_interactiveType = value; }
         }
 
 
@@ -79,6 +80,26 @@ namespace WaterTokenLevelEditor
         {
             get { return m_effect; }
             set { m_effect = value; }
+        }
+
+        #endregion
+
+
+        #region XML functionality
+
+        /// <summary>
+        /// Converts the data stored within the object into XML.
+        /// </summary>
+        /// <returns>An XML version of the object.</returns>
+        public override XElement ToXElement()
+        {
+            XElement element = new XElement ("Interactive");
+
+            element.Add (   new XAttribute ("Sprite", sprite),
+                            new XAttribute ("Type", (int) m_interactiveType),
+                            new XAttribute ("Effect", m_effect));
+
+            return element;
         }
 
         #endregion

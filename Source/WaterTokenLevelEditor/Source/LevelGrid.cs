@@ -9,6 +9,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using System.Xml.Linq;
 
 
 namespace WaterTokenLevelEditor
@@ -565,6 +566,40 @@ namespace WaterTokenLevelEditor
                 
             m_grid.Width = actualTileSize * m_width;
             m_grid.Height = actualTileSize * m_height;
+        }
+
+        #endregion
+
+
+        #region XML functionality
+
+        /// <summary>
+        /// Goes through the entirity of the grids data and creates a saveable XML document.
+        /// </summary>
+        /// <returns>A complete XML document of all level data.</returns>
+        public XDocument GenerateXML()
+        {
+            // Create the document and add the grid parameters.
+            XDocument xml = new XDocument();
+
+            XElement grid =   new XElement ("Grid", 
+                                            new XAttribute ("Width", m_width), new XAttribute ("Height", m_height),
+                                            new XAttribute ("WorkingDirectory", m_workingDirectory), new XAttribute ("TerrainDefault", m_terrainInit)
+                                        );
+
+            // Traverse the deep maze of game tiles producing the XML.
+            XElement gameTiles = new XElement ("GameTiles");
+
+            foreach (GameTile gameTile in m_data)
+            {
+                gameTiles.Add (gameTile.ToXElement());
+            }
+
+            // Finally construct the XML document, ready to return.
+            grid.Add (gameTiles);
+            xml.Add (grid);
+
+            return xml;
         }
 
         #endregion
