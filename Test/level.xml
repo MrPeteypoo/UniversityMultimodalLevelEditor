@@ -1,0 +1,345 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Grid Width="10" Height="10" WorkingDirectory="D:\Programming\CSharp\UniversityMultimodalLevelEditor\Test\" TerrainDefault="Defaults/terrain.png">
+  <GameTiles>
+    <GameTile>
+      <Terrain Sprite="Defaults/terrain.png" Type="0" Defense="0" Resistance="0" Evasion="0" MovementCost="0" />
+    </GameTile>
+    <GameTile>
+      <Terrain Sprite="Defaults/terrain.png" Type="0" Defense="0" Resistance="0" Evasion="0" MovementCost="0" />
+      <Interactive Sprite="Defaults/interactive.png" Type="3" Effect="0" />
+    </GameTile>
+    <GameTile>
+      <Terrain Sprite="Defaults/terrain.png" Type="0" Defense="0" Resistance="0" Evasion="0" MovementCost="0" />
+    </GameTile>
+    <GameTile>
+      <Terrain Sprite="Defaults/terrain.png" Type="0" Defense="0" Resistance="0" Evasion="0" MovementCost="0" />
+    </GameTile>
+    <GameTile>
+      <Terrain Sprite="Defaults/terrain.png" Type="0" Defense="0" Resistance="0" Evasion="0" MovementCost="0" />
+    </GameTile>
+    <GameTile>
+      <Terrain Sprite="Defaults/terrain.png" Type="0" Defense="0" Resistance="0" Evasion="0" MovementCost="0" />
+    </GameTile>
+    <GameTile>
+      <Terrain Sprite="Defaults/terrain.png" Type="0" Defense="0" Resistance="0" Evasion="0" MovementCost="0" />
+    </GameTile>
+    <GameTile>
+      <Terrain Sprite="Defaults/terrain.png" Type="0" Defense="0" Resistance="0" Evasion="0" MovementCost="0" />
+    </GameTile>
+    <GameTile>
+      <Terrain Sprite="Defaults/terrain.png" Type="0" Defense="0" Resistance="0" Evasion="0" MovementCost="0" />
+    </GameTile>
+    <GameTile>
+      <Terrain Sprite="Defaults/terrain.png" Type="0" Defense="0" Resistance="0" Evasion="0" MovementCost="0" />
+    </GameTile>
+    <GameTile>
+      <Terrain Sprite="Defaults/terrain.png" Type="0" Defense="0" Resistance="0" Evasion="0" MovementCost="0" />
+    </GameTile>
+    <GameTile>
+      <Terrain Sprite="Defaults/terrain.png" Type="7" Defense="0" Resistance="0" Evasion="0" MovementCost="0" />
+    </GameTile>
+    <GameTile>
+      <Terrain Sprite="Defaults/terrain.png" Type="0" Defense="0" Resistance="0" Evasion="0" MovementCost="0" />
+    </GameTile>
+    <GameTile>
+      <Terrain Sprite="Defaults/terrain.png" Type="0" Defense="0" Resistance="0" Evasion="0" MovementCost="0" />
+    </GameTile>
+    <GameTile>
+      <Terrain Sprite="Defaults/terrain.png" Type="0" Defense="0" Resistance="0" Evasion="0" MovementCost="0" />
+    </GameTile>
+    <GameTile>
+      <Terrain Sprite="Defaults/terrain.png" Type="0" Defense="0" Resistance="0" Evasion="0" MovementCost="0" />
+      <Interactive Sprite="Defaults/interactive.png" Type="3" Effect="0" />
+      <Character Sprite="Defaults/character.png" Type="2" Name="Bobby-five" Class="20" Affinity="0" Level="1">
+        <Stats HP="1" STR="1" MAG="1" SKL="1" SPD="1" LCK="1" DEF="1" RES="1" CON="1" WEI="1" MOV="1" />
+        <WeaponRanks Sword="1" Axe="0" Lance="0" Bow="0" Fire="0" Thunder="0" Wind="0" Light="0" Staff="0" Knife="0" />
+      </Character>
+    </GameTile>
+    <GameTile>
+      <Terrain Sprite="Defaults/terrain.png" Type="0" Defense="0" Resistance="0" Evasion="0" MovementCost="0" />
+    </GameTile>
+    <GameTile>
+      <Terrain Sprite="Defaults/terrain.png" Type="0" Defense="0" Resistance="0" Evasion="0" MovementCost="0" />
+    </GameTile>
+    <GameTile>
+      <Terrain Sprite="Defaults/terrain.png" Type="0" Defense="0" Resistance="0" Evasion="0" MovementCost="0" />
+    </GameTile>
+    <GameTile>
+      <Terrain Sprite="Defaults/terrain.png" Type="0" Defense="0" Resistance="0" Evasion="0" MovementCost="0" />
+    </GameTile>
+    <GameTile>
+      <Terrain Sprite="Defaults/terrain.png" Type="0" Defense="0" Resistance="0" Evasion="0" MovementCost="0" />
+    </GameTile>
+    <GameTile>
+      <Terrain Sprite="Defaults/terrain.png" Type="0" Defense="0" Resistance="0" Evasion="0" MovementCost="0" />
+    </GameTile>
+    <GameTile>
+      <Terrain Sprite="Defaults/terrain.png" Type="0" Defense="0" Resistance="0" Evasion="0" MovementCost="0" />
+    </GameTile>
+    <GameTile>
+      <Terrain Sprite="Defaults/terrain.png" Type="0" Defense="0" Resistance="0" Evasion="0" MovementCost="0" />
+      <Interactive Sprite="Defaults/interactive.png" Type="3" Effect="0" />
+      <Character Sprite="Defaults/character.png" Type="2" Name="Bobby-five" Class="20" Affinity="0" Level="1">
+        <Stats HP="1" STR="1" MAG="1" SKL="1" SPD="1" LCK="1" DEF="1" RES="1" CON="1" WEI="1" MOV="1" />
+        <WeaponRanks Sword="1" Axe="0" Lance="0" Bow="0" Fire="0" Thunder="0" Wind="0" Light="0" Staff="0" Knife="0" />
+      </Character>
+    </GameTile>
+    <GameTile>
+      <Terrain Sprite="Defaults/terrain.png" Type="0" Defense="0" Resistance="0" Evasion="0" MovementCost="0" />
+    </GameTile>
+    <GameTile>
+      <Terrain Sprite="Defaults/terrain.png" Type="0" Defense="0" Resistance="0" Evasion="0" MovementCost="0" />
+    </GameTile>
+    <GameTile>
+      <Terrain Sprite="Defaults/terrain.png" Type="0" Defense="0" Resistance="0" Evasion="0" MovementCost="0" />
+    </GameTile>
+    <GameTile>
+      <Terrain Sprite="Defaults/terrain.png" Type="0" Defense="0" Resistance="0" Evasion="0" MovementCost="0" />
+    </GameTile>
+    <GameTile>
+      <Terrain Sprite="Defaults/terrain.png" Type="0" Defense="0" Resistance="0" Evasion="0" MovementCost="0" />
+    </GameTile>
+    <GameTile>
+      <Terrain Sprite="Defaults/terrain.png" Type="0" Defense="0" Resistance="0" Evasion="0" MovementCost="0" />
+    </GameTile>
+    <GameTile>
+      <Terrain Sprite="Defaults/terrain.png" Type="0" Defense="0" Resistance="0" Evasion="0" MovementCost="0" />
+    </GameTile>
+    <GameTile>
+      <Terrain Sprite="Defaults/terrain.png" Type="0" Defense="0" Resistance="0" Evasion="0" MovementCost="0" />
+    </GameTile>
+    <GameTile>
+      <Terrain Sprite="Defaults/terrain.png" Type="0" Defense="0" Resistance="0" Evasion="0" MovementCost="0" />
+    </GameTile>
+    <GameTile>
+      <Terrain Sprite="Defaults/terrain.png" Type="0" Defense="0" Resistance="0" Evasion="0" MovementCost="0" />
+      <Interactive Sprite="Defaults/interactive.png" Type="3" Effect="0" />
+    </GameTile>
+    <GameTile>
+      <Terrain Sprite="Defaults/terrain.png" Type="0" Defense="0" Resistance="0" Evasion="0" MovementCost="0" />
+    </GameTile>
+    <GameTile>
+      <Terrain Sprite="Defaults/terrain.png" Type="0" Defense="0" Resistance="0" Evasion="0" MovementCost="0" />
+    </GameTile>
+    <GameTile>
+      <Terrain Sprite="Defaults/terrain.png" Type="8" Defense="4" Resistance="6" Evasion="0.76" MovementCost="1" />
+    </GameTile>
+    <GameTile>
+      <Terrain Sprite="Defaults/terrain.png" Type="0" Defense="0" Resistance="0" Evasion="0" MovementCost="0" />
+      <Interactive Sprite="Defaults/interactive.png" Type="3" Effect="0" />
+      <Character Sprite="Defaults/character.png" Type="2" Name="Bobby-five" Class="20" Affinity="0" Level="1">
+        <Stats HP="1" STR="1" MAG="1" SKL="1" SPD="1" LCK="1" DEF="1" RES="1" CON="1" WEI="1" MOV="1" />
+        <WeaponRanks Sword="1" Axe="0" Lance="0" Bow="0" Fire="0" Thunder="0" Wind="0" Light="0" Staff="0" Knife="0" />
+      </Character>
+    </GameTile>
+    <GameTile>
+      <Terrain Sprite="Defaults/terrain.png" Type="0" Defense="0" Resistance="0" Evasion="0" MovementCost="0" />
+    </GameTile>
+    <GameTile>
+      <Terrain Sprite="Defaults/terrain.png" Type="0" Defense="0" Resistance="0" Evasion="0" MovementCost="0" />
+    </GameTile>
+    <GameTile>
+      <Terrain Sprite="Defaults/terrain.png" Type="0" Defense="0" Resistance="0" Evasion="0" MovementCost="0" />
+    </GameTile>
+    <GameTile>
+      <Terrain Sprite="Defaults/terrain.png" Type="0" Defense="0" Resistance="0" Evasion="0" MovementCost="0" />
+    </GameTile>
+    <GameTile>
+      <Terrain Sprite="Defaults/terrain.png" Type="0" Defense="0" Resistance="0" Evasion="0" MovementCost="0" />
+    </GameTile>
+    <GameTile>
+      <Terrain Sprite="Defaults/terrain.png" Type="0" Defense="0" Resistance="0" Evasion="0" MovementCost="0" />
+    </GameTile>
+    <GameTile>
+      <Terrain Sprite="Defaults/terrain.png" Type="0" Defense="0" Resistance="0" Evasion="0" MovementCost="0" />
+    </GameTile>
+    <GameTile>
+      <Terrain Sprite="Defaults/terrain.png" Type="0" Defense="0" Resistance="0" Evasion="0" MovementCost="0" />
+    </GameTile>
+    <GameTile>
+      <Terrain Sprite="Defaults/terrain.png" Type="0" Defense="0" Resistance="0" Evasion="0" MovementCost="0" />
+      <Character Sprite="Defaults/character.png" Type="1" Name="Bobb" Class="15" Affinity="0" Level="9">
+        <Stats HP="1" STR="1" MAG="34" SKL="36" SPD="36" LCK="1" DEF="1" RES="1" CON="1" WEI="1" MOV="1" />
+        <WeaponRanks Sword="1" Axe="0" Lance="0" Bow="3" Fire="0" Thunder="0" Wind="0" Light="0" Staff="2" Knife="0" />
+      </Character>
+    </GameTile>
+    <GameTile>
+      <Terrain Sprite="Defaults/terrain.png" Type="0" Defense="0" Resistance="0" Evasion="0" MovementCost="0" />
+    </GameTile>
+    <GameTile>
+      <Terrain Sprite="Defaults/terrain.png" Type="0" Defense="0" Resistance="0" Evasion="0" MovementCost="0" />
+      <Interactive Sprite="Defaults/interactive.png" Type="3" Effect="279" />
+    </GameTile>
+    <GameTile>
+      <Terrain Sprite="Defaults/terrain.png" Type="0" Defense="0" Resistance="0" Evasion="0" MovementCost="0" />
+    </GameTile>
+    <GameTile>
+      <Terrain Sprite="Defaults/terrain.png" Type="0" Defense="0" Resistance="0" Evasion="0" MovementCost="0" />
+    </GameTile>
+    <GameTile>
+      <Terrain Sprite="Defaults/terrain.png" Type="0" Defense="0" Resistance="0" Evasion="0" MovementCost="0" />
+      <Character Sprite="Defaults/character.png" Type="2" Name="Bobby-five" Class="20" Affinity="0" Level="1">
+        <Stats HP="1" STR="1" MAG="1" SKL="1" SPD="1" LCK="1" DEF="1" RES="1" CON="1" WEI="1" MOV="1" />
+        <WeaponRanks Sword="1" Axe="0" Lance="0" Bow="0" Fire="0" Thunder="0" Wind="0" Light="0" Staff="0" Knife="0" />
+      </Character>
+    </GameTile>
+    <GameTile>
+      <Terrain Sprite="Defaults/terrain.png" Type="0" Defense="0" Resistance="0" Evasion="0" MovementCost="0" />
+    </GameTile>
+    <GameTile>
+      <Terrain Sprite="Defaults/terrain.png" Type="0" Defense="0" Resistance="0" Evasion="0" MovementCost="0" />
+    </GameTile>
+    <GameTile>
+      <Terrain Sprite="Defaults/terrain.png" Type="0" Defense="0" Resistance="0" Evasion="0" MovementCost="0" />
+    </GameTile>
+    <GameTile>
+      <Terrain Sprite="Defaults/terrain.png" Type="0" Defense="0" Resistance="0" Evasion="0" MovementCost="0" />
+    </GameTile>
+    <GameTile>
+      <Terrain Sprite="Defaults/terrain.png" Type="0" Defense="0" Resistance="0" Evasion="0" MovementCost="0" />
+    </GameTile>
+    <GameTile>
+      <Terrain Sprite="Defaults/terrain.png" Type="0" Defense="0" Resistance="0" Evasion="0" MovementCost="0" />
+    </GameTile>
+    <GameTile>
+      <Terrain Sprite="Defaults/terrain.png" Type="0" Defense="0" Resistance="0" Evasion="0" MovementCost="0" />
+      <Character Sprite="Defaults/character.png" Type="2" Name="Bobby-five" Class="20" Affinity="0" Level="1">
+        <Stats HP="1" STR="1" MAG="1" SKL="1" SPD="1" LCK="1" DEF="1" RES="1" CON="1" WEI="1" MOV="1" />
+        <WeaponRanks Sword="1" Axe="0" Lance="0" Bow="0" Fire="0" Thunder="0" Wind="0" Light="0" Staff="0" Knife="0" />
+      </Character>
+    </GameTile>
+    <GameTile>
+      <Terrain Sprite="Defaults/terrain.png" Type="0" Defense="0" Resistance="0" Evasion="0" MovementCost="0" />
+    </GameTile>
+    <GameTile>
+      <Terrain Sprite="Defaults/terrain.png" Type="0" Defense="0" Resistance="0" Evasion="0" MovementCost="0" />
+    </GameTile>
+    <GameTile>
+      <Terrain Sprite="Defaults/terrain.png" Type="0" Defense="0" Resistance="0" Evasion="0" MovementCost="0" />
+    </GameTile>
+    <GameTile>
+      <Terrain Sprite="Defaults/terrain.png" Type="0" Defense="0" Resistance="0" Evasion="0" MovementCost="0" />
+    </GameTile>
+    <GameTile>
+      <Terrain Sprite="Defaults/terrain.png" Type="0" Defense="0" Resistance="0" Evasion="0" MovementCost="0" />
+    </GameTile>
+    <GameTile>
+      <Terrain Sprite="Defaults/terrain.png" Type="0" Defense="0" Resistance="0" Evasion="0" MovementCost="0" />
+      <Interactive Sprite="Defaults/interactive.png" Type="3" Effect="0" />
+    </GameTile>
+    <GameTile>
+      <Terrain Sprite="Defaults/terrain.png" Type="0" Defense="0" Resistance="0" Evasion="0" MovementCost="0" />
+    </GameTile>
+    <GameTile>
+      <Terrain Sprite="Defaults/terrain.png" Type="0" Defense="0" Resistance="0" Evasion="0" MovementCost="0" />
+    </GameTile>
+    <GameTile>
+      <Terrain Sprite="Defaults/terrain.png" Type="0" Defense="0" Resistance="0" Evasion="0" MovementCost="0" />
+    </GameTile>
+    <GameTile>
+      <Terrain Sprite="Defaults/terrain.png" Type="0" Defense="0" Resistance="0" Evasion="0" MovementCost="0" />
+    </GameTile>
+    <GameTile>
+      <Terrain Sprite="Defaults/terrain.png" Type="0" Defense="0" Resistance="0" Evasion="0" MovementCost="0" />
+    </GameTile>
+    <GameTile>
+      <Terrain Sprite="Defaults/terrain.png" Type="0" Defense="0" Resistance="0" Evasion="0" MovementCost="0" />
+    </GameTile>
+    <GameTile>
+      <Terrain Sprite="Defaults/terrain.png" Type="0" Defense="0" Resistance="0" Evasion="0" MovementCost="0" />
+    </GameTile>
+    <GameTile>
+      <Terrain Sprite="Defaults/terrain.png" Type="0" Defense="0" Resistance="0" Evasion="0" MovementCost="0" />
+    </GameTile>
+    <GameTile>
+      <Terrain Sprite="Defaults/terrain.png" Type="0" Defense="0" Resistance="0" Evasion="0" MovementCost="0" />
+    </GameTile>
+    <GameTile>
+      <Terrain Sprite="Defaults/terrain.png" Type="0" Defense="0" Resistance="0" Evasion="0" MovementCost="0" />
+    </GameTile>
+    <GameTile>
+      <Terrain Sprite="Defaults/terrain.png" Type="0" Defense="0" Resistance="0" Evasion="0" MovementCost="0" />
+    </GameTile>
+    <GameTile>
+      <Terrain Sprite="Defaults/terrain.png" Type="0" Defense="0" Resistance="0" Evasion="0" MovementCost="0" />
+    </GameTile>
+    <GameTile>
+      <Terrain Sprite="Defaults/terrain.png" Type="0" Defense="0" Resistance="0" Evasion="0" MovementCost="0" />
+      <Interactive Sprite="Defaults/interactive.png" Type="3" Effect="0" />
+    </GameTile>
+    <GameTile>
+      <Terrain Sprite="Defaults/terrain.png" Type="0" Defense="0" Resistance="0" Evasion="0" MovementCost="0" />
+    </GameTile>
+    <GameTile>
+      <Terrain Sprite="Defaults/terrain.png" Type="0" Defense="0" Resistance="0" Evasion="0" MovementCost="0" />
+    </GameTile>
+    <GameTile>
+      <Terrain Sprite="Defaults/terrain.png" Type="0" Defense="0" Resistance="0" Evasion="0" MovementCost="0" />
+    </GameTile>
+    <GameTile>
+      <Terrain Sprite="Defaults/terrain.png" Type="0" Defense="0" Resistance="0" Evasion="0" MovementCost="0" />
+    </GameTile>
+    <GameTile>
+      <Terrain Sprite="Defaults/terrain.png" Type="0" Defense="0" Resistance="0" Evasion="0" MovementCost="0" />
+    </GameTile>
+    <GameTile>
+      <Terrain Sprite="Defaults/terrain.png" Type="0" Defense="0" Resistance="0" Evasion="0" MovementCost="0" />
+      <Character Sprite="Defaults/character.png" Type="2" Name="Bobby-five" Class="20" Affinity="0" Level="1">
+        <Stats HP="1" STR="1" MAG="1" SKL="1" SPD="1" LCK="1" DEF="1" RES="1" CON="1" WEI="1" MOV="1" />
+        <WeaponRanks Sword="1" Axe="0" Lance="0" Bow="0" Fire="0" Thunder="0" Wind="0" Light="0" Staff="0" Knife="0" />
+      </Character>
+    </GameTile>
+    <GameTile>
+      <Terrain Sprite="Defaults/terrain.png" Type="0" Defense="0" Resistance="0" Evasion="0" MovementCost="0" />
+    </GameTile>
+    <GameTile>
+      <Terrain Sprite="Defaults/terrain.png" Type="0" Defense="0" Resistance="0" Evasion="0" MovementCost="0" />
+    </GameTile>
+    <GameTile>
+      <Terrain Sprite="Defaults/terrain.png" Type="0" Defense="0" Resistance="0" Evasion="0" MovementCost="0" />
+      <Character Sprite="Defaults/character.png" Type="2" Name="Bobby-five" Class="20" Affinity="0" Level="1">
+        <Stats HP="1" STR="1" MAG="1" SKL="1" SPD="1" LCK="1" DEF="1" RES="1" CON="1" WEI="1" MOV="1" />
+        <WeaponRanks Sword="1" Axe="0" Lance="0" Bow="0" Fire="0" Thunder="0" Wind="0" Light="0" Staff="0" Knife="0" />
+      </Character>
+    </GameTile>
+    <GameTile>
+      <Terrain Sprite="Defaults/terrain.png" Type="0" Defense="0" Resistance="0" Evasion="0" MovementCost="0" />
+    </GameTile>
+    <GameTile>
+      <Terrain Sprite="Defaults/terrain.png" Type="0" Defense="0" Resistance="0" Evasion="0" MovementCost="0" />
+    </GameTile>
+    <GameTile>
+      <Terrain Sprite="Defaults/terrain.png" Type="0" Defense="0" Resistance="0" Evasion="0" MovementCost="0" />
+    </GameTile>
+    <GameTile>
+      <Terrain Sprite="Defaults/terrain.png" Type="0" Defense="0" Resistance="0" Evasion="0" MovementCost="0" />
+    </GameTile>
+    <GameTile>
+      <Terrain Sprite="Defaults/terrain.png" Type="0" Defense="0" Resistance="0" Evasion="0" MovementCost="0" />
+    </GameTile>
+    <GameTile>
+      <Terrain Sprite="Defaults/terrain.png" Type="0" Defense="0" Resistance="0" Evasion="0" MovementCost="0" />
+    </GameTile>
+    <GameTile>
+      <Terrain Sprite="Defaults/terrain.png" Type="0" Defense="0" Resistance="0" Evasion="0" MovementCost="0" />
+    </GameTile>
+    <GameTile>
+      <Terrain Sprite="Defaults/terrain.png" Type="0" Defense="0" Resistance="0" Evasion="0" MovementCost="0" />
+    </GameTile>
+    <GameTile>
+      <Terrain Sprite="Defaults/terrain.png" Type="0" Defense="0" Resistance="0" Evasion="0" MovementCost="0" />
+    </GameTile>
+    <GameTile>
+      <Terrain Sprite="Defaults/terrain.png" Type="0" Defense="0" Resistance="0" Evasion="0" MovementCost="0" />
+    </GameTile>
+    <GameTile>
+      <Terrain Sprite="Defaults/terrain.png" Type="0" Defense="0" Resistance="0" Evasion="0" MovementCost="0" />
+    </GameTile>
+    <GameTile>
+      <Terrain Sprite="Defaults/terrain.png" Type="0" Defense="0" Resistance="0" Evasion="0" MovementCost="0" />
+    </GameTile>
+    <GameTile>
+      <Terrain Sprite="Defaults/terrain.png" Type="0" Defense="0" Resistance="0" Evasion="0" MovementCost="0" />
+    </GameTile>
+  </GameTiles>
+</Grid>
