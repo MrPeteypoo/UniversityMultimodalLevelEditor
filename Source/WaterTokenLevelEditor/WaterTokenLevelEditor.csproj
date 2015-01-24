@@ -57,6 +57,27 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="GridSize.xaml.cs">
+      <DependentUpon>GridSize.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Source\LevelGrid.cs" />
+    <Compile Include="Source\Tiles\Character.cs" />
+    <Compile Include="Source\Tiles\GameTile.cs" />
+    <Compile Include="Source\Tiles\Interactive.cs" />
+    <Compile Include="Source\Tiles\InteractiveTiles.cs" />
+    <Compile Include="Source\Tiles\Terrain.cs" />
+    <Compile Include="Source\Tiles\TileLayer.cs" />
+    <Compile Include="Source\Enumerations.cs" />
+    <Compile Include="Source\Items\IItem.cs" />
+    <Compile Include="Source\Range.cs" />
+    <Compile Include="Source\Stats.cs" />
+    <Compile Include="Source\Items\Supply.cs" />
+    <Compile Include="Source\Items\Weapon.cs" />
+    <Compile Include="Source\Tiles\WeaponRanks.cs" />
+    <Page Include="GridSize.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
